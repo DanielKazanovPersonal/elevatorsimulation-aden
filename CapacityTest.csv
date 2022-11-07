@@ -1,0 +1,30 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,3,1,6,TRUE,1000,gets on
+11,2,1,6,TRUE,1000,gets on
+12,2,1,6,TRUE,1000,gets on
+13,2,1,6,TRUE,1000,gets on
+15,7,2,6,TRUE,1000,skipped - no room
+16,4,3,6,TRUE,1000,gets on
+17,4,4,6,TRUE,1000,skipped - no room
+18,2,5,6,TRUE,1000,gets on
+140,7,6,1,TRUE,1000,gets on
+144,3,6,1,TRUE,1000,gets on
+145,3,6,1,TRUE,1000,gets on
+146,3,6,1,TRUE,1000,skipped - no room
+250,3,1,6,TRUE,1000,get on
+253,4,1,5,TRUE,1000,get on - last possible tick
+254,5,1,4,TRUE,1000,get on
+256,3,1,3,TRUE,1000,get on - last possible tick
+310,13,6,1,TRUE,1000,get on
+317,1,6,5,TRUE,1000,get on - last possible tick
+317,3,6,1,TRUE,1000,skipped - no room
+327,2,5,4,TRUE,1000,get on
+338,3,4,3,TRUE,1000,skipped - no room
+338,2,4,3,TRUE,1000,blocked
+450,5,1,6,TRUE,1000,should board
+450,9,1,3,TRUE,1000,should board
+450,1,1,2,TRUE,1000,should board but block any future passengers….
+459,1,1,4,FALSE,1000,blocked but impolite - should block after causing doors to open
+459,14,1,4,TRUE,1000,blocked but polite
+472,3,2,4,FALSE,1000,Should be blocked twice - but first time should open doors on arrival.
+553,10,2,6,FALSE,1000,make sure that these board with previous group

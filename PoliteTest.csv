@@ -1,0 +1,16 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,6,TRUE,1000,gets on
+15,2,1,6,FALSE,1000,gets on
+19,2,1,6,FALSE,1000,gets on
+23,2,1,6,TRUE,1000,waits
+24,1,3,4,TRUE,1000,gets on
+38,3,3,5,FALSE,1000,gets on
+42,5,3,6,TRUE,1000,waits
+150,3,6,1,TRUE,1000,gets on
+155,2,6,5,TRUE,1000,waits
+155,2,6,5,FALSE,1000,blocked
+160,4,5,1,TRUE,1000,gets on
+166,7,5,3,FALSE,1000,gets on
+173,2,5,1,FALSE,1000,skipped
+190,3,3,1,FALSE,1000,get on
+196,3,3,2,FALSE,1000,get on

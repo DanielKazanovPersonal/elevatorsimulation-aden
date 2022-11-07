@@ -1,0 +1,38 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,6,TRUE,1000,basic testing - call not on same floor
+50,1,2,5,TRUE,1000,
+100,1,3,1,TRUE,1000,
+140,1,4,2,TRUE,1000,
+180,1,1,4,TRUE,1000,
+220,1,2,3,TRUE,1000,
+250,1,1,4,TRUE,1000,testing direct-to-floor-case
+252,1,2,4,TRUE,1000,
+252,1,2,1,TRUE,1000,
+320,1,2,5,TRUE,1000,"testing call prioritzation - down > up, go to highest down"
+320,1,3,6,TRUE,1000,
+320,1,6,1,TRUE,1000,
+320,1,5,2,TRUE,1000,
+320,1,4,3,TRUE,1000,
+450,1,5,6,TRUE,1000,"testing call prioritzation - up > down, go to lowest up"
+450,1,3,5,TRUE,1000,
+450,1,1,2,TRUE,1000,
+450,1,5,3,TRUE,1000,
+450,1,4,1,TRUE,1000,
+580,1,1,3,TRUE,1000,
+610,1,1,4,TRUE,1000,"Test equal # calls, go with closest (up)"
+610,1,6,4,TRUE,1000,
+680,1,5,1,TRUE,1000,"Test equal # calls, go with closest (down)"
+680,1,2,3,TRUE,1000,
+740,1,5,3,TRUE,1000,"Test equal # calls, same distance - go with up"
+740,1,1,3,TRUE,1000,
+810,1,3,5,TRUE,1000,Test that call on current floor is prioritized above other floors 
+810,1,1,5,TRUE,1000,
+890,1,5,2,TRUE,1000,call on floor should win - going down
+890,1,1,4,TRUE,1000,
+890,1,2,4,TRUE,1000,
+960,1,4,6,TRUE,1000,call on floor should win - going up
+960,1,5,2,TRUE,1000,
+960,1,3,1,TRUE,1000,
+1030,1,1,4,TRUE,1000,
+1060,1,4,1,TRUE,1000,call up - call down - call up wins
+1060,1,4,6,TRUE,1000,

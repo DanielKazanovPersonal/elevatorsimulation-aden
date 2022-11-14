@@ -237,6 +237,9 @@ public class Building {
 			}
 		}
 	}
+	
+	//TODO
+	public boolean elevatorStateChanged(Elevator e) {return false;}
 
 	/**
 	 * Log elevator config.

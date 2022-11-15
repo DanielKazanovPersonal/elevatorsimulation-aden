@@ -104,7 +104,18 @@ public class Building {
 	}
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
+	private boolean elevatorStateChanged(Elevator e) {return false;}
+	private int currStateStop(int time, Elevator elevator) {return 0;}
+	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
+	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
+	private int currStateOffLd(int time, Elevator elevator) {return 0;}
+	private int currStateBoard(int time, Elevator elevator) {return 0;}
+	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
+	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
 	
+	public void addPassengersToQueue(int time, int numPass, int fromFloor, int toFloor, boolean polite, int wait) {
+		passQ.add(new Passengers(time, numPass, fromFloor, toFloor, polite, wait));
+	}
 	
 	// DO NOT CHANGE ANYTHING BELOW THIS LINE:
 	/**
@@ -178,16 +189,6 @@ public class Building {
 			e.printStackTrace();
 		}
 	}
-
-	//TODO
-	private boolean elevatorStateChanged(Elevator e) {return false;}
-	private int currStateStop(int time, Elevator elevator) {return 0;}
-	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
-	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
-	private int currStateOffLd(int time, Elevator elevator) {return 0;}
-	private int currStateBoard(int time, Elevator elevator) {return 0;}
-	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
-	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
 
 	/**
 	 * Enable logging. Prints the initial configuration message.

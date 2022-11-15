@@ -80,5 +80,8 @@ public class CallManager {
 	//      5. Should the elevator change direction?
 	//
 	//      These are an example - you may find you don't need some of these, or you may need more...
-
+	
+	boolean callPending() {
+		return !(upCallPending || downCallPending);
+	}
 }

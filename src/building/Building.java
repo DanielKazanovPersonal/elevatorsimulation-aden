@@ -179,6 +179,16 @@ public class Building {
 		}
 	}
 
+	//TODO
+	private boolean elevatorStateChanged(Elevator e) {return false;}
+	private int currStateStop(int time, Elevator elevator) {return 0;}
+	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
+	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
+	private int currStateOffLd(int time, Elevator elevator) {return 0;}
+	private int currStateBoard(int time, Elevator elevator) {return 0;}
+	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
+	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
+
 	/**
 	 * Enable logging. Prints the initial configuration message.
 	 * For testing, logging must be enabled BEFORE the run starts.
@@ -237,9 +247,7 @@ public class Building {
 			}
 		}
 	}
-	
-	//TODO
-	public boolean elevatorStateChanged(Elevator e) {return false;}
+
 
 	/**
 	 * Log elevator config.

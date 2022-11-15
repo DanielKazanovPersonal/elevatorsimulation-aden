@@ -82,6 +82,11 @@ public class CallManager {
 	//      These are an example - you may find you don't need some of these, or you may need more...
 	
 	boolean callPending() {
+		findPendingCalls();
 		return !(upCallPending || downCallPending);
+	}
+	
+	void findPendingCalls() {
+		
 	}
 }

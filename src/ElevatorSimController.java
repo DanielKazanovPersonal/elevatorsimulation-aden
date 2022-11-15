@@ -85,7 +85,7 @@ public class ElevatorSimController {
 		building = new Building(NUM_FLOORS,NUM_ELEVATORS,logfile);
 		
 		//TODO: YOU still need to configure the elevators in the building here....
-		
+		building.configElevators(numFloors, capacity, floorTicks, doorTicks, passPerTick);	
 		initializePassengerData(testfile);
 		
 

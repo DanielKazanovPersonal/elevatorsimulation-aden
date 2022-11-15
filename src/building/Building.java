@@ -185,7 +185,7 @@ public class Building {
 		if (!passQ.isEmpty()) {
 			if (passQ.peek().getTime() == time) {
 				Passengers p = passQ.poll();
-				floor[p.getOnFloor()].addPassenger(p, p.getDirection());
+				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
 			}
 		}
 	}

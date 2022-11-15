@@ -78,4 +78,41 @@ public class Elevator {
 	//      3) opening the doors
 	//      and so on...
 	
+	public int getPrevState() {
+		return this.prevState;
+	}
+
+	public int getCurrState() {
+		return this.currState;
+	}
+
+
+	public int getPrevFloor() {
+		return this.prevFloor;
+	}
+
+	public int getCurrFloor() {
+		return this.currFloor;
+	}
+
+	public int getCapacity() {
+		return this.capacity;
+	}
+
+
+	public int getTicksPerFloor() {
+		return this.ticksPerFloor;
+	}
+
+	public int getTicksDoorOpenClose() {
+		return this.ticksDoorOpenClose;
+	}
+
+	public int getPassPerTick() {
+		return this.passPerTick;
+	}
+
+	public void updateCurrState(int newState) {
+		currState = newState;
+	}
 }

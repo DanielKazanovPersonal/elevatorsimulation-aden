@@ -95,7 +95,13 @@ public class ElevatorSimController {
 	//TODO: Write methods to update the GUI display
 	//      Needs to cover the Elevator state, Elevator passengers
 	//      and queues for each floor, as well as the current time
-	
+
+	private int totalTicks = 0;
+
+	public int getTotalTicks() {
+		return totalTicks;
+	}
+
 	/**
 	 * Config simulation. Reads the filename, and parses the
 	 * parameters.

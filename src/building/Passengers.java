@@ -60,6 +60,99 @@ public class Passengers {
 	
 	// TODO: Write any required getters/setters for this class
 
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getTime() {
+		return this.time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	public int getNumPass() {
+		return this.numPass;
+	}
+
+	public void setNumPass(int numPass) {
+		this.numPass = numPass;
+	}
+
+	public int getOnFloor() {
+		return this.onFloor;
+	}
+
+	public void setOnFloor(int onFloor) {
+		this.onFloor = onFloor;
+	}
+
+	public int getDestFloor() {
+		return this.destFloor;
+	}
+
+	public void setDestFloor(int destFloor) {
+		this.destFloor = destFloor;
+	}
+
+	public boolean isPolite() {
+		return this.polite;
+	}
+
+	public boolean getPolite() {
+		return this.polite;
+	}
+
+	public void setPolite(boolean polite) {
+		this.polite = polite;
+	}
+
+	public int getWaitTime() {
+		return this.waitTime;
+	}
+
+	public void setWaitTime(int waitTime) {
+		this.waitTime = waitTime;
+	}
+
+	public int getDirection() {
+		return this.direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
+	public int getTimeWillGiveUp() {
+		return this.timeWillGiveUp;
+	}
+
+	public void setTimeWillGiveUp(int timeWillGiveUp) {
+		this.timeWillGiveUp = timeWillGiveUp;
+	}
+
+	public int getBoardTime() {
+		return this.boardTime;
+	}
+
+	public void setBoardTime(int boardTime) {
+		this.boardTime = boardTime;
+	}
+
+	public int getTimeArrived() {
+		return this.timeArrived;
+	}
+
+	public void setTimeArrived(int timeArrived) {
+		this.timeArrived = timeArrived;
+	}
+
 	// 
 	/**
 	 * Reset static ID. 

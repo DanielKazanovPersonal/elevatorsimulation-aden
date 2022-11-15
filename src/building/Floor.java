@@ -32,6 +32,19 @@ public class Floor {
 	// given time based upon direction - you could choose to 
 	// account for this in your methods.
 	
+	public void addPassenger(Passengers p, int direction) { // can always come back to change return value
+		if (direction == UP) {
+			up.add(p);
+		} else {
+			down.add(p);
+		}
+	}
+
+	public boolean isEmpty() {
+		if (down.isEmpty() && up.isEmpty()) return true;
+		return false;
+	}
+
 	/**
 	 * Queue string. This method provides visibility into the queue
 	 * contents as a string. What exactly you would want to visualize 

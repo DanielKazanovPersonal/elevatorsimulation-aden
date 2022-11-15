@@ -70,7 +70,8 @@ public class Building {
 	private CallManager callMgr;
 	
 	// Add any fields that you think you might need here...
-
+	private static final String ELEVATOR_CONFIG_PATH = "ElevatorSimConfig.csv";
+	
 	/**
 	 * Instantiates a new building.
 	 *
@@ -100,7 +101,13 @@ public class Building {
 		callMgr = new CallManager(floors,NUM_FLOORS);
 		elevators = new Elevator[NUM_ELEVATORS];
 		//TODO: if you defined new fields, make sure to initialize them here
-		
+
+	}
+	
+	public void configElevators(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {
+		for (int i = 0; i < elevators.length; i++) {
+			elevators[i] = new Elevator(numFloors, capacity, floorTicks, doorTicks, passPerTick);
+		}
 	}
 	
 	/**
@@ -190,6 +197,20 @@ public class Building {
 		}
 	}
 	
+	
+	/**
+	 * Updates the state of the 
+	 */
+	public void update() {
+		
+	}
+	
+	
+	/**
+	 * Sees whether all queues are empty.
+	 *
+	 * @return true if all queues are empty
+	 */
 	public boolean queuesEmpty() {
 		for (Floor f : floors) {
 			if (!f.isEmpty()) {

@@ -103,16 +103,112 @@ public class Building {
 		
 	}
 	
+	/**
+	 * Elevator state changed.
+	 *
+	 * @param e the e
+	 * @return true, if successful
+	 */
 	// TODO: Place all of your code HERE - state methods and helpers...
 	private boolean elevatorStateChanged(Elevator e) {return false;}
+	
+	/**
+	 * Curr state stop.
+	 *
+	 * @param time the time
+	 * @param elevator the elevator
+	 * @return the int
+	 */
 	private int currStateStop(int time, Elevator elevator) {return 0;}
+	
+	/**
+	 * Curr state mv to flr.
+	 *
+	 * @param time the time
+	 * @param elevator the elevator
+	 * @return the int
+	 */
 	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
+	
+	/**
+	 * Curr state open dr.
+	 *
+	 * @param time the time
+	 * @param elevator the elevator
+	 * @return the int
+	 */
 	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
+	
+	/**
+	 * Curr state off ld.
+	 *
+	 * @param time the time
+	 * @param elevator the elevator
+	 * @return the int
+	 */
 	private int currStateOffLd(int time, Elevator elevator) {return 0;}
+	
+	/**
+	 * Curr state board.
+	 *
+	 * @param time the time
+	 * @param elevator the elevator
+	 * @return the int
+	 */
 	private int currStateBoard(int time, Elevator elevator) {return 0;}
+	
+	/**
+	 * Curr state close dr.
+	 *
+	 * @param time the time
+	 * @param elevator the elevator
+	 * @return the int
+	 */
 	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
+	
+	/**
+	 * Curr state mv 1 flr.
+	 *
+	 * @param time the time
+	 * @param elevator the elevator
+	 * @return the int
+	 */
 	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
 	
+	
+	/**
+	 * Update floor queues. Also acts as a "tick" function
+	 * 
+	 * @param time time since simulation began
+	 */
+	public void updateFloorQueues(int time) {
+		if (!passQ.isEmpty()) {
+			if (passQ.peek().getTime() == time) {
+				Passengers p = passQ.poll();
+				floor[p.getOnFloor()].addPassenger(p, p.getDirection());
+			}
+		}
+	}
+	
+	public boolean queuesEmpty() {
+		for (Floor f : floors) {
+			if (!f.isEmpty()) {
+				return false;
+			}
+		}
+		return passQ.isEmpty();
+	}
+	
+	/**
+	 * Adds a passenger to the building's queue.
+	 *
+	 * @param time the time
+	 * @param numPass the num pass
+	 * @param fromFloor the from floor
+	 * @param toFloor the to floor
+	 * @param polite the polite
+	 * @param wait the wait
+	 */
 	public void addPassengersToQueue(int time, int numPass, int fromFloor, int toFloor, boolean polite, int wait) {
 		passQ.add(new Passengers(time, numPass, fromFloor, toFloor, polite, wait));
 	}

@@ -197,7 +197,7 @@ public class Building {
 	public void enableLogging() {
 		LOGGER.setLevel(Level.INFO);
 		for (Elevator el:elevators)
-			logElevatorConfig(el.getCapacity(),el.getTicksPerFloor(), el.getTicksDoorOpenClose(), el.getPassPerTick(), el.getCurrState());
+			logElevatorConfig(el.getCapacity(),el.getTicksPerFloor(), el.getTicksDoorOpenClose(), el.getPassPerTick(), el.getCurrState(), el.getCurrFloor());
 	}
 	
 	/**

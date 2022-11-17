@@ -19,56 +19,36 @@ import genericqueue.GenericQueue;
 // TODO: Auto-generated Javadoc
 public class Building {
 	
-	/**  Constants for direction. */
 	private final static int UP = 1;
-	
-	/** The Constant DOWN. */
 	private final static int DOWN = -1;
-	
 	/** The Constant LOGGER. */
 	private final static Logger LOGGER = Logger.getLogger(Building.class.getName());
-	
 	/**  The fh - used by LOGGER to write the log messages to a file. */
 	private FileHandler fh;
-	
 	/**  The fio for writing necessary files for data analysis. */
 	private MyFileIO fio;
-	
 	/**  File that will receive the information for data analysis. */
 	private File passDataFile;
-
 	/**  passSuccess holds all Passengers who arrived at their destination floor. */
 	private ArrayList<Passengers> passSuccess;
-	
 	/**  gaveUp holds all Passengers who gave up and did not use the elevator. */
 	private ArrayList<Passengers> gaveUp;
-	
 	/**  The number of floors - must be initialized in constructor. */
 	private final int NUM_FLOORS;
-	
 	/**  The size of the up/down queues on each floor. */
 	private final int FLOOR_QSIZE = 10;	
-	
-	/** passQ holds the time-ordered queue of Passengers, initialized at the start 
-	 *  of the simulation. At the end of the simulation, the queue will be empty.
-	 */
+	/** passQ holds the time-ordered queue of Passengers, initialized at the start of the simulation. At the end of the simulation, the queue will be empty. */
 	private GenericQueue<Passengers> passQ;
-
 	/**  The size of the queue to store Passengers at the start of the simulation. */
 	private final int PASSENGERS_QSIZE = 1000;	
-
 	/**  The number of elevators - must be initialized in constructor. */
 	private final int NUM_ELEVATORS;
-	
 	/** The floors. */
 	public Floor[] floors;
-	
 	/** The elevators. */
 	private Elevator[] elevators;
-	
 	/**  The Call Manager - it tracks calls for the elevator, analyzes them to answer questions and prioritize calls. */
 	private CallManager callMgr;
-	
 	// Add any fields that you think you might need here...
 	private static final String ELEVATOR_CONFIG_PATH = "ElevatorSimConfig.csv";
 	
@@ -111,112 +91,51 @@ public class Building {
 	}
 	
 	/**
-	 * Elevator state changed.
-	 *
-	 * @param e the e
-	 * @return true, if successful
+	 * Update call to the building (from the simulation controller)
+	 * 
+	 * @param timeSinceSimStart time since the beginning of the simulation
 	 */
+	public void update(int timeSinceSimStart) {
+		checkPassengerQueue(timeSinceSimStart);
+	}
+	
 	// TODO: Place all of your code HERE - state methods and helpers...
 	private boolean elevatorStateChanged(Elevator e) {return false;}
-	
-	/**
-	 * Curr state stop.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateStop(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state mv to flr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state open dr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state off ld.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateOffLd(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state board.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateBoard(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state close dr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state mv 1 flr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
 	
 	
 	/**
-	 * Update floor queues. Also acts as a "tick" function
+	 * Update floor queues
 	 * 
 	 * @param time time since simulation began
 	 */
-	public void updateFloorQueues(int time) {
+	private void checkPassengerQueue(int time) {
 		if (!passQ.isEmpty()) {
 			if (passQ.peek().getTime() == time) {
 				Passengers p = passQ.poll();
 				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
 			}
 		}
-	}
-	
-	
-	/**
-	 * Updates the state of the 
-	 */
-	public void update() {
-		
-	}
-	
+	}	
 	
 	/**
-	 * Sees whether all queues are empty.
+	 * Determines if there is nobody in the queues and the elevators are stopped
 	 *
-	 * @return true if all queues are empty
+	 * @return true if all queues are empty and elevators are stopped
 	 */
-	public boolean queuesEmpty() {
-		for (Floor f : floors) {
-			if (!f.isEmpty()) {
+	public boolean buildingEmpty() {
+		for (Floor f : floors)
+			if (!f.isEmpty())
 				return false;
-			}
-		}
+		for (Elevator e : elevators)
+			if (e.getCurrState() != Elevator.STOP)
+				return false;
 		return passQ.isEmpty();
 	}
 	

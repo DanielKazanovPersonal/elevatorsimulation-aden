@@ -1,0 +1,8 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,3,1,6,TRUE,1000,
+50,13,6,1,TRUE,1000,get on
+57,1,6,5,TRUE,1000,get on - last possible tick
+57,3,6,1,TRUE,1000,skipped - no room
+67,2,5,4,TRUE,1000,get on
+78,3,4,3,TRUE,1000,skipped - no room
+78,2,4,3,TRUE,1000,blocked

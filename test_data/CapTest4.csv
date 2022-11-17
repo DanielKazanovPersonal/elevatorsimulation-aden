@@ -1,0 +1,6 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,6,TRUE,1000,gets on
+50,7,6,1,TRUE,1000,gets on
+54,3,6,1,TRUE,1000,gets on
+55,3,6,1,TRUE,1000,gets on
+56,3,6,1,TRUE,1000,skipped - no room

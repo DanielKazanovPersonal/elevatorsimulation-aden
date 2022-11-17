@@ -1,0 +1,6 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,4,TRUE,1000,
+50,1,4,3,TRUE,1000,"Condition #5: same total # of calls, but by floor up should win…. end on floor 3"
+50,1,4,5,TRUE,1000,
+50,1,4,3,TRUE,1000,
+50,1,5,6,TRUE,1000,

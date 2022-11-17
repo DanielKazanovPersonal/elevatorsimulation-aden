@@ -1,0 +1,5 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait
+10,1,1,6,TRUE,1000
+50,1,6,4,TRUE,1000
+50,1,6,2,TRUE,1000, should change direction during close door after dropping off this passenger.
+55,1,3,4,TRUE,1000

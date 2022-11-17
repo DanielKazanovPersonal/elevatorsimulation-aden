@@ -1,0 +1,7 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,2,TRUE,1000,
+50,1,5,6,TRUE,1000,"testing call prioritzation - up > down, go to lowest up"
+50,1,3,5,TRUE,1000,
+50,1,1,2,TRUE,1000,
+50,1,5,3,TRUE,1000,
+50,1,4,1,TRUE,1000,

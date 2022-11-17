@@ -1,0 +1,4 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,3,TRUE,1000,
+50,1,1,4,TRUE,1000,"Test equal # calls, go with closest (up)"
+50,1,6,4,TRUE,1000,

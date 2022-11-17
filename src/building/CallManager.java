@@ -82,6 +82,20 @@ public class CallManager {
 	//      These are an example - you may find you don't need some of these, or you may need more...
 	
 	boolean callPending() {
+		findPendingCalls();
 		return !(upCallPending || downCallPending);
+	}
+	
+	void findPendingCalls() {
+		upCallPending = false;
+		downCallPending = false;
+		for (int i = 0; i < floors.length; i++) {
+			upCalls[i] = floors[i].peekFloorQueue(UP) != null;
+			downCalls[i] = floors[i].peekFloorQueue(DOWN) != null;
+			if (upCalls[i])
+				upCallPending = true;
+			if (downCalls[i])
+				downCallPending = true;
+		}
 	}
 }

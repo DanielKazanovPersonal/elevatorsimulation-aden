@@ -45,6 +45,10 @@ public class Floor {
 		return false;
 	}
 
+	public Passengers peekFloorQueue(int dir) {
+		return null;
+	}
+
 	/**
 	 * Queue string. This method provides visibility into the queue
 	 * contents as a string. What exactly you would want to visualize 

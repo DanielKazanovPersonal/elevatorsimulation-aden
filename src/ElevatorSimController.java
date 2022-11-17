@@ -102,6 +102,14 @@ public class ElevatorSimController {
 		return totalTicks;
 	}
 
+	public int getCurrentFloor() {
+		return 0; // HERE ------ IF WE DO ELEVATOR LIST IN BUILDING, THIS METHOD NEEDS TO TAKE IN WHICH ELEVATOR IS BEING USED
+	}
+
+	public String getTestName() {
+		return ""; // NEED TO IMPLEMENT / ACTUALLY RETURN TEST
+	}
+
 	/**
 	 * Config simulation. Reads the filename, and parses the
 	 * parameters.

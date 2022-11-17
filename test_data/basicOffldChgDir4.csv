@@ -1,0 +1,5 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait
+10,1,1,6,TRUE,1000
+50,1,6,3,TRUE,1000
+55,1,3,5,TRUE,1000, change dir after offload..
+55,1,4,5,TRUE,1000, 

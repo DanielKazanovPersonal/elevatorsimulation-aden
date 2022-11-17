@@ -1,0 +1,4 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait
+10,1,1,4,TRUE,1000
+15,1,4,3,TRUE,1000,do not change dir here
+15,1,5,3,TRUE,1000,do go to 5 and change dir

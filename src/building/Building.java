@@ -101,7 +101,17 @@ public class Building {
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
 	private boolean elevatorStateChanged(Elevator e) {return false;}
-	private int currStateStop(int time, Elevator elevator) {return 0;}
+	private int currStateStop(int time, Elevator elevator) {
+		if (!callMgr.callPending())
+			return Elevator.STOP;
+		else if (elevator.getCurrFloor() == callMgr.prioritizePassengerCalls(elevator.getCurrFloor()).getOnFloor())
+			return Elevator.OPENDR;
+		else {
+//			elevator.setDirection();
+			return 0;
+		}
+	}
+	
 	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
 	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
 	private int currStateOffLd(int time, Elevator elevator) {return 0;}

@@ -86,7 +86,7 @@ public class CallManager {
 		return !(upCallPending || downCallPending);
 	}
 	
-	void findPendingCalls() {
+	private void findPendingCalls() {
 		upCallPending = false;
 		downCallPending = false;
 		for (int i = 0; i < floors.length; i++) {

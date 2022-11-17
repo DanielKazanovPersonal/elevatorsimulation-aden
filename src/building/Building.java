@@ -90,13 +90,13 @@ public class Building {
 		}
 	}
 	
-	/**
-	 * Update call to the building (from the simulation controller)
-	 * 
-	 * @param timeSinceSimStart time since the beginning of the simulation
-	 */
-	public void update(int timeSinceSimStart) {
-		checkPassengerQueue(timeSinceSimStart);
+	public void updateFloorQueues(int timeSinceSimStart) {
+		if (!passQ.isEmpty()) {
+			if (passQ.peek().getTime() == timeSinceSimStart) {
+				Passengers p = passQ.poll();
+				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
+			}
+		}
 	}
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
@@ -108,28 +108,8 @@ public class Building {
 	private int currStateBoard(int time, Elevator elevator) {return 0;}
 	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
 	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
-	
-	
-	/**
-	 * Update floor queues
-	 * 
-	 * @param time time since simulation began
-	 */
-	private void checkPassengerQueue(int time) {
-		if (!passQ.isEmpty()) {
-			if (passQ.peek().getTime() == time) {
-				Passengers p = passQ.poll();
-				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
-			}
-		}
-	}	
-	
-	/**
-	 * Determines if there is nobody in the queues and the elevators are stopped
-	 *
-	 * @return true if all queues are empty and elevators are stopped
-	 */
-	public boolean buildingEmpty() {
+
+	public boolean endSim() {
 		for (Floor f : floors)
 			if (!f.isEmpty())
 				return false;

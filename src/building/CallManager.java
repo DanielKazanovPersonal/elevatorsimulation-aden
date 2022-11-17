@@ -87,6 +87,15 @@ public class CallManager {
 	}
 	
 	void findPendingCalls() {
-		
+		upCallPending = false;
+		downCallPending = false;
+		for (int i = 0; i < floors.length; i++) {
+			upCalls[i] = floors[i].peekFloorQueue(UP) != null;
+			downCalls[i] = floors[i].peekFloorQueue(DOWN) != null;
+			if (upCalls[i])
+				upCallPending = true;
+			if (downCalls[i])
+				downCallPending = true;
+		}
 	}
 }

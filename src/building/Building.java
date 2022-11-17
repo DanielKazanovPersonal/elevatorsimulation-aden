@@ -91,87 +91,31 @@ public class Building {
 	}
 	
 	/**
-	 * Elevator state changed.
-	 *
-	 * @param e the e
-	 * @return true, if successful
+	 * Update call to the building (from the simulation controller)
+	 * 
+	 * @param timeSinceSimStart time since the beginning of the simulation
 	 */
-	// TODO: Place all of your code HERE - state methods and helpers...
-	private boolean elevatorStateChanged(Elevator e) {return false;}
-	
-	/**
-	 * Curr state stop.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
-	private int currStateStop(int time, Elevator elevator) {
-//		callMgr
-		return 0;
+	public void update(int timeSinceSimStart) {
+		checkPassengerQueue(timeSinceSimStart);
 	}
 	
-	/**
-	 * Curr state mv to flr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
+	// TODO: Place all of your code HERE - state methods and helpers...
+	private boolean elevatorStateChanged(Elevator e) {return false;}
+	private int currStateStop(int time, Elevator elevator) {return 0;}
 	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state open dr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state off ld.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateOffLd(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state board.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateBoard(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state close dr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
-	
-	/**
-	 * Curr state mv 1 flr.
-	 *
-	 * @param time the time
-	 * @param elevator the elevator
-	 * @return the int
-	 */
 	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
 	
 	
 	/**
-	 * Update floor queues. Also acts as a "tick" function
+	 * Update floor queues
 	 * 
 	 * @param time time since simulation began
 	 */
-	public void updateFloorQueues(int time) {
+	private void checkPassengerQueue(int time) {
 		if (!passQ.isEmpty()) {
 			if (passQ.peek().getTime() == time) {
 				Passengers p = passQ.poll();
@@ -181,16 +125,17 @@ public class Building {
 	}	
 	
 	/**
-	 * Sees whether all queues are empty.
+	 * Determines if there is nobody in the queues and the elevators are stopped
 	 *
-	 * @return true if all queues are empty
+	 * @return true if all queues are empty and elevators are stopped
 	 */
-	public boolean queuesEmpty() {
-		for (Floor f : floors) {
-			if (!f.isEmpty()) {
+	public boolean buildingEmpty() {
+		for (Floor f : floors)
+			if (!f.isEmpty())
 				return false;
-			}
-		}
+		for (Elevator e : elevators)
+			if (e.getCurrState() != Elevator.STOP)
+				return false;
 		return passQ.isEmpty();
 	}
 	

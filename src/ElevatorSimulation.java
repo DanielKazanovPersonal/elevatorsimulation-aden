@@ -1,6 +1,11 @@
 
 import building.Elevator;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -47,7 +52,24 @@ public class ElevatorSimulation extends Application {
 
 		//TODO: Complete your GUI, including adding any helper methods.
 		//      Meet the 30 line limit...
+		setUp(primaryStage);
+	}
+	
+	public void setUp (Stage primaryStage) {
+		BorderPane borderPane = new BorderPane();
+		Pane pane = new Pane();
+		HBox hbox = new HBox(3);
+		Scene scene = new Scene(borderPane, 500, 500);
 		
+		Button run = new Button("Run");
+		Button step = new Button("Step: ");
+		Button log = new Button("Log");
+		
+	    hbox.getChildren().addAll(run, step, log);
+	    borderPane.setCenter(pane);
+		borderPane.setBottom(hbox);
+		
+		primaryStage.setScene(scene);
 	}
 	
 	/**

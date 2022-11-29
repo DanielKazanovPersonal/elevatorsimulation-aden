@@ -115,8 +115,19 @@ public class Building {
 		}
 	}
 	
-	//TODO
-	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
+	private int currStateMvToFlr(int time, Elevator elevator) {
+		int startFloor = elevator.getPrevFloor();
+		int endFloor = elevator.getCurrFloor();
+		int ticksPerFloor = elevator.getTicksPerFloor();
+		int timeInState = elevator.getTimeInState();
+		
+		elevator.setTimeInState(timeInState + 1);
+		
+		if (timeInState + 1 == Math.abs(ticksPerFloor * (endFloor - startFloor)))
+			return Elevator.OPENDR;
+		else
+			return Elevator.MVTOFLR;
+	}
 	
 	private int currStateOpenDr(int time, Elevator elevator) {
 		int doorState = elevator.getDoorState();
@@ -149,15 +160,20 @@ public class Building {
 			return Elevator.OPENDR;
 		else if (doorState - 1 > 0)
 			return Elevator.CLOSEDR;
-		else if (elevator.getPrevState() == Elevator.STOP)
-			return Elevator.MVTOFLR;
-		else
-			return Elevator.MV1FLR;
+		else 
+			return figureOutWhereToGoNext(elevator);
 	}
 	
 	//TODO
 	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
 
+	private int figureOutWhereToGoNext(Elevator e) {
+		if (e.getPrevState() == Elevator.STOP)
+			return Elevator.MVTOFLR;
+		else
+			return Elevator.MV1FLR;
+	}
+	
 	public boolean endSim() {
 		for (Floor f : floors)
 			if (!f.isEmpty())

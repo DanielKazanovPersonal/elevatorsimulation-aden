@@ -96,4 +96,8 @@ public class CallManager {
 	boolean callOnFloor(int floor, int elevatorDirection) {
 		return (elevatorDirection == UP)? upCalls[floor] : downCalls[floor];
 	}
+	
+	boolean callerIsPolite(int floor, int elevatorDirection) {
+		return floors[floor].peekFloorQueue((elevatorDirection == UP)? UP : DOWN).getPolite();
+	}
 }

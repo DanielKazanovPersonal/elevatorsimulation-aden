@@ -115,4 +115,85 @@ public class Elevator {
 	public void updateCurrState(int newState) {
 		currState = newState;
 	}
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+	public void setTicksPerFloor(int ticksPerFloor) {
+		this.ticksPerFloor = ticksPerFloor;
+	}
+	public void setTicksDoorOpenClose(int ticksDoorOpenClose) {
+		this.ticksDoorOpenClose = ticksDoorOpenClose;
+	}
+	public void setPassPerTick(int passPerTick) {
+		this.passPerTick = passPerTick;
+	}
+	public void setCurrState(int currState) {
+		this.currState = currState;
+	}
+	public void setPrevState(int prevState) {
+		this.prevState = prevState;
+	}
+	public void setPrevFloor(int prevFloor) {
+		this.prevFloor = prevFloor;
+	}
+	public void setCurrFloor(int currFloor) {
+		this.currFloor = currFloor;
+	}
+
+	public int getDirection() {
+		return this.direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
+	public int getTimeInState() {
+		return this.timeInState;
+	}
+
+	public void setTimeInState(int timeInState) {
+		this.timeInState = timeInState;
+	}
+
+	public int getDoorState() {
+		return this.doorState;
+	}
+
+	public void setDoorState(int doorState) {
+		this.doorState = doorState;
+	}
+
+	public int getPassengers() {
+		return this.passengers;
+	}
+
+	public void setPassengers(int passengers) {
+		this.passengers = passengers;
+	}
+
+	public ArrayList<Passengers>[] getPassByFloor() {
+		return this.passByFloor;
+	}
+
+	public void setPassByFloor(ArrayList<Passengers>[] passByFloor) {
+		this.passByFloor = passByFloor;
+	}
+
+	public int getMoveToFloor() {
+		return this.moveToFloor;
+	}
+
+	public void setMoveToFloor(int moveToFloor) {
+		this.moveToFloor = moveToFloor;
+	}
+
+	public int getPostMoveToFloorDir() {
+		return this.postMoveToFloorDir;
+	}
+
+	public void setPostMoveToFloorDir(int postMoveToFloorDir) {
+		this.postMoveToFloorDir = postMoveToFloorDir;
+	}
+
 }

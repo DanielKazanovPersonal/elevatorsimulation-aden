@@ -33,10 +33,16 @@ public class Floor {
 	// account for this in your methods.
 
 	public boolean passengersGoingUp() {
-		return false;
+		if (up.isEmpty()) {
+			return false;
+		}
+		return true;
 	}
 
 	public boolean passengersGoingDown() {
+		if (down.isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 

@@ -75,7 +75,10 @@ public class CallManager {
 	 * @return the passengers
 	 */
 	Passengers prioritizePassengerCalls(int floor) {
-		//TODO: Write this method based upon prioritization from STOP...
+		updateCallStatus();
+
+		
+		
 		return null;
 	}
 
@@ -91,6 +94,10 @@ public class CallManager {
 	boolean callPending() {
 		updateCallStatus();
 		return !(upCallPending || downCallPending);
+	}
+	
+	boolean callOnFloor(int floor) {
+		return upCalls[floor] || downCalls[floor];
 	}
 	
 	boolean callOnFloor(int floor, int elevatorDirection) {

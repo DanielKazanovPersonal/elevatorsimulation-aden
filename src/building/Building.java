@@ -105,11 +105,18 @@ public class Building {
 	}
 	
 	private int currStateStop(int time, Elevator elevator) {
-		if (!callMgr.callPending())
+		int currFloor = elevator.getCurrFloor();
+		if (!callMgr.callPending()) {
 			return Elevator.STOP;
-		else if (elevator.getCurrFloor() == callMgr.prioritizePassengerCalls(elevator.getCurrFloor()).getOnFloor())
+		} else if (callMgr.callOnFloor(currFloor)) {
+			//determine direction
+			if (callMgr.callOnFloor(currFloor, UP) && callMgr.callOnFloor(currFloor, DOWN)) {
+				
+			} else {
+				elevator.setDirection(callMgr.callOnFloor(currFloor, UP)? UP : DOWN);
+			}
 			return Elevator.OPENDR;
-		else {
+		} else {
 //			elevator.setDirection();
 			return 0;
 		}
@@ -150,7 +157,6 @@ public class Building {
 	
 	private int currStateCloseDr(int time, Elevator elevator) {
 		int doorState = elevator.getDoorState();
-		int maxDoorTicks = elevator.getTicksDoorOpenClose();
 		int currFloor = elevator.getCurrFloor();
 		int dir = elevator.getDirection();
 

@@ -115,16 +115,47 @@ public class Building {
 		}
 	}
 	
+	//TODO
 	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
 	
 	private int currStateOpenDr(int time, Elevator elevator) {
-		 
-		return 0;
+		int doorState = elevator.getDoorState();
+		int maxDoorTicks = elevator.getTicksDoorOpenClose();
+		
+		elevator.setDoorState(doorState + 1);
+		
+		if (doorState + 1 < maxDoorTicks) {
+			return Elevator.OPENDR;
+		} else {
+			return Elevator.BOARD;
+		}
 	}
 	
+	//TODO
 	private int currStateOffLd(int time, Elevator elevator) {return 0;}
+	
+	//TODO
 	private int currStateBoard(int time, Elevator elevator) {return 0;}
-	private int currStateCloseDr(int time, Elevator elevator) {return 0;}
+	
+	private int currStateCloseDr(int time, Elevator elevator) {
+		int doorState = elevator.getDoorState();
+		int maxDoorTicks = elevator.getTicksDoorOpenClose();
+		int currFloor = elevator.getCurrFloor();
+		int dir = elevator.getDirection();
+
+		elevator.setDoorState(doorState - 1);
+			
+		if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callerIsPolite(currFloor, dir))
+			return Elevator.OPENDR;
+		else if (doorState - 1 > 0)
+			return Elevator.CLOSEDR;
+		else if (elevator.getPrevState() == Elevator.STOP)
+			return Elevator.MVTOFLR;
+		else
+			return Elevator.MV1FLR;
+	}
+	
+	//TODO
 	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
 
 	public boolean endSim() {

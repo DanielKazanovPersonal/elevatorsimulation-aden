@@ -58,13 +58,20 @@ public class CallManager {
 	 * recalculate the values of specific fields when needed.
 	 */
 	void updateCallStatus() {
-		//TODO: Write this method if you choose to implement it...
+		upCallPending = false;
+		downCallPending = false;
+		for (int i = 0; i < floors.length; i++) {
+			upCalls[i] = floors[i].passengersGoingUp();
+			downCalls[i] = floors[i].passengersGoingDown();
+			if (upCalls[i]) upCallPending = true;
+			if (downCalls[i]) downCallPending = true;
+		}
 	}
 
 	/**
 	 * Prioritize passenger calls from STOP STATE
 	 *
-	 * @param floor the floor
+	 * @param floor the floor the elevator is on (?)
 	 * @return the passengers
 	 */
 	Passengers prioritizePassengerCalls(int floor) {
@@ -82,20 +89,11 @@ public class CallManager {
 	//      These are an example - you may find you don't need some of these, or you may need more...
 	
 	boolean callPending() {
-		findPendingCalls();
+		updateCallStatus();
 		return !(upCallPending || downCallPending);
 	}
 	
-	private void findPendingCalls() {
-		upCallPending = false;
-		downCallPending = false;
-		for (int i = 0; i < floors.length; i++) {
-			upCalls[i] = floors[i].peekFloorQueue(UP) != null;
-			downCalls[i] = floors[i].peekFloorQueue(DOWN) != null;
-			if (upCalls[i])
-				upCallPending = true;
-			if (downCalls[i])
-				downCallPending = true;
-		}
+	boolean callOnFloor(int floor, int elevatorDirection) {
+		return (elevatorDirection == UP)? upCalls[floor] : downCalls[floor];
 	}
 }

@@ -100,7 +100,10 @@ public class Building {
 	}
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
-	private boolean elevatorStateChanged(Elevator e) {return false;}
+	private boolean elevatorStateChanged(Elevator e) {
+		return e.getCurrState() == e.getPrevState();
+	}
+	
 	private int currStateStop(int time, Elevator elevator) {
 		if (!callMgr.callPending())
 			return Elevator.STOP;
@@ -113,7 +116,12 @@ public class Building {
 	}
 	
 	private int currStateMvToFlr(int time, Elevator elevator) {return 0;}
-	private int currStateOpenDr(int time, Elevator elevator) {return 0;}
+	
+	private int currStateOpenDr(int time, Elevator elevator) {
+		 
+		return 0;
+	}
+	
 	private int currStateOffLd(int time, Elevator elevator) {return 0;}
 	private int currStateBoard(int time, Elevator elevator) {return 0;}
 	private int currStateCloseDr(int time, Elevator elevator) {return 0;}

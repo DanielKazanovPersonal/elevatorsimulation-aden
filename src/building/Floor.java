@@ -31,7 +31,15 @@ public class Floor {
 	// You probably will only be accessing one queue at any
 	// given time based upon direction - you could choose to 
 	// account for this in your methods.
-	
+
+	public boolean passengersGoingUp() {
+		return false;
+	}
+
+	public boolean passengersGoingDown() {
+		return true;
+	}
+
 	public void addPassenger(Passengers p, int direction) { // can always come back to change return value
 		if (direction == UP) {
 			up.add(p);

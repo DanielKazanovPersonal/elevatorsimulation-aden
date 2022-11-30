@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -27,6 +29,10 @@ public class ElevatorSimulation extends Application {
 	private final int CLOSEDR = Elevator.CLOSEDR;
 	private final int MV1FLR = Elevator.MV1FLR;
 
+	/** */
+	private final int WIDTH = 700;
+	private final int HEIGHT = 700;
+	
 	/**
 	 * Instantiates a new elevator simulation.
 	 */
@@ -49,27 +55,53 @@ public class ElevatorSimulation extends Application {
 		// appear in the Title of the window!!
 		primaryStage.setTitle("Elevator Simulation - "+ controller.getTestName());
 		primaryStage.show();
+		primaryStage.setResizable(false);
 
 		//TODO: Complete your GUI, including adding any helper methods.
 		//      Meet the 30 line limit...
-		setUp(primaryStage);
+		mainSetup(primaryStage);
 	}
 	
-	public void setUp (Stage primaryStage) {
+	public void mainSetup(Stage primaryStage) {
 		BorderPane borderPane = new BorderPane();
 		Pane pane = new Pane();
 		HBox hbox = new HBox(3);
-		Scene scene = new Scene(borderPane, 500, 500);
+		Scene scene = new Scene(borderPane, WIDTH, HEIGHT);
 		
-		Button run = new Button("Run");
-		Button step = new Button("Step: ");
-		Button log = new Button("Log");
+		buttonSetup(hbox);
 		
-	    hbox.getChildren().addAll(run, step, log);
 	    borderPane.setCenter(pane);
 		borderPane.setBottom(hbox);
-		
 		primaryStage.setScene(scene);
+		
+		floorSetup(pane);
+	}
+	
+	public void buttonSetup(HBox hbox) {
+		Font font = new Font(25);
+		
+		Button run = new Button("Run");
+		run.setFont(font);
+		run.setPrefWidth(WIDTH / 3);
+		run.setPrefHeight(HEIGHT / 9);
+		
+		Button step = new Button("Step: ");
+		step.setFont(font);
+		step.setPrefWidth(WIDTH / 3);
+		step.setPrefHeight(HEIGHT / 9);
+		
+		Button log = new Button("Log");
+		log.setFont(font);
+		log.setPrefWidth(WIDTH / 3);
+		log.setPrefHeight(HEIGHT / 9);
+		
+	    hbox.getChildren().addAll(run, step, log);
+	}
+	
+	public void floorSetup(Pane pane) {
+		for (int i = 0; i < NUM_FLOORS; i++) {
+			Line floor1 = new Line();
+		}
 	}
 	
 	/**

@@ -154,6 +154,22 @@ public class Building {
 	}
 	
 	private int currStateBoard(int time, Elevator elevator) {
+		int maxCap = elevator.getCapacity();
+		int passengersOnElevator = elevator.getPassengers();
+		int floor = elevator.getCurrFloor();
+		int timeInState = elevator.getTimeInState();
+		int boardedPassengers = elevator.getBoardedPassengers();
+		int passengersPerTick = elevator.getPassPerTick();
+		int dir = elevator.getDirection();
+		
+		
+		if (floors[floor].isEmpty(dir));
+		
+		if (Math.ceil((double) boardedPassengers / passengersPerTick) == timeInState) {
+			
+		}
+		
+		
 		elevator.addPassengers(null);
 		return 0;
 	}
@@ -194,6 +210,7 @@ public class Building {
 		int priorityFloor = callMgr.prioritizePassengerCalls(eFloor).getOnFloor();
 		if (e.getPrevState() == Elevator.STOP) {
 			e.setDirection((priorityFloor >= eFloor)? UP : DOWN);
+			e.setPostMoveToFloorDir(callMgr.prioritizePassengerCalls(eFloor).getDestFloor() > priorityFloor? UP : DOWN);
 			if (priorityFloor == eFloor) return Elevator.OPENDR;
 			return Elevator.MVTOFLR;
 		} else {

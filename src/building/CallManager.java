@@ -93,6 +93,10 @@ public class CallManager {
 	//
 	//      These are an example - you may find you don't need some of these, or you may need more...
 	
+	void changeDirection() {
+		
+	}
+	
 	boolean callPending() {
 		updateCallStatus();
 		return !(upCallPending || downCallPending);

@@ -153,7 +153,10 @@ public class Building {
 		}
 	}
 	
-	private int currStateBoard(int time, Elevator elevator) {return 0;}
+	private int currStateBoard(int time, Elevator elevator) {
+		elevator.addPassengers(null);
+		return 0;
+	}
 	
 	private int currStateCloseDr(int time, Elevator elevator) {
 		int doorState = elevator.getDoorState();
@@ -173,7 +176,18 @@ public class Building {
 		}
 	}
 	
-	private int currStateMv1Flr(int time, Elevator elevator) {return 0;}
+	private int currStateMv1Flr(int time, Elevator elevator) {
+		if (elevator.getTimeInState() % elevator.getTicksPerFloor() == 0) {
+			elevator.setCurrFloor(elevator.getCurrFloor() + 1);
+			
+			ArrayList<Passengers> passengers = elevator.getAllPassengers();
+			for (Passengers p : passengers)
+				if (p.getDestFloor() == elevator.getCurrFloor()) return Elevator.OPENDR;
+			if (callMgr.callOnFloor(elevator.getCurrFloor(), elevator.getDirection()))
+				return Elevator.OPENDR;
+		}
+		return Elevator.MV1FLR;
+	}
 
 	private int figureOutWhereToGoNext(Elevator e) {
 		int eFloor = e.getCurrFloor();
@@ -195,16 +209,19 @@ public class Building {
 		ArrayList<Passengers> passengers = e.getAllPassengers();
 		
 		if (e.getDirection() == UP) {
-			for (Passengers p : passengers) {
-				if (p.getDestFloor() > e.getCurrFloor()) {
+			for (Passengers p : passengers)
+				if (p.getDestFloor() > e.getCurrFloor())
 					return UP;
-				}
-			}
-			for (int i = 0; i < floors.length; i++) {
-				
-			}
+			for (int i = e.getCurrFloor(); i < floors.length; i++)
+				if (callMgr.callOnFloor(i, UP)) return UP;
+			return DOWN;
 		} else {
-			
+			for (Passengers p : passengers)
+				if (p.getDestFloor() < e.getCurrFloor())
+					return DOWN;
+			for (int i = 0; i < e.getCurrFloor(); i++)
+				if (callMgr.callOnFloor(i, DOWN)) return DOWN;
+			return UP;
 		}
 	}
 	

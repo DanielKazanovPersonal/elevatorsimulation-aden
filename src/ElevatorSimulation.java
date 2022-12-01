@@ -8,6 +8,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -29,7 +31,7 @@ public class ElevatorSimulation extends Application {
 	private final int CLOSEDR = Elevator.CLOSEDR;
 	private final int MV1FLR = Elevator.MV1FLR;
 
-	/** */
+	/** Danie's created variables */
 	private final int WIDTH = 700;
 	private final int HEIGHT = 700;
 	
@@ -65,19 +67,19 @@ public class ElevatorSimulation extends Application {
 	public void mainSetup(Stage primaryStage) {
 		BorderPane borderPane = new BorderPane();
 		Pane pane = new Pane();
-		HBox hbox = new HBox(3);
+		HBox hBox = new HBox(3);
 		Scene scene = new Scene(borderPane, WIDTH, HEIGHT);
 		
-		buttonSetup(hbox);
-		
 	    borderPane.setCenter(pane);
-		borderPane.setBottom(hbox);
+		borderPane.setBottom(hBox);
 		primaryStage.setScene(scene);
 		
+		buttonSetup(hBox);
 		floorSetup(pane);
+		elevatorSetup(pane);
 	}
 	
-	public void buttonSetup(HBox hbox) {
+	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
 		
 		Button run = new Button("Run");
@@ -95,14 +97,34 @@ public class ElevatorSimulation extends Application {
 		log.setPrefWidth(WIDTH / 3);
 		log.setPrefHeight(HEIGHT / 9);
 		
-	    hbox.getChildren().addAll(run, step, log);
+	    hBox.getChildren().addAll(run, step, log);
 	}
 	
 	public void floorSetup(Pane pane) {
+		Line[] lineArr = new Line[NUM_FLOORS];
+		Text[] labelArr = new Text[NUM_FLOORS];
+		int yLocation = HEIGHT - (HEIGHT / 8);
+		
 		for (int i = 0; i < NUM_FLOORS; i++) {
-			Line floor1 = new Line();
+			lineArr[i] = new Line();
+			labelArr[i] = new Text(WIDTH / 30, yLocation, i + 1 + "");
+			
+			lineArr[i].setStrokeWidth(15);
+			lineArr[i].setStartX(WIDTH / 3);
+			lineArr[i].setEndX(WIDTH);
+			lineArr[i].setStartY(yLocation);
+			lineArr[i].setEndY(yLocation);
+			labelArr[i].setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
+			
+			yLocation -= (HEIGHT - 75) / NUM_FLOORS;
+			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
 	}
+	
+	public void elevatorSetup(Pane pane) {
+		
+	}
+	
 	
 	/**
 	 * The main method.

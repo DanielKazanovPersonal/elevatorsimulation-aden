@@ -117,8 +117,8 @@ public class Building {
 		int endFloor = elevator.getCurrFloor();
 		int ticksPerFloor = elevator.getTicksPerFloor();
 		int timeInState = elevator.getTimeInState();
-		
-		elevator.setTimeInState(timeInState + 1);
+
+		elevator.incrementTicks();
 		
 		if (timeInState + 1 == Math.abs(ticksPerFloor * (endFloor - startFloor)))
 			return Elevator.OPENDR;
@@ -160,14 +160,22 @@ public class Building {
 		int timeInState = elevator.getTimeInState();
 		int boardedPassengers = elevator.getBoardedPassengers();
 		int passengersPerTick = elevator.getPassPerTick();
-		int dir = elevator.getDirection();
+		int dir = determineDirection(elevator);
 		
+		
+		elevator.incrementTicks();
+		
+		
+		if (Math.ceil((double) boardedPassengers / passengersPerTick) < timeInState) {
+			if (!floors[floor].isEmpty(dir)) {
+				if (elevator.getCapacity() > elevator.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
+					boardedPassengers += floors[floor].peekFloorQueue(dir).getNumPass();
+					elevator.add(floors[floor].getFirstPassInQ(dir));
+				}
+			}
+		}
 		
 		if (floors[floor].isEmpty(dir));
-		
-		if (Math.ceil((double) boardedPassengers / passengersPerTick) == timeInState) {
-			
-		}
 		
 		
 		elevator.addPassengers(null);

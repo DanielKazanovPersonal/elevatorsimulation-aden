@@ -3,10 +3,13 @@ import building.Elevator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -31,9 +34,14 @@ public class ElevatorSimulation extends Application {
 	private final int CLOSEDR = Elevator.CLOSEDR;
 	private final int MV1FLR = Elevator.MV1FLR;
 
-	/** Danie's created variables */
-	private final int WIDTH = 700;
-	private final int HEIGHT = 700;
+	/** Daniel's created variables */
+	private final int PANE_WIDTH = 700;
+	private final int PANE_HEIGHT = 700;
+	
+	private final int ELEVATOR_WIDTH = 90;
+	private final int ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
+	private int ELEVATOR_X_POSITION = (PANE_WIDTH / 7);	
+	private int ELEVATOR_Y_POSITION = (PANE_HEIGHT / 2);
 	
 	/**
 	 * Instantiates a new elevator simulation.
@@ -68,7 +76,7 @@ public class ElevatorSimulation extends Application {
 		BorderPane borderPane = new BorderPane();
 		Pane pane = new Pane();
 		HBox hBox = new HBox(3);
-		Scene scene = new Scene(borderPane, WIDTH, HEIGHT);
+		Scene scene = new Scene(borderPane, PANE_WIDTH, PANE_HEIGHT);
 		
 	    borderPane.setCenter(pane);
 		borderPane.setBottom(hBox);
@@ -76,7 +84,10 @@ public class ElevatorSimulation extends Application {
 		
 		buttonSetup(hBox);
 		floorSetup(pane);
-		elevatorSetup(pane);
+		Rectangle body = elevatorSetup(pane);
+		
+		// TODO: change line below
+		elevatorMoveToFloor(pane, 6, body);
 	}
 	
 	public void buttonSetup(HBox hBox) {
@@ -84,18 +95,20 @@ public class ElevatorSimulation extends Application {
 		
 		Button run = new Button("Run");
 		run.setFont(font);
-		run.setPrefWidth(WIDTH / 3);
-		run.setPrefHeight(HEIGHT / 9);
+		run.setPrefWidth(PANE_WIDTH / 3);
+		run.setPrefHeight(PANE_HEIGHT / 9);
+		run.setOnAction(e -> controller.stepSim());
 		
-		Button step = new Button("Step: ");
+		TextField step = new TextField("Step: " + time);
 		step.setFont(font);
-		step.setPrefWidth(WIDTH / 3);
-		step.setPrefHeight(HEIGHT / 9);
+		step.setPrefWidth(PANE_WIDTH / 3);
+		step.setPrefHeight(PANE_HEIGHT / 9);
 		
 		Button log = new Button("Log");
 		log.setFont(font);
-		log.setPrefWidth(WIDTH / 3);
-		log.setPrefHeight(HEIGHT / 9);
+		log.setPrefWidth(PANE_WIDTH / 3);
+		log.setPrefHeight(PANE_HEIGHT / 9);
+		log.setOnAction(e -> controller.enableLogging());
 		
 	    hBox.getChildren().addAll(run, step, log);
 	}
@@ -103,28 +116,63 @@ public class ElevatorSimulation extends Application {
 	public void floorSetup(Pane pane) {
 		Line[] lineArr = new Line[NUM_FLOORS];
 		Text[] labelArr = new Text[NUM_FLOORS];
-		int yLocation = HEIGHT - (HEIGHT / 8);
+		int yLocation = PANE_HEIGHT - (PANE_HEIGHT / 8);
 		
 		for (int i = 0; i < NUM_FLOORS; i++) {
 			lineArr[i] = new Line();
-			labelArr[i] = new Text(WIDTH / 30, yLocation, i + 1 + "");
+			labelArr[i] = new Text(PANE_WIDTH / 30, yLocation, i + 1 + "");
 			
 			lineArr[i].setStrokeWidth(15);
-			lineArr[i].setStartX(WIDTH / 3);
-			lineArr[i].setEndX(WIDTH);
+			lineArr[i].setStartX(PANE_WIDTH / 3);
+			lineArr[i].setEndX(PANE_WIDTH);
 			lineArr[i].setStartY(yLocation);
 			lineArr[i].setEndY(yLocation);
 			labelArr[i].setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
 			
-			yLocation -= (HEIGHT - 75) / NUM_FLOORS;
+			yLocation -= (PANE_HEIGHT - 75) / NUM_FLOORS;
 			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
 	}
 	
-	public void elevatorSetup(Pane pane) {
+	//TODO: implement to work with multiple elevators
+	public Rectangle elevatorSetup(Pane pane) {
+		Rectangle body = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
+		Line line = new Line();
+		line.setStrokeWidth(3);
+		line.setStroke(Color.LIGHTGRAY);
+		line.setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+		line.setEndX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+		line.setStartY(ELEVATOR_Y_POSITION);
+		line.setEndY(ELEVATOR_Y_POSITION + ELEVATOR_HEIGHT);
+		
+		Text passengers = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
+		passengers.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
+		
+		pane.getChildren().addAll(body, line, passengers);
+		return body;
+	}
+	
+	// TODO: Write this method
+	public void elevatorOpenDoors() {
 		
 	}
 	
+	// TODO: Not working, need to implement correctly
+	public void elevatorMoveToFloor(Pane pane, int floor, Rectangle body) {
+		for (int i = (int)body.getY(); i < (PANE_HEIGHT / floor); i++) {
+			body.setY(body.getY() + i);
+			pane.getChildren().remove(body);
+			pane.getChildren().add(body);
+		}
+	}
+	
+	public void passengersGroupSetup(Pane pane) {
+		
+	}
+	
+	public void passengersGroupMove(Pane pane) {
+		
+	}
 	
 	/**
 	 * The main method.

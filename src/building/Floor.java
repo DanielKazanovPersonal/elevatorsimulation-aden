@@ -46,6 +46,15 @@ public class Floor {
 		}
 	}
 
+	// gets and removes first passenger in q
+	public Passengers removeFirstPassInQ(int direction) {
+
+		if (direction > 0) {
+			return up.remove();
+		} else {
+			return down.remove();
+		}
+	}
 
 	public void addPassenger(Passengers p, int direction) { // can always come back to change return value
 		if (direction == UP) {
@@ -60,8 +69,13 @@ public class Floor {
 		return false;
 	}
 
+	// same as removeFirstPassInQ wo the removal
 	public Passengers peekFloorQueue(int dir) {
-		return null;
+		if (dir > 0) {
+			return up.element();
+		} else {
+			return down.element();
+		}
 	}
 
 	/**

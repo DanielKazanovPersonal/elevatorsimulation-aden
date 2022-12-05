@@ -100,6 +100,10 @@ public class Elevator {
 		return allPass;
 	}
 
+	public void incrementTicks() {
+		timeInState++;
+	}
+
 	public void addPassengers(Passengers p) {
 		for (int i = 0; i < passByFloor.length; i++) {
 			if (passByFloor[i].get(0).getDestFloor() == p.getDestFloor()) {

@@ -32,19 +32,20 @@ public class Floor {
 	// given time based upon direction - you could choose to 
 	// account for this in your methods.
 
-	public boolean passengersGoingUp() {
-		if (up.isEmpty()) {
-			return false;
+	public boolean passGoingInDir(int dir) {
+		if (dir > 0) {
+			if (up.isEmpty()) {
+				return false;
+			}
+			return true;
+		} else {
+			if (down.isEmpty()) {
+				return false;
+			}
+			return true;	
 		}
-		return true;
 	}
 
-	public boolean passengersGoingDown() {
-		if (down.isEmpty()) {
-			return false;
-		}
-		return true;
-	}
 
 	public void addPassenger(Passengers p, int direction) { // can always come back to change return value
 		if (direction == UP) {

@@ -63,8 +63,8 @@ public class CallManager {
 		upCallPending = false;
 		downCallPending = false;
 		for (int i = 0; i < floors.length; i++) {
-			upCalls[i] = floors[i].passengersGoingUp();
-			downCalls[i] = floors[i].passengersGoingDown();
+			upCalls[i] = floors[i].passGoingInDir(UP);
+			downCalls[i] = floors[i].passGoingInDir(DOWN);
 			if (upCalls[i]) upCallPending = true;
 			if (downCalls[i]) downCallPending = true;
 		}
@@ -78,10 +78,34 @@ public class CallManager {
 	 */
 	Passengers prioritizePassengerCalls(int floor) {
 		updateCallStatus();
-
+		if (upCalls[floor])
+			return floors[floor].peekFloorQueue(UP);
+		if (downCalls[floor])
+			return floors[floor].peekFloorQueue(DOWN);
+		int numUpCalls = 0;
+		for (int i = 0; i < floors.length; i++)
+			if (upCalls[floor]) numUpCalls++;
+		int numDownCalls = 0;
+		for (int i = 0; i < floors.length; i++)
+			if (downCalls[floor]) numDownCalls++;
 		
+		int highestDownCall = 0;
+		for (int i = floors.length - 1; i >= 0; i--)
+			if (downCalls[i]) highestDownCall = floors[i].peekFloorQueue(DOWN).getOnFloor();
+		int lowestUpCall = floors.length - 1;
+		for (int i = 0; i < floors.length; i++)
+			if (upCalls[i]) lowestUpCall = floors[i].peekFloorQueue(UP).getOnFloor();
 		
-		return null;
+		if (numUpCalls > numDownCalls) {
+			return floors[lowestUpCall].peekFloorQueue(UP);
+		} else if (numUpCalls < numDownCalls) {
+			return floors[highestDownCall].peekFloorQueue(DOWN);
+		} else {
+			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor))
+				return floors[lowestUpCall].peekFloorQueue(UP);
+			else
+				return floors[highestDownCall].peekFloorQueue(DOWN);
+		}
 	}
 
 	//TODO: Write any additional methods here. Things that you might consider:
@@ -93,8 +117,8 @@ public class CallManager {
 	//
 	//      These are an example - you may find you don't need some of these, or you may need more...
 	
-	void changeDirection() {
-		
+	void changeDirection(int currentDir) {
+		//tf does this do
 	}
 	
 	boolean callPending() {

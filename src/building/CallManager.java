@@ -117,8 +117,42 @@ public class CallManager {
 	//
 	//      These are an example - you may find you don't need some of these, or you may need more...
 	
-	void changeDirection(int currentDir) {
-		//tf does this do
+	/**
+	 * Decide whether or not to change directions based on calls and elevator destinations
+	 * 
+	 * @param e the elevator object
+	 * @return whether or not to change directions
+	 */
+	boolean changeDirection(Elevator e) {
+		int currFloor = e.getCurrFloor();
+		int currDir = e.getDirection();
+		
+		if (currDir == UP) {
+			if (currFloor == floors.length - 1) return true;
+
+			if (e.getPassengers() == 0) {
+				for (int i = currFloor + 1; i < floors.length; i++)
+					if (callOnFloor(i))
+						return false;
+				return true;
+			} else {
+				for (Passengers p : e.getAllPassengers())
+					if (p.getDestFloor() > currFloor) return false;
+				return true;
+			}
+		} else {
+			if (currFloor == 0 && currDir == DOWN) return true;
+
+			if (e.getPassengers() == 0) {
+				for (int i = 0; i < currFloor; i++)
+					if (callOnFloor(i)) return false;
+				return true;
+			} else {
+				for (Passengers p : e.getAllPassengers())
+					if (p.getDestFloor() < currFloor) return false;
+				return true;
+			}
+		}
 	}
 	
 	boolean callPending() {

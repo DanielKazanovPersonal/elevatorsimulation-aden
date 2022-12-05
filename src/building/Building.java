@@ -130,6 +130,8 @@ public class Building {
 		int doorState = elevator.getDoorState();
 		int maxDoorTicks = elevator.getTicksDoorOpenClose();
 		
+		if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
+		
 		elevator.setDoorState(doorState + 1);
 		
 		if (doorState + 1 < maxDoorTicks) {

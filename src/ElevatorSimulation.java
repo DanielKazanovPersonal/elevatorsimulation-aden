@@ -38,8 +38,8 @@ public class ElevatorSimulation extends Application {
 	private final int PANE_WIDTH = 700;
 	private final int PANE_HEIGHT = 700;
 	
-	private final int ELEVATOR_WIDTH = 90;
-	private final int ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
+	private final int ELEVATOR_WIDTH;
+	private final int ELEVATOR_HEIGHT;
 	private int ELEVATOR_X_POSITION = (PANE_WIDTH / 7);	
 	private int ELEVATOR_Y_POSITION = (PANE_HEIGHT / 2);
 	
@@ -51,6 +51,13 @@ public class ElevatorSimulation extends Application {
 		NUM_FLOORS = controller.getNumFloors();
 		NUM_ELEVATORS = controller.getNumElevators();
 		currFloor = controller.getCurrentFloor();
+		
+		ELEVATOR_WIDTH = (PANE_WIDTH / 10);
+		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
+	}
+	
+	public void update() {
+		
 	}
 
 	/**

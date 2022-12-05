@@ -365,7 +365,7 @@ public class ElevatorSimController {
 		// or elevator(s) are not all in STOP state), then
 		// 		1) check for arrival of any new passengers
 		// 		2) update the elevator
-		// 		3) update the GUI 
+		// 		3) update the GUI
 		//  else 
 		//    	1) update the GUI
 		//		2) close the logs

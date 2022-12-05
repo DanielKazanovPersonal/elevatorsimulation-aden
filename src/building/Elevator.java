@@ -55,6 +55,7 @@ public class Elevator {
 	
 	private int postMoveToFloorDir; // This is the direction that the elevator will travel AFTER reaching
 	                                // the moveToFloor in MVTOFLR state.
+	 private int boardedPassengers;
 
 	@SuppressWarnings("unchecked")
 	public Elevator(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {		
@@ -71,6 +72,24 @@ public class Elevator {
 		//      initialization of any other private fields, etc.
 	}
 	
+	public void clearPassengers(int floor) {
+		ArrayList<Passengers>[] temp = new ArrayList[passByFloor.length - 1];
+		boolean skipped = false;
+		int ind = 0;
+		for (int i = 0; i < passByFloor.length; i++) {
+			if (!skipped) {
+				ind = i;
+			} else {
+				ind = i - 1;
+			}
+			if (passByFloor[i].get(0).getDestFloor() != floor) { // goes into each arraylist in passbyFloor -> gets first elements destination floor (should be same for all in the same arrlist)
+				temp[ind] = passByFloor[i];
+			} else if (passByFloor[i].get(0).getDestFloor() == floor) {
+				skipped = true;
+			}
+		}
+	}
+
 	//TODO: Add Getter/Setters and any methods that you deem are required. Examples 
 	//      include:
 	//      1) moving the elevator
@@ -98,6 +117,15 @@ public class Elevator {
 	public int getCapacity() {
 		return this.capacity;
 	}
+
+	public int getBoardedPassengers() {
+		return this.boardedPassengers;
+	}
+
+	public void setBoardedPassengers(int boardedPassengers) {
+		this.boardedPassengers = boardedPassengers;
+	}
+
 
 
 	public int getTicksPerFloor() {

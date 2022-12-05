@@ -194,7 +194,7 @@ public class Building {
 			if (!floors[floor].passGoingInDir(dir)) return;
 			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
 				boardedPassengers += floors[floor].peekFloorQueue(dir).getNumPass();
-				e.addPassengers(floors[floor].getFirstPassInQ(dir));
+				e.addPassengers(floors[floor].removeFirstPassInQ(dir));
 			}
 		}
 	}

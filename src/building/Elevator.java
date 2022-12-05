@@ -90,6 +90,25 @@ public class Elevator {
 		}
 	}
 
+	public ArrayList<Passengers> getAllPassengers() {
+		ArrayList<Passengers> allPass = new ArrayList<>();
+		for (int i = 0; i < passByFloor.length; i++) {
+			for (int j = 0; j < passByFloor[i].size(); j++) {
+				allPass.add(passByFloor[i].get(j));
+			}
+		}
+		return allPass;
+	}
+
+	public void addPassengers(Passengers p) {
+		for (int i = 0; i < passByFloor.length; i++) {
+			if (passByFloor[i].get(0).getDestFloor() == p.getDestFloor()) {
+				passByFloor[i].add(p);
+				break;
+			}
+		}
+	}	
+
 	//TODO: Add Getter/Setters and any methods that you deem are required. Examples 
 	//      include:
 	//      1) moving the elevator

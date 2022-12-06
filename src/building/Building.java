@@ -170,21 +170,23 @@ public class Building {
 		int maxCap = elevator.getCapacity();
 		int passengersOnElevator = elevator.getPassengers();
 		int floor = elevator.getCurrFloor();
-		int timeInState = elevator.getTimeInState();
 		int boardedPassengers = elevator.getBoardedPassengers();
 		int passengersPerTick = elevator.getPassPerTick();
 		int dir = determineDirection(elevator);
 		
 		elevator.incrementTicks();
 
-		elevator.setDirection(dir);
+		int timeInState = elevator.getTimeInState();
 		
+		elevator.setDirection(dir);
+
+		System.out.println(timeInState + ", " + boardedPassengers);
 		if (boardedPassengers == 0 && timeInState == 1) {
 			attemptPassengerBoard(elevator, time);
-			return Elevator.BOARD;
+//			return Elevator.BOARD;
 		}
 		
-		if (Math.ceil((double) boardedPassengers / passengersPerTick) < timeInState) {
+		if (Math.ceil((double) boardedPassengers / passengersPerTick) > timeInState) {
 			attemptPassengerBoard(elevator, time);
 			return Elevator.BOARD;
 		} else {
@@ -204,7 +206,7 @@ public class Building {
 		if (floors[floor].passGoingInDir(dir)) {
 			if (!floors[floor].passGoingInDir(dir)) return;
 			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
-				boardedPassengers += floors[floor].peekFloorQueue(dir).getNumPass();
+				e.setBoardedPassengers(boardedPassengers + floors[floor].peekFloorQueue(dir).getNumPass());
 				Passengers p = floors[floor].removeFirstPassInQ(dir);
 				e.addPassengers(p);
 				logBoard(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());

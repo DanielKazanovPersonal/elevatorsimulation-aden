@@ -377,16 +377,16 @@ public class ElevatorSimController {
 		//		3) process the passenger results
 		//		4) send endSimulation to the GUI to stop ticks.
 		
-		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
-			// check for arrival of new passengers
-			gui.updateElevator(); // 	 BUILDING CLASS --> public void updateElevator(int time) {
-			gui.updateGUI();
-		} else {
-			gui.updateGUI();
-			building.closeLogs(stepCnt);
-			// process the passenger results
-			gui.endSimulation();
-		}
+//		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
+//			// check for arrival of new passengers
+//			gui.updateElevator(); // 	 BUILDING CLASS --> public void updateElevator(int time) {
+//			gui.updateGUI();
+//		} else {
+//			gui.updateGUI();
+//			building.closeLogs(stepCnt);
+//			// process the passenger results
+//			gui.endSimulation();
+//		}
 	}
 	
 	/**

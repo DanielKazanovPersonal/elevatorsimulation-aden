@@ -152,7 +152,8 @@ public class Elevator {
 	public void updateCurrState(int newState) {
 		prevState = currState;
 		currState = newState;
-		timeInState = 0;
+		if (newState != prevState)
+			timeInState = 0;
 	}
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;

@@ -1,0 +1,3 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,6,TRUE,1000,
+50,1,1,3,TRUE,1000,must change direction 

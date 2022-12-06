@@ -1,0 +1,7 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,5,1,6,TRUE,1000
+50,4,6,1,TRUE,1000,Board
+50,3,5,1,TRUE,1000,Board
+51,6,4,1,TRUE,1000,Board
+60,3,3,1,TRUE,20,Should give up and NOT block the next group
+60,2,3,1,TRUE,1000,These should board

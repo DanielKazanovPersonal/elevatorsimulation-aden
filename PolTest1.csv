@@ -1,0 +1,3 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,6,TRUE,1000,gets on
+15,2,1,6,FALSE,1000,gets on

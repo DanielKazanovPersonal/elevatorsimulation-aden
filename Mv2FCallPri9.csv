@@ -1,0 +1,5 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,5,TRUE,1000,
+50,1,5,2,TRUE,1000,call on floor should win - going down
+50,1,1,4,TRUE,1000,
+50,1,2,4,TRUE,1000,

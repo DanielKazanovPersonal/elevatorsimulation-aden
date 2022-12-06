@@ -1,0 +1,3 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,4,1,TRUE,1000,call up - call down - call up wins
+10,1,4,6,TRUE,1000,

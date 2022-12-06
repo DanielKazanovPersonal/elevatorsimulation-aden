@@ -1,0 +1,2 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,5,6,1,TRUE,10, should give up - elevator should go to 6th floor and stop

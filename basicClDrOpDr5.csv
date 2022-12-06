@@ -1,0 +1,4 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,1,6,TRUE,1000,
+50,1,6,4,TRUE,1000
+69,1,4,6,TRUE,1000,"pass appears during closedr, elevator empty, no other calls - should change dir then opendr."

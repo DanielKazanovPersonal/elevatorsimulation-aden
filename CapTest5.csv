@@ -1,0 +1,5 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,3,1,6,TRUE,1000,get on
+13,4,1,5,TRUE,1000,get on - last possible tick
+14,5,1,4,TRUE,1000,get on
+16,3,1,3,TRUE,1000,get on - last possible tick

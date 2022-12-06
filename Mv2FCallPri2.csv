@@ -1,0 +1,4 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,1,3,4,TRUE,1000,testing direct-to-floor-case
+12,1,2,4,TRUE,1000,
+12,1,2,1,TRUE,1000,

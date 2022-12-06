@@ -1,0 +1,4 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,14,1,6,TRUE,1000,get on
+10,2,2,3,TRUE,17,Blocks next group before giving up
+10,1,2,6,TRUE,1000,

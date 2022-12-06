@@ -1,0 +1,8 @@
+Time,NumPass,FromFloor,To Floor,Polite,Wait,
+10,5,1,6,TRUE,1000,should board
+10,9,1,3,TRUE,1000,should board
+10,1,1,2,TRUE,1000,should board but block any future passengers….
+19,1,1,4,FALSE,1000,blocked but impolite - should block after causing doors to open
+19,14,1,4,TRUE,1000,blocked but polite
+32,3,2,4,FALSE,1000,Should be blocked twice - but first time should open doors on arrival.
+113,10,2,6,FALSE,1000,make sure that these board with previous group

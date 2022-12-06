@@ -40,7 +40,7 @@ public class ElevatorSimulation extends Application {
 	
 	private final int ELEVATOR_WIDTH;
 	private final int ELEVATOR_HEIGHT;
-	private int ELEVATOR_X_POSITION = (PANE_WIDTH / 7);	
+	private int ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
 	private int ELEVATOR_Y_POSITION = (PANE_HEIGHT / 2);
 	
 	/**
@@ -56,6 +56,7 @@ public class ElevatorSimulation extends Application {
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
 	}
 	
+	// TODO: Write this method
 	public void update() {
 		
 	}
@@ -91,10 +92,10 @@ public class ElevatorSimulation extends Application {
 		
 		buttonSetup(hBox);
 		floorSetup(pane);
-		Rectangle body = elevatorSetup(pane);
+		elevatorSetup(pane);
 		
 		// TODO: change line below
-		elevatorMoveToFloor(pane, 6, body);
+//		elevatorMoveToFloor(pane, 6, body);
 	}
 	
 	public void buttonSetup(HBox hBox) {
@@ -141,26 +142,36 @@ public class ElevatorSimulation extends Application {
 		}
 	}
 	
-	//TODO: implement to work with multiple elevators
-	public Rectangle elevatorSetup(Pane pane) {
-		Rectangle body = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
-		Line line = new Line();
-		line.setStrokeWidth(3);
-		line.setStroke(Color.LIGHTGRAY);
-		line.setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
-		line.setEndX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
-		line.setStartY(ELEVATOR_Y_POSITION);
-		line.setEndY(ELEVATOR_Y_POSITION + ELEVATOR_HEIGHT);
+	public void elevatorSetup(Pane pane) {
+		Rectangle[] rectangleArr = new Rectangle[NUM_ELEVATORS];
+		Line[] lineArr = new Line[NUM_ELEVATORS];
 		
-		Text passengers = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
-		passengers.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
-		
-		pane.getChildren().addAll(body, line, passengers);
-		return body;
+		for (int i = 0; i < NUM_ELEVATORS; i++) {
+			rectangleArr[i] = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
+			
+			lineArr[i] = new Line();
+			lineArr[i].setStrokeWidth(3);
+			lineArr[i].setStroke(Color.LIGHTGRAY);
+			lineArr[i].setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+			lineArr[i].setEndX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+			lineArr[i].setStartY(ELEVATOR_Y_POSITION);
+			lineArr[i].setEndY(ELEVATOR_Y_POSITION + ELEVATOR_HEIGHT);
+			
+			Text passengers = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
+			passengers.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
+			
+			pane.getChildren().addAll(rectangleArr[i], lineArr[i], passengers);
+		}
 	}
 	
 	// TODO: Write this method
 	public void elevatorOpenDoors() {
+		// ASK --> Multiple elevator setup, need to PASS IN which elevator to open doors to
+		// MAYBE --> Don't need to worry as will ALWAYS only have 1 elevator
+	}
+	
+	// TODO: Write this method
+	public void elevatorCloseDoors() {
 		
 	}
 	
@@ -173,10 +184,12 @@ public class ElevatorSimulation extends Application {
 		}
 	}
 	
+	// TODO: Write this method
 	public void passengersGroupSetup(Pane pane) {
 		
 	}
 	
+	// TODO: Write this method
 	public void passengersGroupMove(Pane pane) {
 		
 	}

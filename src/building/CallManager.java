@@ -125,6 +125,7 @@ public class CallManager {
 	 * @return whether or not to change directions
 	 */
 	boolean changeDirection(Elevator e) {
+		updateCallStatus();
 		int currFloor = e.getCurrFloor();
 		int currDir = e.getDirection();
 		
@@ -162,14 +163,17 @@ public class CallManager {
 	}
 	
 	boolean callOnFloor(int floor) {
+		updateCallStatus();
 		return upCalls[floor] || downCalls[floor];
 	}
 	
 	boolean callOnFloor(int floor, int elevatorDirection) {
+		updateCallStatus();
 		return (elevatorDirection == UP)? upCalls[floor] : downCalls[floor];
 	}
 	
 	boolean callerIsPolite(int floor, int elevatorDirection) {
+		updateCallStatus();
 		return floors[floor].peekFloorQueue((elevatorDirection == UP)? UP : DOWN).getPolite();
 	}
 	

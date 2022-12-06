@@ -73,7 +73,12 @@ public class Elevator {
 	}
 	
 	public void clearPassengers(int floor) {
+		int passGettingOff = 0;
+		for (Passengers p : passByFloor[floor]) {
+			passGettingOff += p.getNumPass();
+		}
 		passByFloor[floor].clear();
+		passengers -= passGettingOff;
 	}
 
 	public ArrayList<Passengers> getAllPassengers() {
@@ -92,6 +97,7 @@ public class Elevator {
 
 	public void addPassengers(Passengers p) {
 		passByFloor[p.getDestFloor()].add(p);
+		passengers += p.getNumPass();
 	}	
 
 	//TODO: Add Getter/Setters and any methods that you deem are required. Examples 

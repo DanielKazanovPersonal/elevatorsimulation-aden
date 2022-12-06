@@ -84,11 +84,27 @@ public class Building {
 		//TODO: if you defined new fields, make sure to initialize them here
 
 	}
-	
+
+	//returns the data of every passenger group in the floor queues in 4 array lists
 	public ArrayList<Integer>[] getFloorQueueData() {
-		return null;
+		//ppl in group, current, dest, polite (1 or 0)
+		ArrayList<Integer>[] data = new ArrayList[4];
+		for (int i = 0; i < 4; i++)
+			data[i] = new ArrayList<Integer>();
+		for (int i = 0; i < floors.length; i++) {
+			ArrayList<Passengers> passengers = floors[i].getAllPassengers();
+			for (int j = 0; j < passengers.size(); j++) {
+				Passengers p = passengers.get(j);
+				data[0].add(p.getNumPass());
+				data[1].add(p.getOnFloor());
+				data[2].add(p.getDestFloor());
+				data[3].add(p.isPolite()? 1 : 0);				
+			}
+		}
+		
+		return data;
 	}
-	
+
 	public void configElevators(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {
 		for (int i = 0; i < elevators.length; i++) {
 			elevators[i] = new Elevator(numFloors, capacity, floorTicks, doorTicks, passPerTick);

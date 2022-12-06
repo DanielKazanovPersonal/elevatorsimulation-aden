@@ -157,7 +157,7 @@ public class CallManager {
 	
 	boolean callPending() {
 		updateCallStatus();
-		return !(upCallPending || downCallPending);
+		return upCallPending || downCallPending;
 	}
 	
 	boolean callOnFloor(int floor) {

@@ -99,6 +99,11 @@ public class Building {
 				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
 			}
 		}
+		
+		Elevator e = elevators[0];
+		//to prevent duplicate messages
+		if (!elevatorStateChanged(e))
+			logElevatorStateChanged(timeSinceSimStart,  e.getPrevState(),  e.getCurrState(),  e.getPrevFloor(),  e.getCurrFloor());
 	}
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
@@ -171,19 +176,19 @@ public class Building {
 		elevator.setDirection(dir);
 		
 		if (boardedPassengers == 0 && timeInState == 1) {
-			attemptPassengerBoard(elevator);
+			attemptPassengerBoard(elevator, time);
 			return Elevator.BOARD;
 		}
 		
 		if (Math.ceil((double) boardedPassengers / passengersPerTick) < timeInState) {
-			attemptPassengerBoard(elevator);
+			attemptPassengerBoard(elevator, time);
 			return Elevator.BOARD;
 		} else {
 			return Elevator.CLOSEDR;
 		}
 	}
 	
-	private void attemptPassengerBoard(Elevator e) {
+	private void attemptPassengerBoard(Elevator e, int time) {
 		int maxCap = e.getCapacity();
 		int passengersOnElevator = e.getPassengers();
 		int floor = e.getCurrFloor();
@@ -196,7 +201,9 @@ public class Building {
 			if (!floors[floor].passGoingInDir(dir)) return;
 			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
 				boardedPassengers += floors[floor].peekFloorQueue(dir).getNumPass();
-				e.addPassengers(floors[floor].removeFirstPassInQ(dir));
+				Passengers p = floors[floor].removeFirstPassInQ(dir);
+				e.addPassengers(p);
+				logBoard(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
 			}
 		}
 	}

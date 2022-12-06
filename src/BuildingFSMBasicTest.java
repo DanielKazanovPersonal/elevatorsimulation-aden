@@ -244,7 +244,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(2)
-	@Disabled
+//	@Disabled
 	void testCallOnFloorUp1() {
 		String test = "basicCallOnFloorUp1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");

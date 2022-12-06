@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -92,11 +93,14 @@ public class Building {
 	
 	public void updateFloorQueues(int timeSinceSimStart) {
 		if (!passQ.isEmpty()) {
-			if (passQ.peek().getTime() == timeSinceSimStart) {
+			while (!passQ.isEmpty() && passQ.peek().getTime() == timeSinceSimStart) {
 				Passengers p = passQ.poll();
 				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
 			}
 		}
+		
+//		Elevator e = elevators[0];
+//		logElevatorStateChanged(timeSinceSimStart, e.getPrevState(), e.getCurrState(), e.getPrevFloor(), e.getCurrFloor());
 	}
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
@@ -219,7 +223,7 @@ public class Building {
 	
 	private int currStateMv1Flr(int time, Elevator elevator) {
 		if (elevator.getTimeInState() % elevator.getTicksPerFloor() == 0) {
-			elevator.setCurrFloor(elevator.getCurrFloor() + elevator.getDirection());
+			elevator.updateCurrFloor(elevator.getCurrFloor() + elevator.getDirection());
 			
 			ArrayList<Passengers> passengers = elevator.getAllPassengers();
 			for (Passengers p : passengers)
@@ -232,7 +236,8 @@ public class Building {
 
 	private int figureOutWhereToGoNext(Elevator e) {
 		int eFloor = e.getCurrFloor();
-		int priorityFloor = callMgr.prioritizePassengerCalls(eFloor).getOnFloor();
+		Passengers priorityPass = callMgr.prioritizePassengerCalls(eFloor);
+		int priorityFloor = priorityPass.getOnFloor();
 		if (e.getCurrState() == Elevator.STOP) {
 			e.setDirection((priorityFloor >= eFloor)? UP : DOWN);
 			e.setPostMoveToFloorDir(callMgr.prioritizePassengerCalls(eFloor).getDestFloor() > priorityFloor? UP : DOWN);
@@ -269,11 +274,13 @@ public class Building {
 	
 	public boolean endSim() {
 		for (Floor f : floors)
-			if (!f.isEmpty())
+			if (!f.isEmpty()) {
 				return false;
+			}
 		for (Elevator e : elevators)
-			if (e.getCurrState() != Elevator.STOP)
+			if (e.getCurrState() != Elevator.STOP) {
 				return false;
+			}
 		return passQ.isEmpty();
 	}
 	
@@ -321,6 +328,7 @@ public class Building {
 	 */
 	// YOU WILL NEED TO CODE ANY MISSING METHODS IN THE APPROPRIATE CLASSES...
 	public void updateElevator(int time) {
+		System.out.println(time + " " + passQ.toString());
 		for (Elevator lift: elevators) {
 			if (elevatorStateChanged(lift))
 				logElevatorStateChanged(time,lift.getPrevState(),lift.getCurrState(),lift.getPrevFloor(),lift.getCurrFloor());

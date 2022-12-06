@@ -181,4 +181,10 @@ public class CallManager {
 		}
 		return calls;
 	}
+	
+	//for debug
+	void printCalls() {
+		System.out.println(Arrays.toString(upCalls));
+		System.out.println(Arrays.toString(downCalls));
+	}
 }

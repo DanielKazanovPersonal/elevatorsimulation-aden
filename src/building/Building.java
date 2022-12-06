@@ -98,9 +98,6 @@ public class Building {
 				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
 			}
 		}
-		
-//		Elevator e = elevators[0];
-//		logElevatorStateChanged(timeSinceSimStart, e.getPrevState(), e.getCurrState(), e.getPrevFloor(), e.getCurrFloor());
 	}
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
@@ -328,7 +325,6 @@ public class Building {
 	 */
 	// YOU WILL NEED TO CODE ANY MISSING METHODS IN THE APPROPRIATE CLASSES...
 	public void updateElevator(int time) {
-		System.out.println(time + " " + passQ.toString());
 		for (Elevator lift: elevators) {
 			if (elevatorStateChanged(lift))
 				logElevatorStateChanged(time,lift.getPrevState(),lift.getCurrState(),lift.getPrevFloor(),lift.getCurrFloor());

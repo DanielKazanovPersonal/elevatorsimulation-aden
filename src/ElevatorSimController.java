@@ -355,8 +355,8 @@ public class ElevatorSimController {
  		// DO NOT MOVE THIS - YOU MUST INCREMENT TIME FIRST!
 		stepCnt++;
 		if (!building.endSim()) {
-			building.updateElevator(stepCnt);
 			building.updateFloorQueues(stepCnt);
+			building.updateElevator(stepCnt);
 		}
 
 

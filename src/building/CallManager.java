@@ -172,4 +172,13 @@ public class CallManager {
 	boolean callerIsPolite(int floor, int elevatorDirection) {
 		return floors[floor].peekFloorQueue((elevatorDirection == UP)? UP : DOWN).getPolite();
 	}
+	
+	int numCalls(int dir) {
+		updateCallStatus();
+		int calls = 0;
+		for (Floor f : floors) {
+			if (f.passGoingInDir(UP)) calls++;
+		}
+		return calls;
+	}
 }

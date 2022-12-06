@@ -23,6 +23,11 @@ public class ElevatorSimulation extends Application {
 	private final int NUM_ELEVATORS;
 	private int currFloor;
 	private int passengers;
+	
+	public int getPassengers() {
+		return passengers;
+	}
+	
 	private int time;
 
 	/** Local copies of the states for tracking purposes */
@@ -56,8 +61,19 @@ public class ElevatorSimulation extends Application {
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
 	}
 	
+	
 	// TODO: Write this method
-	public void update() {
+	public void endSimulation() {
+		
+	}
+	
+	// TODO: Write this method
+	public void updateGUI() {
+		
+	}
+	
+	// TODO: Write this method
+	public void updateElevator() {
 		
 	}
 

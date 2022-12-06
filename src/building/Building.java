@@ -101,7 +101,7 @@ public class Building {
 	
 	// TODO: Place all of your code HERE - state methods and helpers...
 	private boolean elevatorStateChanged(Elevator e) {
-		return e.getCurrState() == e.getPrevState();
+		return e.getCurrState() != e.getPrevState();
 	}
 	
 	private int currStateStop(int time, Elevator elevator) {

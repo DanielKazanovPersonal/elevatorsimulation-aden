@@ -54,7 +54,16 @@ public class Passengers {
 	// TODO: Write the constructor for this class
 	//       Remember to appropriately adjust the onFloor and destFloor to account  
 	//       to convert from American to European numbering...
+		id = ID++;
 		
+		this.time = time;
+		this.numPass = numPass;
+		this.onFloor = on - 1;
+		this.destFloor = dest - 1;
+		this.polite = polite;
+		this.waitTime = waitTime;
+		
+		direction = (destFloor - onFloor) / Math.abs(destFloor - onFloor);
 	}
 	
 	

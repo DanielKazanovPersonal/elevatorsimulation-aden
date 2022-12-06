@@ -1,6 +1,7 @@
 package building;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The Class CallManager. This class models all of the calls on each floor,
@@ -73,7 +74,7 @@ public class CallManager {
 	/**
 	 * Prioritize passenger calls from STOP STATE
 	 *
-	 * @param floor the floor the elevator is on (?)
+	 * @param floor the floor the elevator is on
 	 * @return the passengers
 	 */
 	Passengers prioritizePassengerCalls(int floor) {

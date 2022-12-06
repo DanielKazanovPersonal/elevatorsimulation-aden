@@ -50,9 +50,9 @@ public class Floor {
 	public Passengers removeFirstPassInQ(int direction) {
 
 		if (direction > 0) {
-			return up.remove();
+			return up.poll();
 		} else {
-			return down.remove();
+			return down.poll();
 		}
 	}
 
@@ -72,9 +72,9 @@ public class Floor {
 	// same as removeFirstPassInQ wo the removal
 	public Passengers peekFloorQueue(int dir) {
 		if (dir > 0) {
-			return up.element();
+			return up.peek();
 		} else {
-			return down.element();
+			return down.peek();
 		}
 	}
 

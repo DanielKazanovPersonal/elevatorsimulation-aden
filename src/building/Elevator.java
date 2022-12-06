@@ -73,21 +73,7 @@ public class Elevator {
 	}
 	
 	public void clearPassengers(int floor) {
-		ArrayList<Passengers>[] temp = new ArrayList[passByFloor.length - 1];
-		boolean skipped = false;
-		int ind = 0;
-		for (int i = 0; i < passByFloor.length; i++) {
-			if (!skipped) {
-				ind = i;
-			} else {
-				ind = i - 1;
-			}
-			if (passByFloor[i].get(0).getDestFloor() != floor) { // goes into each arraylist in passbyFloor -> gets first elements destination floor (should be same for all in the same arrlist)
-				temp[ind] = passByFloor[i];
-			} else if (passByFloor[i].get(0).getDestFloor() == floor) {
-				skipped = true;
-			}
-		}
+		passByFloor[floor].clear();
 	}
 
 	public ArrayList<Passengers> getAllPassengers() {
@@ -105,12 +91,7 @@ public class Elevator {
 	}
 
 	public void addPassengers(Passengers p) {
-		for (int i = 0; i < passByFloor.length; i++) {
-			if (passByFloor[i].get(0).getDestFloor() == p.getDestFloor()) {
-				passByFloor[i].add(p);
-				break;
-			}
-		}
+		passByFloor[p.getDestFloor()].add(p);
 	}	
 
 	//TODO: Add Getter/Setters and any methods that you deem are required. Examples 
@@ -136,7 +117,12 @@ public class Elevator {
 	public int getCurrFloor() {
 		return this.currFloor;
 	}
-
+	
+	public void updateCurrFloor(int newFloor) {
+		prevFloor = currFloor;
+		currFloor = newFloor;
+	}
+	
 	public int getCapacity() {
 		return this.capacity;
 	}
@@ -164,7 +150,9 @@ public class Elevator {
 	}
 
 	public void updateCurrState(int newState) {
+		prevState = currState;
 		currState = newState;
+		timeInState = 0;
 	}
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;

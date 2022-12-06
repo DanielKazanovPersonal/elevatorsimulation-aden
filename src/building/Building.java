@@ -95,6 +95,7 @@ public class Building {
 		if (!passQ.isEmpty()) {
 			while (!passQ.isEmpty() && passQ.peek().getTime() == timeSinceSimStart) {
 				Passengers p = passQ.poll();
+				logCalls(timeSinceSimStart, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
 				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
 			}
 		}

@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -42,6 +43,7 @@ public class ElevatorSimulation extends Application {
 	private final int MV1FLR = Elevator.MV1FLR;
 
 	/** Daniel's created variables */
+	private Pane pane;
 	private final int PANE_WIDTH = 700;
 	private final int PANE_HEIGHT = 700;
 	
@@ -100,7 +102,7 @@ public class ElevatorSimulation extends Application {
 	
 	public void mainSetup(Stage primaryStage) {
 		BorderPane borderPane = new BorderPane();
-		Pane pane = new Pane();
+		pane = new Pane();
 		HBox hBox = new HBox(3);
 		Scene scene = new Scene(borderPane, PANE_WIDTH, PANE_HEIGHT);
 		
@@ -109,8 +111,8 @@ public class ElevatorSimulation extends Application {
 		primaryStage.setScene(scene);
 		
 		buttonSetup(hBox);
-		floorSetup(pane);
-		elevatorSetup(pane);
+		floorSetup();
+		elevatorSetup();
 		
 		// TODO: change line below
 //		elevatorMoveToFloor(pane, 6, body);
@@ -139,7 +141,7 @@ public class ElevatorSimulation extends Application {
 	    hBox.getChildren().addAll(run, step, log);
 	}
 	
-	public void floorSetup(Pane pane) {
+	public void floorSetup() {
 		Line[] lineArr = new Line[NUM_FLOORS];
 		Text[] labelArr = new Text[NUM_FLOORS];
 		int yLocation = PANE_HEIGHT - (PANE_HEIGHT / 8);
@@ -160,7 +162,7 @@ public class ElevatorSimulation extends Application {
 		}
 	}
 	
-	public void elevatorSetup(Pane pane) {
+	public void elevatorSetup() {
 		Rectangle[] rectangleArr = new Rectangle[NUM_ELEVATORS];
 		Line[] lineArr = new Line[NUM_ELEVATORS];
 		
@@ -194,7 +196,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	// TODO: Not working, need to implement correctly
-	public void elevatorMoveToFloor(Pane pane, int floor, Rectangle body) {
+	public void elevatorMoveToFloor(int floor, Rectangle body) {
 		for (int i = (int)body.getY(); i < (PANE_HEIGHT / floor); i++) {
 			body.setY(body.getY() + i);
 			pane.getChildren().remove(body);
@@ -203,27 +205,36 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	// TODO: Write this method
-	public void passengersGroupSetup(Pane pane) {
+	public void passengersGroupSetup() {
 		// in bulding call method called getAllPassengerData(); <-- array of arraylists (ints, 2D) Arraylist<int>[4] =
 		// for (i = controller.stepCnt; i < step)
 		// 	    controller.stepSim()
 		// doesn't have to be smooth, can just pop near the elevator once the tick updates
 		// draw all passengers
 		
-		ArrayList<Integer>[] list = controller.getAllPassengerData();
+		ArrayList<Integer>[] passengerData = controller.getAllPassengerData();
 		
-		for (int i = 0; i < list[0].size(); i++) {
-			list[0].get(i); // Number of people in  group
-			list[1].get(i); // Current floor
-			list[2].get(i); // Destination floor
-			list[3].get(i); // Politeness (0 is impolite, 1 is polite)
+		Circle[] circleArr = new Circle[passengerData[0].size()];
+		Text[] textArr = new Text[passengerData[0].size()];
+		Triangle[] triangleArr = new Triangle[passengerData[0].size()];
+		
+		for (int i = 0; i < passengerData[0].size(); i++) {
+			int numPeople = passengerData[0].get(i); // Number of people in  group
+			int currFloor = passengerData[1].get(i); // Current floor
+			int destFloor = passengerData[2].get(i); // Destination floor
+			int politeness = passengerData[3].get(i); // Politeness (0 is impolite, 1 is polite)
+			
+			circleArr[i] = new Circle(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, PANE_HEIGHT / NUM_FLOORS);
+			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
+			
+			pane.getChildren().addAll(circleArr[i], textArr[i]);
 		}
 		
 	}
 	
 	// TODO: Write this method
 	public void passengersGroupMove(Pane pane) {
-		
+		// take care of ticks
 	}
 	
 	/**

@@ -1,4 +1,6 @@
 
+import java.util.ArrayList;
+
 import building.Elevator;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -202,6 +204,20 @@ public class ElevatorSimulation extends Application {
 	
 	// TODO: Write this method
 	public void passengersGroupSetup(Pane pane) {
+		// in bulding call method called getAllPassengerData(); <-- array of arraylists (ints, 2D) Arraylist<int>[4] =
+		// for (i = controller.stepCnt; i < step)
+		// 	    controller.stepSim()
+		// doesn't have to be smooth, can just pop near the elevator once the tick updates
+		// draw all passengers
+		
+		ArrayList<Integer>[] list = controller.getAllPassengerData();
+		
+		for (int i = 0; i < list[0].size(); i++) {
+			list[0].get(i); // Number of people in  group
+			list[1].get(i); // Current floor
+			list[2].get(i); // Destination floor
+			list[3].get(i); // Politeness (0 is impolite, 1 is polite)
+		}
 		
 	}
 	

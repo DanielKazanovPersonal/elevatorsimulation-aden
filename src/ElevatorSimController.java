@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import building.Building;
 import myfileio.MyFileIO;
@@ -90,6 +91,10 @@ public class ElevatorSimController {
 		
 
 		
+	}
+	
+	public ArrayList<Integer>[] getAllPassengerData() {
+		return building.getFloorQueueData();
 	}
 	
 	//TODO: Write methods to update the GUI display

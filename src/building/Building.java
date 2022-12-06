@@ -85,6 +85,10 @@ public class Building {
 
 	}
 	
+	public ArrayList<Integer>[] getFloorQueueData() {
+		return null;
+	}
+	
 	public void configElevators(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {
 		for (int i = 0; i < elevators.length; i++) {
 			elevators[i] = new Elevator(numFloors, capacity, floorTicks, doorTicks, passPerTick);

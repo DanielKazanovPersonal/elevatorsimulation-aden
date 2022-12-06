@@ -196,7 +196,6 @@ public class Building {
 		int boardedPassengers = e.getBoardedPassengers();
 		int passengersPerTick = e.getPassPerTick();
 		int dir = determineDirection(e);
-		
 		if (floors[floor].passGoingInDir(dir)) {
 			if (!floors[floor].passGoingInDir(dir)) return;
 			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {

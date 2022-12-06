@@ -177,15 +177,6 @@ public class CallManager {
 		return floors[floor].peekFloorQueue((elevatorDirection == UP)? UP : DOWN).getPolite();
 	}
 	
-	int numCalls(int dir) {
-		updateCallStatus();
-		int calls = 0;
-		for (Floor f : floors) {
-			if (f.passGoingInDir(UP)) calls++;
-		}
-		return calls;
-	}
-	
 	//for debug
 	void printCalls() {
 		System.out.println(Arrays.toString(upCalls));

@@ -1,10 +1,8 @@
 package building;
+import java.util.ArrayList;
 // ListIterater can be used to look at the contents of the floor queues for 
 // debug/display purposes...
 import java.util.ListIterator;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import genericqueue.GenericQueue;
 
@@ -76,6 +74,26 @@ public class Floor {
 		} else {
 			return down.peek();
 		}
+	}
+	
+	ArrayList<Passengers> getAllPassengers() {
+		ArrayList<Passengers> passengers = new ArrayList<Passengers>();
+		
+		ListIterator<Passengers> q;
+		q = up.getListIterator();
+		if (q != null) {
+			while (q.hasNext()) {
+				passengers.add(q.next());
+			}
+		}
+		q = down.getListIterator();
+		if (q != null) {
+			while (q.hasNext()) {
+				passengers.add(q.next());
+			}
+		}
+		
+		return passengers;
 	}
 
 	/**

@@ -76,7 +76,7 @@ public class Floor {
 		}
 	}
 	
-	ArrayList<Passengers> getAllPassengers() {
+	protected ArrayList<Passengers> getAllPassengers() {
 		ArrayList<Passengers> passengers = new ArrayList<Passengers>();
 		
 		ListIterator<Passengers> q;

@@ -139,7 +139,9 @@ public class Building {
 			if (priorityGrp.getOnFloor() == elevator.getCurrFloor()) {
 				return Elevator.OPENDR;
 			}
-			if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
+			if (callMgr.changeDirection(elevator)) {
+				elevator.setDirection(elevator.getDirection() * -1);
+			}
 			elevator.setPostMoveToFloorDir(priorityGrp.getDestFloor() - priorityGrp.getOnFloor() > 0? UP : DOWN);
 			elevator.setStartFloor(elevator.getCurrFloor());
 			elevator.setTargetFloor(priorityGrp.getOnFloor());
@@ -215,13 +217,9 @@ public class Building {
 		if (elevator.getTimeInState() == 0) elevator.setBoardedPassengers(0);
 		int boardedPassengers = elevator.getBoardedPassengers();
 		int passengersPerTick = elevator.getPassPerTick();
-		int dir = determineDirection(elevator);
 		
 		elevator.incrementTicks();
 		int timeInState = elevator.getTimeInState();
-
-		
-		elevator.setDirection(dir);
 
 		if (timeInState == 1) {
 			attemptPassengerBoard(elevator, time);
@@ -246,7 +244,7 @@ public class Building {
 		int timeInState = e.getTimeInState();
 		int boardedPassengers = e.getBoardedPassengers();
 		int passengersPerTick = e.getPassPerTick();
-		int dir = determineDirection(e);
+		int dir = e.getDirection();
 		
 		if (floors[floor].passGoingInDir(dir)) {
 			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
@@ -288,34 +286,13 @@ public class Building {
 					return Elevator.OPENDR;
 				}
 			if (callMgr.callOnFloor(elevator.getCurrFloor(), elevator.getDirection())) {
-				if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
+				if (callMgr.changeDirection(elevator)) {
+					elevator.setDirection(elevator.getDirection() * -1);
+				}
 				return Elevator.OPENDR;
 			}
 		}
 		return Elevator.MV1FLR;
-	}
-
-	private int determineDirection(Elevator e) {
-		if (e.getCurrFloor() == floors.length - 1) return DOWN;
-		if (e.getCurrFloor() == 0) return UP;
-
-		ArrayList<Passengers> passengers = e.getAllPassengers();
-		
-		if (e.getDirection() == UP) {
-			for (Passengers p : passengers)
-				if (p.getDestFloor() > e.getCurrFloor())
-					return UP;
-			for (int i = e.getCurrFloor(); i < floors.length; i++)
-				if (callMgr.callOnFloor(i, UP)) return UP;
-			return DOWN;
-		} else {
-			for (Passengers p : passengers)
-				if (p.getDestFloor() < e.getCurrFloor())
-					return DOWN;
-			for (int i = 0; i < e.getCurrFloor(); i++)
-				if (callMgr.callOnFloor(i, DOWN)) return DOWN;
-			return UP;
-		}
 	}
 	
 	public boolean endSim(int time) {

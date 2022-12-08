@@ -81,8 +81,8 @@ public class CallManager {
 		updateCallStatus();
 		
 		int floor = e.getCurrFloor();
-		System.out.println(Arrays.toString(upCalls));
-		System.out.println(Arrays.toString(downCalls));
+//		System.out.println(Arrays.toString(upCalls));
+//		System.out.println(Arrays.toString(downCalls));
 		
 		Passengers currFloorPass = checkCurrentFloor(e);
 		if (currFloorPass != null) return currFloorPass;

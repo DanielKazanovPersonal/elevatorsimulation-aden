@@ -453,7 +453,7 @@ class BuildingFSMBasicTest {
 	
 	@Test
 	@Order(13)
-	@Disabled
+//	@Disabled
 	void testbasicMv1FChgDir1() {
 		String test = "basicMv1FChgDir1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");

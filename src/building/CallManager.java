@@ -79,10 +79,12 @@ public class CallManager {
 	 */
 	Passengers prioritizePassengerCalls(int floor) {
 		updateCallStatus();
-		if (upCalls[floor])
-			return floors[floor].peekFloorQueue(UP);
-		if (downCalls[floor])
-			return floors[floor].peekFloorQueue(DOWN);
+		System.out.println(Arrays.toString(upCalls));
+		System.out.println(Arrays.toString(downCalls));
+		
+		Passengers currFloorPass = checkCurrentFloor(floor);
+		if (currFloorPass != null) return currFloorPass;
+		
 		int numUpCalls = 0;
 		for (int i = 0; i < floors.length; i++)
 			if (upCalls[floor]) numUpCalls++;
@@ -92,21 +94,33 @@ public class CallManager {
 		
 		int highestDownCall = 0;
 		for (int i = floors.length - 1; i >= 0; i--)
-			if (downCalls[i]) highestDownCall = floors[i].peekFloorQueue(DOWN).getOnFloor();
+			if (downCalls[i]) highestDownCall = i;
 		int lowestUpCall = floors.length - 1;
 		for (int i = 0; i < floors.length; i++)
-			if (upCalls[i]) lowestUpCall = floors[i].peekFloorQueue(UP).getOnFloor();
+			if (upCalls[i]) lowestUpCall = i;
 		
 		if (numUpCalls > numDownCalls) {
+			System.out.println("1");
 			return floors[lowestUpCall].peekFloorQueue(UP);
 		} else if (numUpCalls < numDownCalls) {
+			System.out.println("2");
 			return floors[highestDownCall].peekFloorQueue(DOWN);
 		} else {
-			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor))
+			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor)) {
+				System.out.println("3");
 				return floors[lowestUpCall].peekFloorQueue(UP);
-			else {
-				return floors[highestDownCall].peekFloorQueue(DOWN);}
+			} else {
+				System.out.println("4");
+				return floors[highestDownCall].peekFloorQueue(DOWN);
+			}
 		}
+	}
+	
+	Passengers checkCurrentFloor(int floor) {
+				if (upCalls[floor])
+					return floors[floor].peekFloorQueue(UP);
+				if (downCalls[floor])
+					return floors[floor].peekFloorQueue(DOWN);
 	}
 
 	//TODO: Write any additional methods here. Things that you might consider:

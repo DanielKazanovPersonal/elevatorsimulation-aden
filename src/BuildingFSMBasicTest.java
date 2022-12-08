@@ -263,7 +263,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(3)
-	@Disabled
+//	@Disabled
 	void testCallOnFloorUp1b() {
 		String test = "basicCallOnFloorUp1b";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -282,7 +282,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(4)
-	@Disabled
+//	@Disabled
 	void testCallOnFloorUp1c() {
 		String test = "basicCallOnFloorUp1c";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -301,7 +301,7 @@ class BuildingFSMBasicTest {
 	
 	@Test
 	@Order(5)
-	@Disabled
+//	@Disabled
 	void testbasicBoardOffld1() {
 		String test = "basicBoardOffld1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -320,7 +320,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(6)
-	@Disabled
+//	@Disabled
 	void testbasicBoardOffld2() {
 		String test = "basicBoardOffld2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");

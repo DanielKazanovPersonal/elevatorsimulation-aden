@@ -178,15 +178,24 @@ public class Building {
 	
 	private int currStateOffLd(int time, Elevator elevator) {
 		elevator.incrementTicks();
+
 		int floor = elevator.getCurrFloor();
-		ArrayList<Passengers> offloaded = elevator.getPassByFloor()[floor];
-		int passengerCnt = 0;
-		for (Passengers p : offloaded)
-			passengerCnt += p.getNumPass();
-		if (Math.ceil((double)passengerCnt / elevator.getPassPerTick()) <= elevator.getTimeInState()) {
+		
+		if (elevator.getTimeInState() == 1) {
+			ArrayList<Passengers> offloaded = elevator.getPassByFloor()[floor];
+			int passengerCnt = 0;
+			for (Passengers p : offloaded)
+				passengerCnt += p.getNumPass();
 			for (int i = 0; i < offloaded.size(); i++)
 				logArrival(time, offloaded.get(i).getNumPass(), floor, offloaded.get(i).getId());
 			elevator.clearPassengers(floor);
+			elevator.setOffloadedPassengers(passengerCnt);
+		}
+		
+		int offloaded = elevator.getOffloadedPassengers();
+		
+		if (Math.ceil((double)offloaded / elevator.getPassPerTick()) <= elevator.getTimeInState()) {
+			
 			return callMgr.callOnFloor(floor, elevator.getDirection())? Elevator.BOARD : Elevator.CLOSEDR;
 		} else {
 			return Elevator.OFFLD;
@@ -197,26 +206,28 @@ public class Building {
 		int maxCap = elevator.getCapacity();
 		int passengersOnElevator = elevator.getPassengers();
 		int floor = elevator.getCurrFloor();
+		if (elevator.getTimeInState() == 0) elevator.setBoardedPassengers(0);
 		int boardedPassengers = elevator.getBoardedPassengers();
 		int passengersPerTick = elevator.getPassPerTick();
 		int dir = determineDirection(elevator);
 		
 		elevator.incrementTicks();
-
 		int timeInState = elevator.getTimeInState();
+
 		
 		elevator.setDirection(dir);
 
-		if (boardedPassengers == 0 && timeInState == 1) {
+		if (timeInState == 1) {
 			attemptPassengerBoard(elevator, time);
-//			return Elevator.BOARD;
 		}
 		
-		if (Math.ceil((double) boardedPassengers / passengersPerTick) > timeInState) {
+		boardedPassengers = elevator.getBoardedPassengers();
+		
+		if (Math.ceil((double) boardedPassengers / passengersPerTick) <= timeInState) {
+			return Elevator.CLOSEDR;
+		} else {
 			attemptPassengerBoard(elevator, time);
 			return Elevator.BOARD;
-		} else {
-			return Elevator.CLOSEDR;
 		}
 	}
 	
@@ -229,8 +240,9 @@ public class Building {
 		int passengersPerTick = e.getPassPerTick();
 		int dir = determineDirection(e);
 		
+		System.out.println(time + ":" + floors[floor].passGoingInDir(dir));
+		
 		if (floors[floor].passGoingInDir(dir)) {
-			if (!floors[floor].passGoingInDir(dir)) return;
 			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
 				e.setBoardedPassengers(boardedPassengers + floors[floor].peekFloorQueue(dir).getNumPass());
 				Passengers p = floors[floor].removeFirstPassInQ(dir);
@@ -238,6 +250,7 @@ public class Building {
 				logBoard(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
 			}
 		}
+		System.out.println(e.getBoardedPassengers());
 	}
 	
 	private int currStateCloseDr(int time, Elevator elevator) {

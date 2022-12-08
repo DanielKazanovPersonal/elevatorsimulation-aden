@@ -32,15 +32,9 @@ public class Floor {
 
 	public boolean passGoingInDir(int dir) {
 		if (dir > 0) {
-			if (up.isEmpty()) {
-				return false;
-			}
-			return true;
+			return !up.isEmpty();
 		} else {
-			if (down.isEmpty()) {
-				return false;
-			}
-			return true;	
+			return !down.isEmpty();
 		}
 	}
 

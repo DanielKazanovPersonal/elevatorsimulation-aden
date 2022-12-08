@@ -55,7 +55,7 @@ public class Elevator {
 	
 	private int postMoveToFloorDir; // This is the direction that the elevator will travel AFTER reaching
 	                                // the moveToFloor in MVTOFLR state.
-	 private int boardedPassengers;
+	 private int transferredPassengers; //represents the passengers getting on or off the elevator
 
 	@SuppressWarnings("unchecked")
 	public Elevator(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {		
@@ -134,14 +134,20 @@ public class Elevator {
 	}
 
 	public int getBoardedPassengers() {
-		return this.boardedPassengers;
+		return this.transferredPassengers;
 	}
 
 	public void setBoardedPassengers(int boardedPassengers) {
-		this.boardedPassengers = boardedPassengers;
+		this.transferredPassengers = boardedPassengers;
 	}
 
-
+	public int getOffloadedPassengers() {
+		return this.transferredPassengers;
+	}
+	
+	public void setOffloadedPassengers(int offloadedPassengers) {
+		this.transferredPassengers = offloadedPassengers;
+	}
 
 	public int getTicksPerFloor() {
 		return this.ticksPerFloor;

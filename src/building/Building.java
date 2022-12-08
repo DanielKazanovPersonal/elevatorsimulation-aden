@@ -135,36 +135,42 @@ public class Building {
 		if (!callMgr.callPending()) {
 			return Elevator.STOP;
 		} else {
-			if (callMgr.prioritizePassengerCalls(elevator.getCurrFloor()).getOnFloor() == elevator.getCurrFloor()) {
+			Passengers priorityGrp = callMgr.prioritizePassengerCalls(elevator);
+			if (priorityGrp.getOnFloor() == elevator.getCurrFloor()) {
 				return Elevator.OPENDR;
 			}
 			if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
+			elevator.setPostMoveToFloorDir(priorityGrp.getDestFloor() - priorityGrp.getOnFloor() > 0? UP : DOWN);
+			elevator.setStartFloor(elevator.getCurrFloor());
+			elevator.setTargetFloor(priorityGrp.getOnFloor());
 			return Elevator.MVTOFLR;
 		}
 	}
 	
 	private int currStateMvToFlr(int time, Elevator elevator) {
-		int startFloor = elevator.getPrevFloor();
-		int endFloor = elevator.getCurrFloor();
+		int startFloor = elevator.getStartFloor();
+		int endFloor = elevator.getTargetFloor();
 		int ticksPerFloor = elevator.getTicksPerFloor();
-		int timeInState = elevator.getTimeInState();
 
 		elevator.incrementTicks();
-		
-		if (timeInState + 1 == Math.abs(ticksPerFloor * (endFloor - startFloor)))
+		int timeInState = elevator.getTimeInState();
+		if ((double) timeInState / ticksPerFloor == Math.abs(endFloor - startFloor)) {
+			elevator.setDirection(elevator.getPostMoveToFloorDir());
+			elevator.updateCurrFloor(endFloor);
 			return Elevator.OPENDR;
-		else
+		} else {
+			if (timeInState % ticksPerFloor == 0) {
+				elevator.updateCurrFloor(elevator.getCurrFloor() + elevator.getDirection());
+			}
 			return Elevator.MVTOFLR;
+		}
 	}
 	
 	private int currStateOpenDr(int time, Elevator elevator) {
 		int doorState = elevator.getDoorState();
 		int maxDoorTicks = elevator.getTicksDoorOpenClose();
 		
-		elevator.updateCurrFloor(elevator.getCurrFloor());
-		
-		if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
-		
+		elevator.updateCurrFloor(elevator.getCurrFloor());		
 		elevator.setDoorState(doorState + 1);
 		
 		if (doorState + 1 < maxDoorTicks) {
@@ -266,7 +272,6 @@ public class Building {
 		} else if (elevator.getPassengers() == 0) {
 			return Elevator.STOP;
 		} else {
-			if (callMgr.changeDirection(elevator)) elevator.setDirection(dir * -1);
 			return elevator.getPassengers() == 0? Elevator.STOP : Elevator.MV1FLR;
 		}
 	}
@@ -278,9 +283,14 @@ public class Building {
 			
 			ArrayList<Passengers> passengers = elevator.getAllPassengers();
 			for (Passengers p : passengers)
-				if (p.getDestFloor() == elevator.getCurrFloor()) return Elevator.OPENDR;
-			if (callMgr.callOnFloor(elevator.getCurrFloor(), elevator.getDirection()))
+				if (p.getDestFloor() == elevator.getCurrFloor()) {
+					if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);				
+					return Elevator.OPENDR;
+				}
+			if (callMgr.callOnFloor(elevator.getCurrFloor(), elevator.getDirection())) {
+				if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
 				return Elevator.OPENDR;
+			}
 		}
 		return Elevator.MV1FLR;
 	}

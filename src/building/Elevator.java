@@ -55,8 +55,12 @@ public class Elevator {
 	
 	private int postMoveToFloorDir; // This is the direction that the elevator will travel AFTER reaching
 	                                // the moveToFloor in MVTOFLR state.
-	 private int transferredPassengers; //represents the passengers getting on or off the elevator
+	private int transferredPassengers; //represents the passengers getting on or off the elevator
 
+	//for the moveToFloor method
+	private int targetFloor;
+	private int startFloor;
+	
 	@SuppressWarnings("unchecked")
 	public Elevator(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {		
 		this.prevState = STOP;
@@ -70,6 +74,7 @@ public class Elevator {
 
 		//TODO: Finish this constructor, adding configuration initialiation and
 		//      initialization of any other private fields, etc.
+		direction = 1; //up by default
 	}
 	
 	public void clearPassengers(int floor) {
@@ -248,4 +253,19 @@ public class Elevator {
 		this.postMoveToFloorDir = postMoveToFloorDir;
 	}
 
+	public int getTargetFloor() {
+		return targetFloor;
+	}
+	
+	public void setTargetFloor(int targetFloor) {
+		this.targetFloor = targetFloor;
+	}
+	
+	public int getStartFloor() {
+		return startFloor;
+	}
+	
+	public void setStartFloor(int startFloor) {
+		this.startFloor = startFloor;
+	}
 }

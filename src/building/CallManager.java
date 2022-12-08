@@ -77,50 +77,81 @@ public class CallManager {
 	 * @param floor the floor the elevator is on
 	 * @return the passengers
 	 */
-	Passengers prioritizePassengerCalls(int floor) {
+	Passengers prioritizePassengerCalls(Elevator e) {
 		updateCallStatus();
+		
+		int floor = e.getCurrFloor();
 		System.out.println(Arrays.toString(upCalls));
 		System.out.println(Arrays.toString(downCalls));
 		
-		Passengers currFloorPass = checkCurrentFloor(floor);
+		Passengers currFloorPass = checkCurrentFloor(e);
 		if (currFloorPass != null) return currFloorPass;
 		
 		int numUpCalls = 0;
 		for (int i = 0; i < floors.length; i++)
-			if (upCalls[floor]) numUpCalls++;
+			if (upCalls[i]) numUpCalls++;
 		int numDownCalls = 0;
 		for (int i = 0; i < floors.length; i++)
-			if (downCalls[floor]) numDownCalls++;
+			if (downCalls[i]) numDownCalls++;
 		
 		int highestDownCall = 0;
-		for (int i = floors.length - 1; i >= 0; i--)
-			if (downCalls[i]) highestDownCall = i;
+		for (int i = floors.length - 1; i >= 0; i--) {
+			if (downCalls[i]) {
+				highestDownCall = i;
+				break;
+			}
+		}
 		int lowestUpCall = floors.length - 1;
-		for (int i = 0; i < floors.length; i++)
-			if (upCalls[i]) lowestUpCall = i;
+		for (int i = 0; i < floors.length; i++) {
+			if (upCalls[i]) {
+				lowestUpCall = i;
+				break;
+			}
+		}
+		
+//		System.out.println(numUpCalls + ", " + numDownCalls + ", " + lowestUpCall + ", " + highestDownCall + ", " + e.getCurrFloor());
 		
 		if (numUpCalls > numDownCalls) {
-			System.out.println("1");
+//			System.out.println("1");
 			return floors[lowestUpCall].peekFloorQueue(UP);
 		} else if (numUpCalls < numDownCalls) {
-			System.out.println("2");
+//			System.out.println("2");
 			return floors[highestDownCall].peekFloorQueue(DOWN);
 		} else {
 			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor)) {
-				System.out.println("3");
+//				System.out.println("3");
 				return floors[lowestUpCall].peekFloorQueue(UP);
 			} else {
-				System.out.println("4");
+//				System.out.println("4");
 				return floors[highestDownCall].peekFloorQueue(DOWN);
 			}
 		}
 	}
 	
-	Passengers checkCurrentFloor(int floor) {
-				if (upCalls[floor])
-					return floors[floor].peekFloorQueue(UP);
-				if (downCalls[floor])
-					return floors[floor].peekFloorQueue(DOWN);
+	Passengers checkCurrentFloor(Elevator e) {
+		int floor = e.getCurrFloor();
+		if (upCalls[floor] && !downCalls[floor]) {
+			e.setDirection(UP);
+			return floors[floor].peekFloorQueue(UP);
+		} else if (downCalls[floor] && !upCalls[floor]) {
+			e.setDirection(DOWN);
+			return floors[floor].peekFloorQueue(DOWN);
+		} else if (upCalls[floor] && downCalls[floor]){
+			int downCallsBelowElevator = 0;
+			int upCallsAboveElevator = 0;
+			for (int i = 0; i < floor; i++)
+				if (downCalls[i]) downCallsBelowElevator++;
+			for (int i = floor + 1; i < floors.length; i++)
+				if (upCalls[i]) upCallsAboveElevator++;
+			if (upCallsAboveElevator >= downCallsBelowElevator) {
+				e.setDirection(UP);
+				return floors[floor].peekFloorQueue(UP);
+			} else {
+				e.setDirection(DOWN);
+				return floors[floor].peekFloorQueue(DOWN);
+			}
+		}
+		return null;
 	}
 
 	//TODO: Write any additional methods here. Things that you might consider:

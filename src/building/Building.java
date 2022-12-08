@@ -203,7 +203,9 @@ public class Building {
 		int offloaded = elevator.getOffloadedPassengers();
 		
 		if (Math.ceil((double)offloaded / elevator.getPassPerTick()) <= elevator.getTimeInState()) {
+			if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
 //			System.out.println(callMgr.callOnFloor(floor, elevator.getDirection()));
+//			System.out.println(elevator.getDirection());
 			return callMgr.callOnFloor(floor, elevator.getDirection())? Elevator.BOARD : Elevator.CLOSEDR;
 		} else {
 			return Elevator.OFFLD;

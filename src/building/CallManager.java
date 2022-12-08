@@ -193,7 +193,7 @@ public class CallManager {
 				for (Passengers p : e.getAllPassengers()) {
 					if (p.getDestFloor() > currFloor) return false;
 				}
-				return true;
+//				return true;
 			}
 		} else {
 //			System.out.print("going down, ");
@@ -216,6 +216,8 @@ public class CallManager {
 				return true;
 			}
 		}
+		
+		return false;
 	}
 	
 	boolean callPending() {
@@ -230,6 +232,8 @@ public class CallManager {
 	
 	boolean callOnFloor(int floor, int elevatorDirection) {
 		updateCallStatus();
+//		System.out.println(Arrays.toString(upCalls));
+//		System.out.println(Arrays.toString(downCalls));
 		return (elevatorDirection == UP)? upCalls[floor] : downCalls[floor];
 	}
 	

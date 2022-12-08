@@ -216,7 +216,7 @@ public class ElevatorSimulation extends Application {
 		
 		Circle[] circleArr = new Circle[passengerData[0].size()];
 		Text[] textArr = new Text[passengerData[0].size()];
-		Triangle[] triangleArr = new Triangle[passengerData[0].size()];
+//		Triangle[] triangleArr = new Triangle[passengerData[0].size()];
 		
 		for (int i = 0; i < passengerData[0].size(); i++) {
 			int numPeople = passengerData[0].get(i); // Number of people in  group

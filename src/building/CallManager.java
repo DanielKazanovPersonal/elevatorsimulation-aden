@@ -143,7 +143,7 @@ public class CallManager {
 				return true;
 			}
 		} else {
-			if (currFloor == 0 && currDir == DOWN) return true;
+			if (currFloor == 0) return true;
 
 			if (e.getPassengers() == 0) {
 				for (int i = 0; i < currFloor; i++)

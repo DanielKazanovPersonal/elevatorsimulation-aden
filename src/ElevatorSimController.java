@@ -359,11 +359,10 @@ public class ElevatorSimController {
 	public void stepSim() {
  		// DO NOT MOVE THIS - YOU MUST INCREMENT TIME FIRST!
 		stepCnt++;
-		if (!building.endSim()) {
+		if (!building.endSim(stepCnt)) {
 			building.updateFloorQueues(stepCnt);
 			building.updateElevator(stepCnt);
 		}
-
 
 		// TODO: Write the rest of this method
 		// If simulation is not completed (not all passengers have been processed
@@ -376,6 +375,9 @@ public class ElevatorSimController {
 		//		2) close the logs
 		//		3) process the passenger results
 		//		4) send endSimulation to the GUI to stop ticks.
+		
+		if (gui == null) return;
+		
 		
 		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
 			// check for arrival of new passengers

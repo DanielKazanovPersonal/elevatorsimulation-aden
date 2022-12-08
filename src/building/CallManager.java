@@ -173,30 +173,46 @@ public class CallManager {
 		updateCallStatus();
 		int currFloor = e.getCurrFloor();
 		int currDir = e.getDirection();
+//		System.out.println("initial dir " + currDir);
 		
 		if (currDir == UP) {
+//			System.out.print("going up, ");
 			if (currFloor == floors.length - 1) return true;
 
 			if (e.getPassengers() == 0) {
-				for (int i = currFloor + 1; i < floors.length; i++)
-					if (callOnFloor(i))
+				for (int i = currFloor + 1; i < floors.length; i++) {
+					if (callOnFloor(i)) {
+//						System.out.println("calls above");
 						return false;
+					}
+				}
+//				System.out.println("no calls above");
 				return true;
 			} else {
-				for (Passengers p : e.getAllPassengers())
+//				System.out.println("have passengers, ");
+				for (Passengers p : e.getAllPassengers()) {
 					if (p.getDestFloor() > currFloor) return false;
+				}
 				return true;
 			}
 		} else {
+//			System.out.print("going down, ");
 			if (currFloor == 0) return true;
 
 			if (e.getPassengers() == 0) {
-				for (int i = 0; i < currFloor; i++)
-					if (callOnFloor(i)) return false;
+				for (int i = 0; i < currFloor; i++) {
+					if (callOnFloor(i)) {
+//						System.out.println("call below");
+						return false;
+					}
+				}
+//				System.out.println("no calls below");
 				return true;
 			} else {
-				for (Passengers p : e.getAllPassengers())
+//				System.out.println("have passengers, ");
+				for (Passengers p : e.getAllPassengers()) {
 					if (p.getDestFloor() < currFloor) return false;
+				}
 				return true;
 			}
 		}
@@ -220,11 +236,5 @@ public class CallManager {
 	boolean callerIsPolite(int floor, int elevatorDirection) {
 		updateCallStatus();
 		return floors[floor].peekFloorQueue((elevatorDirection == UP)? UP : DOWN).getPolite();
-	}
-	
-	//for debug
-	void printCalls() {
-		System.out.println(Arrays.toString(upCalls));
-		System.out.println(Arrays.toString(downCalls));
 	}
 }

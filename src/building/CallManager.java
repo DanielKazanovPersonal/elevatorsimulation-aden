@@ -104,8 +104,8 @@ public class CallManager {
 		} else {
 			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor))
 				return floors[lowestUpCall].peekFloorQueue(UP);
-			else
-				return floors[highestDownCall].peekFloorQueue(DOWN);
+			else {
+				return floors[highestDownCall].peekFloorQueue(DOWN);}
 		}
 	}
 

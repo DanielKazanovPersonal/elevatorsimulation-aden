@@ -261,18 +261,21 @@ public class Building {
 		return Elevator.MV1FLR;
 	}
 
+	//bugged as fuck
 	private int figureOutWhereToGoNext(Elevator e) {
 		int eFloor = e.getCurrFloor();
 		Passengers priorityPass = callMgr.prioritizePassengerCalls(eFloor);
-		int priorityFloor = priorityPass.getOnFloor();
-		if (e.getCurrState() == Elevator.STOP) {
-			e.setDirection((priorityFloor >= eFloor)? UP : DOWN);
-			e.setPostMoveToFloorDir(callMgr.prioritizePassengerCalls(eFloor).getDestFloor() > priorityFloor? UP : DOWN);
-			if (priorityFloor == eFloor) return Elevator.OPENDR;
-			return Elevator.MVTOFLR;
-		} else {
-			e.setDirection(determineDirection(e));
-			return Elevator.MV1FLR;
+		if (priorityPass == null) {
+			int priorityFloor = priorityPass.getOnFloor();
+			if (e.getCurrState() == Elevator.STOP) {
+				e.setDirection((priorityFloor >= eFloor)? UP : DOWN);
+				e.setPostMoveToFloorDir(callMgr.prioritizePassengerCalls(eFloor).getDestFloor() > priorityFloor? UP : DOWN);
+				if (priorityFloor == eFloor) return Elevator.OPENDR;
+				return Elevator.MVTOFLR;
+			} else {
+				e.setDirection(determineDirection(e));
+				return Elevator.MV1FLR;
+			}
 		}
 	}
 	

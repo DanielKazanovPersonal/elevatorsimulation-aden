@@ -202,7 +202,8 @@ public class Elevator {
 	}
 
 	public void setDirection(int direction) {
-//		System.out.println("set direction to " + direction);
+		System.out.println("set direction to " + direction);
+//		if (direction == -1) {int x = 3/0;} //force a stacktrace dump for debug
 		this.direction = direction;
 	}
 

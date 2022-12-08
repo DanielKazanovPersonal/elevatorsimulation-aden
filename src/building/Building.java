@@ -264,14 +264,29 @@ public class Building {
 		int dir = elevator.getDirection();
 
 		elevator.setDoorState(doorState - 1);
-			
+
+		//if there is a call on the current floor in the current direction (caller isn't polite)
 		if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callerIsPolite(currFloor, dir)) {
 			return Elevator.OPENDR;
-		} else if (doorState - 1 > 0) {
+		}
+		
+		//if the elevator is empty and there is a call on the currentfloor
+		
+		
+		//if the doors are closing
+		if (doorState - 1 > 0) {
 			return Elevator.CLOSEDR;
-		} else if (elevator.getPassengers() == 0 && !callMgr.callPending()) {
-			return Elevator.STOP;
-		} else {
+		//if the doors are fully closed and elevator is empty
+		} else if (elevator.getPassengers() == 0) {
+			if (!callMgr.callPending()) { //no calls
+				return Elevator.STOP;
+			} else if (callMgr.callOnFloor(currFloor, dir)) { //call on current floor in current dir
+				return Elevator.OPENDR;
+			} else {
+				return Elevator.MV1FLR;
+			}
+		} else { //doors are fully closed but there are indeed calls on another floor
+			if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
 			return Elevator.MV1FLR;
 		}
 	}

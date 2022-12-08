@@ -1,0 +1,7 @@
+numFloors,6
+numElevators,1
+passCSV,FullElevatorTest.csv
+capacity,15
+floorTicks,5
+doorTicks,2
+passPerTick,3

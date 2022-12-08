@@ -224,6 +224,8 @@ public class Building {
 		boardedPassengers = elevator.getBoardedPassengers();
 		
 		if (Math.ceil((double) boardedPassengers / passengersPerTick) <= timeInState) {
+			attemptPassengerBoard(elevator, time);
+			if (boardedPassengers != elevator.getBoardedPassengers()) return Elevator.BOARD;
 			return Elevator.CLOSEDR;
 		} else {
 			attemptPassengerBoard(elevator, time);
@@ -240,8 +242,6 @@ public class Building {
 		int passengersPerTick = e.getPassPerTick();
 		int dir = determineDirection(e);
 		
-		System.out.println(time + ":" + floors[floor].passGoingInDir(dir));
-		
 		if (floors[floor].passGoingInDir(dir)) {
 			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
 				e.setBoardedPassengers(boardedPassengers + floors[floor].peekFloorQueue(dir).getNumPass());
@@ -250,7 +250,6 @@ public class Building {
 				logBoard(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
 			}
 		}
-		System.out.println(e.getBoardedPassengers());
 	}
 	
 	private int currStateCloseDr(int time, Elevator elevator) {

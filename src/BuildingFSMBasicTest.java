@@ -339,7 +339,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(7)
-	@Disabled
+//	@Disabled
 	void testbasicBoardOffld3() {
 		String test = "basicBoardOffld3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -358,7 +358,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(8)
-	@Disabled
+//	@Disabled
 	void testbasicBoardOffld4() {
 		String test = "basicBoardOffld4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");

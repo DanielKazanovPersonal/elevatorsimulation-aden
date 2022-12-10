@@ -261,6 +261,31 @@ public class CallManager {
 		return false;
 	}
 	
+	//note -- excludes the current floor of the elevator
+	boolean callInDirection(int direction, int currFloor) {
+		if (direction == UP) {
+			for (int i = currFloor + 1; i < floors.length; i++) {
+				if (callOnFloor(i, direction)) return true;
+			}
+		} else {
+			for (int i = 0; i < currFloor; i++) {
+				if (callOnFloor(i, direction)) return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	//might not need this tbh
+	boolean changeDirectionAfterCloseDoor(Elevator e) {
+		//if no passengers
+		
+		//if no calls in floors in the current direction
+		//and calls in floors in opposite direction
+		
+		return false;
+	}
+	
 	boolean callPending() {
 		updateCallStatus();
 		return upCallPending || downCallPending;

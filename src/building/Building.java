@@ -278,7 +278,7 @@ public class Building {
 		} else if (elevator.getPassengers() == 0) {
 			if (!callMgr.callPending()) { //no calls
 				return Elevator.STOP;
-			} else if (callMgr.callOnFloor(currFloor, dir)) { //call on current floor in current dir
+			} else if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callInDirection(dir, currFloor)) { //call on current floor in current dir			
 				return Elevator.OPENDR;
 			} else {
 				return Elevator.MV1FLR;

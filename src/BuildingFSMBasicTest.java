@@ -662,7 +662,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(24)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr2() {
 		String test = "basicClDrOpDr2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -681,7 +681,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(25)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr3() {
 		String test = "basicClDrOpDr3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -700,7 +700,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(26)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr4() {
 		String test = "basicClDrOpDr4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -719,7 +719,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(27)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr5() {
 		String test = "basicClDrOpDr5";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -738,7 +738,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(28)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr6() {
 		String test = "basicClDrOpDr6";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -757,7 +757,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(29)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr7() {
 		String test = "basicClDrOpDr7";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -776,7 +776,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(30)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr8() {
 		String test = "basicClDrOpDr8";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -795,7 +795,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(31)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr9() {
 		String test = "basicClDrOpDr9";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -814,7 +814,7 @@ class BuildingFSMBasicTest {
 
 	@Test
 	@Order(32)
-	@Disabled
+//	@Disabled
 	void testbasicClDrOpDr10() {
 		String test = "basicClDrOpDr10";
 		System.out.println("\n\nExecuting Test: "+test+".csv");

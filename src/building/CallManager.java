@@ -305,6 +305,8 @@ public class CallManager {
 	
 	boolean callerIsPolite(int floor, int elevatorDirection) {
 		updateCallStatus();
-		return floors[floor].peekFloorQueue((elevatorDirection == UP)? UP : DOWN).getPolite();
+		if (floors[floor].peekFloorQueue(elevatorDirection).getPolite()) return true;
+		floors[floor].peekFloorQueue(elevatorDirection).setPolite(true);
+		return false;
 	}
 }

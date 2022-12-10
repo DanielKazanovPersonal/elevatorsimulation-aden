@@ -186,7 +186,13 @@ public class CallManager {
 						return false;
 					}
 				}
+				
+				if (callOnFloor(currFloor)) {
+					if (upCalls[currFloor]) return false;
+				}
+				
 //				System.out.println("no calls above");
+				
 				return true;
 			} else {
 //				System.out.println("have passengers, ");
@@ -206,6 +212,11 @@ public class CallManager {
 						return false;
 					}
 				}
+				
+				if (callOnFloor(currFloor)) {
+					if (downCalls[currFloor]) return false;
+				}
+				
 //				System.out.println("no calls below");
 				return true;
 			} else {
@@ -215,6 +226,36 @@ public class CallManager {
 				}
 				return true;
 			}
+		}
+		
+		return false;
+	}
+	
+	boolean changeDirectionAfterOffload(Elevator e) {
+		updateCallStatus();
+		//changing direction logic
+		//if elevator is empty
+		//	if no calls on this floor or floors in the direction of movement
+		//	and call on this floor in the opposite direction
+
+		if (e.getPassengers() == 0) {
+			if (e.getDirection() == UP) {
+				for (int i = e.getCurrFloor() + 1; i < floors.length; i++) {
+					if (callOnFloor(i)) return false;
+				}
+				//if call on current floor in the direction of movement
+				if (callOnFloor(e.getCurrFloor(), UP)) return false;
+			} else {
+				for (int i = 0; i < e.getCurrFloor(); i++) {
+					if (callOnFloor(i)) return false;
+				}
+				//if call on current floor in the direction of movement
+				if (callOnFloor(e.getCurrFloor(), DOWN)) return false;
+			}
+			
+			//if you have reached here, then there are no calls in the current direction of the elevator
+			//if there is a call on the current floor in the opposite direction
+			if (callOnFloor(e.getCurrFloor(), e.getDirection() * -1)) return true;
 		}
 		
 		return false;

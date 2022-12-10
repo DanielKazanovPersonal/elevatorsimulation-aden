@@ -139,12 +139,12 @@ public class Building {
 			if (priorityGrp.getOnFloor() == elevator.getCurrFloor()) {
 				return Elevator.OPENDR;
 			}
-			if (callMgr.changeDirection(elevator)) {
-				elevator.setDirection(elevator.getDirection() * -1);
-			}
 			elevator.setPostMoveToFloorDir(priorityGrp.getDestFloor() - priorityGrp.getOnFloor() > 0? UP : DOWN);
 			elevator.setStartFloor(elevator.getCurrFloor());
 			elevator.setTargetFloor(priorityGrp.getOnFloor());
+			int direction = (priorityGrp.getOnFloor() - elevator.getCurrFloor()) / Math.abs(priorityGrp.getOnFloor() - elevator.getCurrFloor());
+			elevator.setDirection(direction);
+			
 			return Elevator.MVTOFLR;
 		}
 	}
@@ -202,10 +202,11 @@ public class Building {
 		
 		int offloaded = elevator.getOffloadedPassengers();
 		
+		//if done offloading
 		if (Math.ceil((double)offloaded / elevator.getPassPerTick()) <= elevator.getTimeInState()) {
-			if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
-//			System.out.println(callMgr.callOnFloor(floor, elevator.getDirection()));
-//			System.out.println(elevator.getDirection());
+
+			if (callMgr.changeDirectionAfterOffload(elevator)) elevator.setDirection(elevator.getDirection() * -1);			
+			
 			return callMgr.callOnFloor(floor, elevator.getDirection())? Elevator.BOARD : Elevator.CLOSEDR;
 		} else {
 			return Elevator.OFFLD;
@@ -231,7 +232,7 @@ public class Building {
 		
 		if (Math.ceil((double) boardedPassengers / passengersPerTick) <= timeInState) {
 			attemptPassengerBoard(elevator, time);
-			if (boardedPassengers != elevator.getBoardedPassengers()) return Elevator.BOARD;
+			if (boardedPassengers / 3 != elevator.getBoardedPassengers() / 3) return Elevator.BOARD;
 			return Elevator.CLOSEDR;
 		} else {
 			attemptPassengerBoard(elevator, time);
@@ -240,12 +241,8 @@ public class Building {
 	}
 	
 	private void attemptPassengerBoard(Elevator e, int time) {
-		int maxCap = e.getCapacity();
-		int passengersOnElevator = e.getPassengers();
 		int floor = e.getCurrFloor();
-		int timeInState = e.getTimeInState();
 		int boardedPassengers = e.getBoardedPassengers();
-		int passengersPerTick = e.getPassPerTick();
 		int dir = e.getDirection();
 		
 		if (floors[floor].passGoingInDir(dir)) {
@@ -275,6 +272,7 @@ public class Building {
 		
 		//if the doors are closing
 		if (doorState - 1 > 0) {
+			if (callMgr.changeDirection(elevator)) elevator.setDirection(dir * -1);
 			return Elevator.CLOSEDR;
 		//if the doors are fully closed and elevator is empty
 		} else if (elevator.getPassengers() == 0) {
@@ -301,10 +299,6 @@ public class Building {
 			ArrayList<Passengers> passengers = elevator.getAllPassengers();
 			for (Passengers p : passengers) {
 				if (p.getDestFloor() == elevator.getCurrFloor()) {
-//					System.out.println(callMgr.changeDirection(elevator));
-//					if (callMgr.changeDirection(elevator)) {
-//						elevator.setDirection(elevator.getDirection() * -1);			
-//					}
 					return Elevator.OPENDR;
 				}
 			}

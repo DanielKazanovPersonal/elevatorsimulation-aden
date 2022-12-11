@@ -113,9 +113,7 @@ public class ElevatorSimulation extends Application {
 		buttonSetup(hBox);
 		floorSetup();
 		elevatorSetup();
-		
-		// TODO: change line below
-//		elevatorMoveToFloor(pane, 6, body);
+		passengersGroupSetup();
 	}
 	
 	public void buttonSetup(HBox hBox) {
@@ -127,10 +125,15 @@ public class ElevatorSimulation extends Application {
 		run.setPrefHeight(PANE_HEIGHT / 9);
 		run.setOnAction(e -> controller.stepSim());
 		
-		TextField step = new TextField("Step: " + time);
-		step.setFont(font);
-		step.setPrefWidth(PANE_WIDTH / 3);
-		step.setPrefHeight(PANE_HEIGHT / 9);
+		Button stepButton = new Button("Step: ");
+		stepButton.setFont(font);
+		stepButton.setPrefWidth(PANE_WIDTH / 3);
+		stepButton.setPrefHeight(PANE_HEIGHT / 9);
+		
+		TextField stepTextField = new TextField(time + "");
+		stepTextField.setFont(font);
+		stepTextField.setPrefWidth(PANE_WIDTH / 5);
+		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
 		
 		Button log = new Button("Log");
 		log.setFont(font);
@@ -138,7 +141,7 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 		
-	    hBox.getChildren().addAll(run, step, log);
+	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
 	
 	public void floorSetup() {
@@ -163,36 +166,33 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorSetup() {
-		Rectangle[] rectangleArr = new Rectangle[NUM_ELEVATORS];
-		Line[] lineArr = new Line[NUM_ELEVATORS];
+		Rectangle rectangle = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
+		Line line = new Line();
 		
-		for (int i = 0; i < NUM_ELEVATORS; i++) {
-			rectangleArr[i] = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
-			
-			lineArr[i] = new Line();
-			lineArr[i].setStrokeWidth(3);
-			lineArr[i].setStroke(Color.LIGHTGRAY);
-			lineArr[i].setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
-			lineArr[i].setEndX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
-			lineArr[i].setStartY(ELEVATOR_Y_POSITION);
-			lineArr[i].setEndY(ELEVATOR_Y_POSITION + ELEVATOR_HEIGHT);
-			
-			Text passengers = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
-			passengers.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
-			
-			pane.getChildren().addAll(rectangleArr[i], lineArr[i], passengers);
-		}
+		rectangle.setStyle("-fx-fill: black; -fx-stroke: black; -fx-stroke-width: 5;");
+		line.setStrokeWidth(3);
+		line.setStroke(Color.LIGHTGRAY);
+		line.setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+		line.setEndX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+		line.setStartY(ELEVATOR_Y_POSITION);
+		line.setEndY(ELEVATOR_Y_POSITION + ELEVATOR_HEIGHT);
+		
+		Text passengers = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
+		passengers.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
+		
+		pane.getChildren().addAll(rectangle, line, passengers);
 	}
 	
-	// TODO: Write this method
 	public void elevatorOpenDoors() {
-		// ASK --> Multiple elevator setup, need to PASS IN which elevator to open doors to
-		// MAYBE --> Don't need to worry as will ALWAYS only have 1 elevator
+		Rectangle elevatorOpenDoors = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
+		elevatorOpenDoors.setStyle("-fx-fill: lightgray; -fx-stroke: black; -fx-stroke-width: 5;");
+		
+		pane.getChildren().addAll(elevatorOpenDoors);
 	}
 	
-	// TODO: Write this method
 	public void elevatorCloseDoors() {
-		
+		pane.getChildren().removeAll();
+		elevatorSetup();
 	}
 	
 	// TODO: Not working, need to implement correctly
@@ -216,7 +216,7 @@ public class ElevatorSimulation extends Application {
 		
 		Circle[] circleArr = new Circle[passengerData[0].size()];
 		Text[] textArr = new Text[passengerData[0].size()];
-//		Triangle[] triangleArr = new Triangle[passengerData[0].size()];
+		System.out.println(passengerData[0].size());
 		
 		for (int i = 0; i < passengerData[0].size(); i++) {
 			int numPeople = passengerData[0].get(i); // Number of people in  group
@@ -229,7 +229,7 @@ public class ElevatorSimulation extends Application {
 			
 			pane.getChildren().addAll(circleArr[i], textArr[i]);
 		}
-		
+		System.out.println("got here");
 	}
 	
 	// TODO: Write this method

@@ -217,40 +217,48 @@ public class Building {
 		int maxCap = elevator.getCapacity();
 		int passengersOnElevator = elevator.getPassengers();
 		int floor = elevator.getCurrFloor();
-		if (elevator.getTimeInState() == 0) elevator.setBoardedPassengers(0);
-		int boardedPassengers = elevator.getBoardedPassengers();
+		if (elevator.getTimeInState() == 0) {
+			elevator.setBoardedPassengers(0);
+			elevator.setCapacityFlag(false);
+		}
 		int passengersPerTick = elevator.getPassPerTick();
 		
 		elevator.incrementTicks();
 		int timeInState = elevator.getTimeInState();
 
-		if (timeInState == 1) {
-			attemptPassengerBoard(elevator, time);
-		}
+//		System.out.println(elevator.atCapacityLastTick());
 		
-		boardedPassengers = elevator.getBoardedPassengers();
-		
-		if (Math.ceil((double) boardedPassengers / passengersPerTick) <= timeInState) {
+		if (!elevator.atCapacityLastTick())
 			attemptPassengerBoard(elevator, time);
-			if (boardedPassengers / 3 != elevator.getBoardedPassengers() / 3) return Elevator.BOARD;
+		
+//		elevator.setCapacityFlag(false);
+		
+//		System.out.println(elevator.getPassengers());
+		
+		if (Math.ceil((double) elevator.getBoardedPassengers() / passengersPerTick) <= timeInState) {
 			return Elevator.CLOSEDR;
 		} else {
-			attemptPassengerBoard(elevator, time);
 			return Elevator.BOARD;
 		}
 	}
 	
 	private void attemptPassengerBoard(Elevator e, int time) {
 		int floor = e.getCurrFloor();
-		int boardedPassengers = e.getBoardedPassengers();
 		int dir = e.getDirection();
 		
-		if (floors[floor].passGoingInDir(dir)) {
-			if (e.getCapacity() > e.getAllPassengers().size() + floors[floor].peekFloorQueue(dir).getNumPass()) {
+		while (floors[floor].passGoingInDir(dir)) {
+			int boardedPassengers = e.getBoardedPassengers();
+			if (e.getCapacity() >= e.getPassengers() + floors[floor].peekFloorQueue(dir).getNumPass()) {
 				e.setBoardedPassengers(boardedPassengers + floors[floor].peekFloorQueue(dir).getNumPass());
 				Passengers p = floors[floor].removeFirstPassInQ(dir);
 				e.addPassengers(p);
 				logBoard(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
+			} else {
+				callMgr.callerIsPolite(floor, dir); //sets skipped passengers to polite to avoid call dupes
+				Passengers p = floors[floor].peekFloorQueue(dir);
+				logSkip(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
+				e.setCapacityFlag(true);
+				break;
 			}
 		}
 	}
@@ -304,8 +312,11 @@ public class Building {
 			}
 			if (callMgr.callOnFloor(elevator.getCurrFloor())) {
 				if (elevator.getPassengers() == 0) {
-					if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
-					return Elevator.OPENDR;
+					if ((elevator.getDirection() == UP && callMgr.getHighestDownCall() == elevator.getCurrFloor())
+							|| (elevator.getDirection() == DOWN && callMgr.getLowestUpCall() == elevator.getCurrFloor())) {
+						if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
+						return Elevator.OPENDR;
+					}
 				}
 				if (callMgr.callOnFloor(elevator.getCurrFloor(), elevator.getDirection())) {
 					return Elevator.OPENDR;

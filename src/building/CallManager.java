@@ -309,4 +309,19 @@ public class CallManager {
 		floors[floor].peekFloorQueue(elevatorDirection).setPolite(true);
 		return false;
 	}
+	
+	int getLowestUpCall() {
+		for (int i = 0; i < floors.length; i++) {
+			if (upCalls[i]) return i;
+		}
+		return floors.length - 1;
+	}
+	
+	int getHighestDownCall() {
+		for (int i = floors.length - 1; i >= 0; i--) {
+			if (downCalls[i]) return i;
+		}
+		
+		return 0;
+	}
 }

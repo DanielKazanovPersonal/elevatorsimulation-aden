@@ -225,7 +225,7 @@ class BuildingFSMCapTest {
 
 	@Test
 	@Order(1)
-	//@Disabled
+//	@Disabled
 	void testCapTest1() {
 		String test = "CapTest1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -244,7 +244,7 @@ class BuildingFSMCapTest {
 
 	@Test
 	@Order(2)
-	//@Disabled
+//	@Disabled
 	void testCapTest2() {
 		String test = "CapTest2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -263,7 +263,7 @@ class BuildingFSMCapTest {
 
 	@Test
 	@Order(3)
-	//@Disabled
+//	@Disabled
 	void testCapTest3() {
 		String test = "CapTest3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -282,7 +282,7 @@ class BuildingFSMCapTest {
 
 	@Test
 	@Order(4)
-	//@Disabled
+//	@Disabled
 	void testCapTest4() {
 		String test = "CapTest4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -301,7 +301,7 @@ class BuildingFSMCapTest {
 
 	@Test
 	@Order(5)
-	//@Disabled
+//	@Disabled
 	void testCapTest5() {
 		String test = "CapTest5";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -320,7 +320,7 @@ class BuildingFSMCapTest {
 
 	@Test
 	@Order(6)
-	//@Disabled
+//	@Disabled
 	void testCapTest6() {
 		String test = "CapTest6";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -339,7 +339,7 @@ class BuildingFSMCapTest {
 
 	@Test
 	@Order(7)
-	//@Disabled
+//	@Disabled
 	void testCapTest7() {
 		String test = "CapTest7";
 		System.out.println("\n\nExecuting Test: "+test+".csv");

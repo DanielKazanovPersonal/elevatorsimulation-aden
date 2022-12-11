@@ -61,6 +61,8 @@ public class Elevator {
 	private int targetFloor;
 	private int startFloor;
 	
+	private boolean atCapLastTick;
+	
 	@SuppressWarnings("unchecked")
 	public Elevator(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {		
 		this.prevState = STOP;
@@ -202,7 +204,7 @@ public class Elevator {
 	}
 
 	public void setDirection(int direction) {
-		System.out.println("set direction to " + direction);
+//		System.out.println("set direction to " + direction);
 //		if (direction == -1) {int x = 3/0;} //force a stacktrace dump for debug
 		this.direction = direction;
 	}
@@ -269,5 +271,13 @@ public class Elevator {
 	
 	public void setStartFloor(int startFloor) {
 		this.startFloor = startFloor;
+	}
+	
+	boolean atCapacityLastTick() {
+		return atCapLastTick;
+	}
+	
+	void setCapacityFlag(boolean flag) {
+		atCapLastTick = flag;
 	}
 }

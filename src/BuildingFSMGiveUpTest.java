@@ -224,7 +224,7 @@ class BuildingFSMGiveUpTest {
 	}
 	@Test
 	@Order(1)
-	//@Disabled
+//	@Disabled
 	void testGiveUpTest1() {
 		String test = "GiveUpTest1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -243,7 +243,7 @@ class BuildingFSMGiveUpTest {
 
 	@Test
 	@Order(2)
-	//@Disabled
+//	@Disabled
 	void testGiveUpTest2() {
 		String test = "GiveUpTest2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -262,7 +262,7 @@ class BuildingFSMGiveUpTest {
 
 	@Test
 	@Order(3)
-	//@Disabled
+//	@Disabled
 	void testGiveUpTest3() {
 		String test = "GiveUpTest3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -281,7 +281,7 @@ class BuildingFSMGiveUpTest {
 
 	@Test
 	@Order(4)
-	//@Disabled
+//	@Disabled
 	void testGiveUpTest4() {
 		String test = "GiveUpTest4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");

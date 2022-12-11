@@ -248,7 +248,11 @@ public class Building {
 		
 		while (floors[floor].passGoingInDir(dir)) {
 			int boardedPassengers = e.getBoardedPassengers();
-			if (e.getCapacity() >= e.getPassengers() + floors[floor].peekFloorQueue(dir).getNumPass()) {
+			Passengers frontGrp = floors[floor].peekFloorQueue(dir);
+			if (frontGrp.getWaitTime() + frontGrp.getTime() < time) {
+				logGiveUp(time, frontGrp.getNumPass(), frontGrp.getOnFloor(), frontGrp.getDirection(), frontGrp.getId());
+				floors[floor].removeFirstPassInQ(dir);
+			} else if (e.getCapacity() >= e.getPassengers() + floors[floor].peekFloorQueue(dir).getNumPass()) {
 				e.setBoardedPassengers(boardedPassengers + floors[floor].peekFloorQueue(dir).getNumPass());
 				Passengers p = floors[floor].removeFirstPassInQ(dir);
 				e.addPassengers(p);

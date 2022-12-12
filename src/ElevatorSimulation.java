@@ -47,10 +47,15 @@ public class ElevatorSimulation extends Application {
 	private final int PANE_WIDTH = 700;
 	private final int PANE_HEIGHT = 700;
 	
+	private Rectangle elevatorRectangle;
+	private Line elevatorLine;
+	private Text elevatorText;
 	private final int ELEVATOR_WIDTH;
 	private final int ELEVATOR_HEIGHT;
 	private int ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
 	private int ELEVATOR_Y_POSITION = (PANE_HEIGHT / 2);
+	
+	private Rectangle elevatorOpenDoors;
 	
 	/**
 	 * Instantiates a new elevator simulation.
@@ -123,12 +128,16 @@ public class ElevatorSimulation extends Application {
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
 		run.setPrefHeight(PANE_HEIGHT / 9);
-		run.setOnAction(e -> controller.stepSim());
+//		run.setOnAction(e -> controller.stepSim());
+		
+		run.setOnAction(e -> elevatorCloseDoors()); // TODO: DELETE
 		
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
 		stepButton.setPrefWidth(PANE_WIDTH / 3);
 		stepButton.setPrefHeight(PANE_HEIGHT / 9);
+		
+		stepButton.setOnAction(e -> elevatorOpenDoors()); // TODO: DELETE
 		
 		TextField stepTextField = new TextField(time + "");
 		stepTextField.setFont(font);
@@ -166,32 +175,34 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorSetup() {
-		Rectangle rectangle = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
-		Line line = new Line();
+		elevatorRectangle = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
+		elevatorLine = new Line();
 		
-		rectangle.setStyle("-fx-fill: black; -fx-stroke: black; -fx-stroke-width: 5;");
-		line.setStrokeWidth(3);
-		line.setStroke(Color.LIGHTGRAY);
-		line.setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
-		line.setEndX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
-		line.setStartY(ELEVATOR_Y_POSITION);
-		line.setEndY(ELEVATOR_Y_POSITION + ELEVATOR_HEIGHT);
+		elevatorRectangle.setStyle("-fx-fill: black; -fx-stroke: black; -fx-stroke-width: 5;");
+		elevatorLine.setStrokeWidth(3);
+		elevatorLine.setStroke(Color.LIGHTGRAY);
+		elevatorLine.setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+		elevatorLine.setEndX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
+		elevatorLine.setStartY(ELEVATOR_Y_POSITION);
+		elevatorLine.setEndY(ELEVATOR_Y_POSITION + ELEVATOR_HEIGHT);
 		
-		Text passengers = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
-		passengers.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
+		elevatorText = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
+		elevatorText.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
 		
-		pane.getChildren().addAll(rectangle, line, passengers);
+		pane.getChildren().addAll(elevatorRectangle, elevatorLine, elevatorText);
 	}
 	
 	public void elevatorOpenDoors() {
-		Rectangle elevatorOpenDoors = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
+		elevatorOpenDoors = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
 		elevatorOpenDoors.setStyle("-fx-fill: lightgray; -fx-stroke: black; -fx-stroke-width: 5;");
 		
 		pane.getChildren().addAll(elevatorOpenDoors);
 	}
 	
 	public void elevatorCloseDoors() {
-		pane.getChildren().removeAll();
+		pane.getChildren().removeAll(elevatorRectangle, elevatorLine, elevatorText);
+		pane.getChildren().removeAll(elevatorOpenDoors);
+		ELEVATOR_X_POSITION += 50; // TODO: Delete
 		elevatorSetup();
 	}
 	
@@ -219,7 +230,7 @@ public class ElevatorSimulation extends Application {
 		System.out.println(passengerData[0].size());
 		
 		for (int i = 0; i < passengerData[0].size(); i++) {
-			int numPeople = passengerData[0].get(i); // Number of people in  group
+			int numPeople = passengerData[0].get(i); // Number of people in group
 			int currFloor = passengerData[1].get(i); // Current floor
 			int destFloor = passengerData[2].get(i); // Destination floor
 			int politeness = passengerData[3].get(i); // Politeness (0 is impolite, 1 is polite)

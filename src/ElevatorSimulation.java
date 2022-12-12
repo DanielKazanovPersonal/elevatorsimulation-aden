@@ -52,8 +52,8 @@ public class ElevatorSimulation extends Application {
 	private Text elevatorText;
 	private final int ELEVATOR_WIDTH;
 	private final int ELEVATOR_HEIGHT;
-	private int ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
-	private int ELEVATOR_Y_POSITION = (PANE_HEIGHT / 2);
+	private int ELEVATOR_X_POSITION;
+	private int ELEVATOR_Y_POSITION;
 	
 	private Rectangle elevatorOpenDoors;
 	
@@ -68,6 +68,8 @@ public class ElevatorSimulation extends Application {
 		
 		ELEVATOR_WIDTH = (PANE_WIDTH / 10);
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
+		ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
+		ELEVATOR_Y_POSITION = PANE_HEIGHT - (PANE_HEIGHT / (NUM_FLOORS + 1)) - ELEVATOR_HEIGHT;
 	}
 	
 	
@@ -115,6 +117,8 @@ public class ElevatorSimulation extends Application {
 		borderPane.setBottom(hBox);
 		primaryStage.setScene(scene);
 		
+		currFloor = 1;
+		
 		buttonSetup(hBox);
 		floorSetup();
 		elevatorSetup();
@@ -150,13 +154,15 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 		
+		log.setOnAction(e -> elevatorMoveToFloor(7)); // TODO: DELETE
+		
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
 	
 	public void floorSetup() {
 		Line[] lineArr = new Line[NUM_FLOORS];
 		Text[] labelArr = new Text[NUM_FLOORS];
-		int yLocation = PANE_HEIGHT - (PANE_HEIGHT / 8);
+		int yLocation = PANE_HEIGHT - (PANE_HEIGHT / (NUM_FLOORS + 1));
 		
 		for (int i = 0; i < NUM_FLOORS; i++) {
 			lineArr[i] = new Line();
@@ -189,7 +195,16 @@ public class ElevatorSimulation extends Application {
 		elevatorText = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
 		elevatorText.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
 		
+		
 		pane.getChildren().addAll(elevatorRectangle, elevatorLine, elevatorText);
+	}
+	
+	public void removeClosedElevator() {
+		pane.getChildren().removeAll(elevatorRectangle, elevatorLine, elevatorText);
+	}
+	
+	public void removeOpenElevator() {
+		pane.getChildren().removeAll(elevatorOpenDoors);
 	}
 	
 	public void elevatorOpenDoors() {
@@ -200,19 +215,21 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorCloseDoors() {
-		pane.getChildren().removeAll(elevatorRectangle, elevatorLine, elevatorText);
-		pane.getChildren().removeAll(elevatorOpenDoors);
-		ELEVATOR_X_POSITION += 50; // TODO: Delete
+		removeClosedElevator();
+		removeOpenElevator();
 		elevatorSetup();
 	}
 	
 	// TODO: Not working, need to implement correctly
-	public void elevatorMoveToFloor(int floor, Rectangle body) {
-		for (int i = (int)body.getY(); i < (PANE_HEIGHT / floor); i++) {
-			body.setY(body.getY() + i);
-			pane.getChildren().remove(body);
-			pane.getChildren().add(body);
+	public void elevatorMoveToFloor(int floor) {
+		for (int i = PANE_HEIGHT - (PANE_HEIGHT / (currFloor + 1)) - ELEVATOR_HEIGHT; i < PANE_HEIGHT - (PANE_HEIGHT / (floor + 1)) - ELEVATOR_HEIGHT; i++) {
+			ELEVATOR_Y_POSITION -= i;
+			removeClosedElevator();
+			removeOpenElevator();
+			elevatorSetup();
 		}
+		currFloor = floor;
+		ELEVATOR_Y_POSITION = PANE_HEIGHT - (PANE_HEIGHT / (currFloor + 1)) - ELEVATOR_HEIGHT;
 	}
 	
 	// TODO: Write this method

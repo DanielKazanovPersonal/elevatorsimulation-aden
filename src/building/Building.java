@@ -87,7 +87,7 @@ public class Building {
 	/**
 	 * Called by the controller to retrieve data about passengers in the floor queues
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @return an array of arraylists, where each arraylist is a list of a given passenger attribute
 	 */
@@ -119,18 +119,38 @@ public class Building {
 		return(elevators[0].getCurrState());
 	}
 
+	/**
+	 * Gets the elevator target floor.
+	 *
+	 * @return the elevator target floor
+	 */
 	public int getElevatorTargetFloor() {
 		return(elevators[0].getTargetFloor());
 	}
 
+	/**
+	 * Gets the elevator curr floor.
+	 *
+	 * @return the elevator curr floor
+	 */
 	public int getElevatorCurrFloor() {
 		return(elevators[0].getCurrFloor());
 	}
 
+	/**
+	 * Gets the elevator direction.
+	 *
+	 * @return the elevator direction
+	 */
 	public int getElevatorDirection() {
 		return(elevators[0].getDirection());
 	}
 
+	/**
+	 * Pass going to floor on elevator.
+	 *
+	 * @return the int
+	 */
 	public int passGoingToFloorOnElevator() {
 		return(elevators[0].getPassWithDestFloor(getElevatorCurrFloor()).size());
 	}
@@ -153,7 +173,7 @@ public class Building {
 	/**
 	 * Called before each update tick to move passengers from the main queue into the floor queues
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param timeSinceSimStart time since the start of the simulation
 	 */
@@ -171,7 +191,7 @@ public class Building {
 	/**
 	 * Whether or not the elevator's state changed from the previous tick
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param e elevator to check
 	 * @return whether or not the state has changed
@@ -183,7 +203,7 @@ public class Building {
 	/**
 	 * Calculates next state after stop state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -236,7 +256,7 @@ public class Building {
 	/**
 	 * Calculates next state after opendr state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify

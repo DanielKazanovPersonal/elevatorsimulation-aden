@@ -108,7 +108,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void mainSetup(Stage primaryStage) {
-		t = new Timeline(new KeyFrame(Duration.millis(1000), ae -> controller.stepSim()));
+		t = new Timeline(new KeyFrame(Duration.millis(500), ae -> controller.stepSim()));
 		
 		BorderPane borderPane = new BorderPane();
 		pane = new Pane();
@@ -152,7 +152,7 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 		
-		log.setOnAction(e -> elevatorMoveToFloor(4)); // TODO: DELETE
+		log.setOnAction(e -> elevatorMoveToFloor(5)); // TODO: DELETE
 		
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
@@ -219,20 +219,19 @@ public class ElevatorSimulation extends Application {
 		elevatorClosedDoors();
 	}
 	
-	// TODO: Not working, need to implement correctly
 	public void elevatorMoveToFloor(int floor) {
 		if (ELEVATOR_Y_POSITION > floorPositions[floor - 1]) {
 			ELEVATOR_Y_POSITION--;
-		} else {
+		} else if (ELEVATOR_Y_POSITION < floorPositions[floor - 1]) {
 			ELEVATOR_Y_POSITION++;
+		} else {
+			currFloor = floor;
+			ELEVATOR_Y_POSITION = floorPositions[floor - 1];
 		}
-			
-			removeClosedElevator();
-			removeOpenElevator();
-			elevatorClosedDoors();
 		
-		currFloor = floor;
-		ELEVATOR_Y_POSITION = floorPositions[floor - 1];
+		removeClosedElevator();
+		removeOpenElevator();
+		elevatorClosedDoors();
 	}
 	
 	// TODO: Write this method

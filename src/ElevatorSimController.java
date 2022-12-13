@@ -404,6 +404,10 @@ public class ElevatorSimController {
 		}
 	}
 	
+	public int getElevatorDirection() {
+		return building.getElevatorDirection()
+	}
+
 	/**
 	 * Gets the building. ONLY USED FOR JUNIT TESTING - YOUR GUI SHOULD NOT ACCESS THIS!.
 	 *

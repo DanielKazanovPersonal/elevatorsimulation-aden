@@ -109,6 +109,32 @@ public class Building {
 		return data;
 	}
 
+	
+	/**
+	 * Gets the elevator state.
+	 *
+	 * @return the elevator state
+	 */
+	public int getElevatorState() {
+		return(elevators[0].getCurrState());
+	}
+
+	public int getElevatorTargetFloor() {
+		return(elevators[0].getTargetFloor());
+	}
+
+	public int getElevatorCurrFloor() {
+		return(elevators[0].getCurrFloor());
+	}
+
+	public int getElevatorDirection() {
+		return(elevators[0].getDirection());
+	}
+
+	public int passGoingToFloorOnElevator() {
+		return(elevators[0].getPassWithDestFloor(getElevatorCurrFloor()).size());
+	}
+
 	/**
 	 * Configures the elevators with the passed in parameters
 	 * 

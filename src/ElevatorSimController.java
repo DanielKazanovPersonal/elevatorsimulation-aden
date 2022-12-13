@@ -381,8 +381,19 @@ public class ElevatorSimController {
 		
 		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
 			// check for arrival of new passengers
-			gui.elevatorMoveToFloor(5); // 	 BUILDING CLASS --> public void updateElevator(int time) {
-			gui.passengersGroupSetup();
+			if (building.getElevatorState() == 1) { // 1 is movetofloor and 6 is move1floor
+				gui.elevatorMoveToFloor(building.getElevatorTargetFloor()); // 	 BUILDING CLASS --> public void updateElevator(int time) {
+				gui.passengersGroupSetup();
+			} else if (building.getElevatorState() == 6) {
+				gui.elevatorMoveToFloor(building.getElevatorCurrFloor() + building.getElevatorDirection());
+				gui.passengersGroupSetup();
+			} else if (building.getElevatorState() == 2) { // open door
+				gui.elevatorOpenDoors();
+			} else if (building.getElevatorState() == 5) { // close door
+				gui.elevatorCloseDoors();
+			} else if (building.getElevatorState() == 3) { // off load
+				gui.setPassengers(gui.getPassengers() - building.passGoingToFloorOnElevator());
+			}
 		} else {
 			gui.passengersGroupSetup();
 			building.closeLogs(stepCnt);

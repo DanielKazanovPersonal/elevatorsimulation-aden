@@ -223,7 +223,7 @@ public class Building {
 		int maxDoorTicks = elevator.getTicksDoorOpenClose();
 		
 		elevator.updateCurrFloor(elevator.getCurrFloor());		
-		elevator.setDoorState(doorState + 1);
+		elevator.openDoor();
 		
 		if (doorState + 1 < maxDoorTicks) {
 			return Elevator.OPENDR;
@@ -342,7 +342,7 @@ public class Building {
 		int currFloor = elevator.getCurrFloor();
 		int dir = elevator.getDirection();
 
-		elevator.setDoorState(doorState - 1);
+		elevator.closeDoor();
 
 		if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callerIsPolite(currFloor, dir))
 			return Elevator.OPENDR;

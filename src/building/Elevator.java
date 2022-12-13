@@ -157,6 +157,20 @@ public class Elevator {
 		direction *= -1;
 	}
 	
+	/**
+	 * Opens the door by 1 tick
+	 */
+	void openDoor() {
+		doorState += 1;
+	}
+	
+	/**
+	 * Closes the door by 1 tick
+	 */
+	void closeDoor() {
+		doorState -= 1;
+	}
+	
 	public int getPrevState() {
 		return this.prevState;
 	}
@@ -249,10 +263,6 @@ public class Elevator {
 
 	public int getDoorState() {
 		return this.doorState;
-	}
-
-	public void setDoorState(int doorState) {
-		this.doorState = doorState;
 	}
 
 	public int getPassengers() {

@@ -121,6 +121,42 @@ public class Elevator {
 		passengers += p.getNumPass();
 	}
 	
+	/**
+	 * Updates the current floor of the elevator
+	 * @param newFloor new floor of the elevator
+	 */
+	public void updateCurrFloor(int newFloor) {
+		prevFloor = currFloor;
+		currFloor = newFloor;
+	}
+	/**
+	 * Updates the current state of the elevator
+	 * @param newState new state of the elevator
+	 */
+	public void updateCurrState(int newState) {
+		prevState = currState;
+		currState = newState;
+		if (newState != prevState)
+			timeInState = 0;
+	}
+
+	/**
+	 * Gets a list of all passengers with a given destination floor
+	 * 
+	 * @param floor destination floor
+	 * @return list of passengers with destination floor of floor
+	 */
+	public ArrayList<Passengers> getPassWithDestFloor(int floor) {
+		return passByFloor[floor];
+	}
+	
+	/**
+	 * Flips the direction of the elevator
+	 */
+	void flipDirections() {
+		direction *= -1;
+	}
+	
 	public int getPrevState() {
 		return this.prevState;
 	}
@@ -135,15 +171,6 @@ public class Elevator {
 
 	public int getCurrFloor() {
 		return this.currFloor;
-	}
-	
-	/**
-	 * Updates the current floor of the elevator
-	 * @param newFloor new floor of the elevator
-	 */
-	public void updateCurrFloor(int newFloor) {
-		prevFloor = currFloor;
-		currFloor = newFloor;
 	}
 	
 	public int getCapacity() {
@@ -178,16 +205,7 @@ public class Elevator {
 		return this.passPerTick;
 	}
 
-	/**
-	 * Updates the current state of the elevator
-	 * @param newState new state of the elevator
-	 */
-	public void updateCurrState(int newState) {
-		prevState = currState;
-		currState = newState;
-		if (newState != prevState)
-			timeInState = 0;
-	}
+	
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
@@ -216,8 +234,8 @@ public class Elevator {
 	public int getDirection() {
 		return this.direction;
 	}
-
-	public void setDirection(int direction) {
+	
+	void setDirection(int direction) {
 		this.direction = direction;
 	}
 
@@ -243,11 +261,6 @@ public class Elevator {
 
 	public void setPassengers(int passengers) {
 		this.passengers = passengers;
-	}
-
-	//TODO: REMOVE
-	public ArrayList<Passengers>[] getPassByFloor() {
-		return this.passByFloor;
 	}
 
 	public int getPostMoveToFloorDir() {

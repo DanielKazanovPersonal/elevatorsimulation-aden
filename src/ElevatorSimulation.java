@@ -152,7 +152,7 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 		
-		log.setOnAction(e -> elevatorMoveToFloor(2)); // TODO: DELETE
+		log.setOnAction(e -> elevatorMoveToFloor(4)); // TODO: DELETE
 		
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
@@ -221,17 +221,15 @@ public class ElevatorSimulation extends Application {
 	
 	// TODO: Not working, need to implement correctly
 	public void elevatorMoveToFloor(int floor) {
-		while (ELEVATOR_Y_POSITION != floorPositions[floor - 1]) { // stepSim calls this class, it should only move up by 1 y location since it will be called by the stepSim over and over again
-			if (ELEVATOR_Y_POSITION > floorPositions[floor - 1]) {
-				ELEVATOR_Y_POSITION--;
-			} else {
-				ELEVATOR_Y_POSITION++;
-			}
+		if (ELEVATOR_Y_POSITION > floorPositions[floor - 1]) {
+			ELEVATOR_Y_POSITION--;
+		} else {
+			ELEVATOR_Y_POSITION++;
+		}
 			
 			removeClosedElevator();
 			removeOpenElevator();
 			elevatorClosedDoors();
-		}
 		
 		currFloor = floor;
 		ELEVATOR_Y_POSITION = floorPositions[floor - 1];

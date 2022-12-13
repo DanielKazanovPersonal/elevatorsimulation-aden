@@ -381,10 +381,10 @@ public class ElevatorSimController {
 		
 		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
 			// check for arrival of new passengers
-			gui.updateElevator(); // 	 BUILDING CLASS --> public void updateElevator(int time) {
-			gui.updateGUI();
+			gui.elevatorMoveToFloor(5); // 	 BUILDING CLASS --> public void updateElevator(int time) {
+			gui.passengersGroupSetup();
 		} else {
-			gui.updateGUI();
+			gui.passengersGroupSetup();
 			building.closeLogs(stepCnt);
 			// process the passenger results
 			gui.endSimulation();

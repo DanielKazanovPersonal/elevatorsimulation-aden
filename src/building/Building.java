@@ -168,14 +168,12 @@ public class Building {
 			return Elevator.STOP;
 		} else {
 			Passengers priorityGrp = callMgr.prioritizePassengerCalls(elevator);
-			if (priorityGrp.getOnFloor() == elevator.getCurrFloor()) {
+			if (priorityGrp.getOnFloor() == elevator.getCurrFloor())
 				return Elevator.OPENDR;
-			}
 			elevator.setPostMoveToFloorDir(priorityGrp.getDestFloor() - priorityGrp.getOnFloor() > 0? UP : DOWN);
 			elevator.setStartFloor(elevator.getCurrFloor());
 			elevator.setTargetFloor(priorityGrp.getOnFloor());
-			int direction = (priorityGrp.getOnFloor() - elevator.getCurrFloor()) / Math.abs(priorityGrp.getOnFloor() - elevator.getCurrFloor());
-			elevator.setDirection(direction);
+			elevator.setDirection((priorityGrp.getOnFloor() - elevator.getCurrFloor()) / Math.abs(priorityGrp.getOnFloor() - elevator.getCurrFloor()));
 			
 			return Elevator.MVTOFLR;
 		}
@@ -306,22 +304,20 @@ public class Building {
 	private void attemptPassengerBoard(Elevator e, int time) {
 		int floor = e.getCurrFloor();
 		int dir = e.getDirection();
-		
 		while (floors[floor].passGoingInDir(dir)) {
 			int boardedPassengers = e.getBoardedPassengers();
 			Passengers frontGrp = floors[floor].peekFloorQueue(dir);
 			if (frontGrp.getWaitTime() + frontGrp.getTime() < time) {
 				logGiveUp(time, frontGrp.getNumPass(), frontGrp.getOnFloor(), frontGrp.getDirection(), frontGrp.getId());
 				floors[floor].removeFirstPassInQ(dir);
-			} else if (e.getCapacity() >= e.getPassengers() + floors[floor].peekFloorQueue(dir).getNumPass()) {
-				e.setBoardedPassengers(boardedPassengers + floors[floor].peekFloorQueue(dir).getNumPass());
-				Passengers p = floors[floor].removeFirstPassInQ(dir);
-				e.addPassengers(p);
-				logBoard(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
+			} else if (e.getCapacity() >= e.getPassengers() + frontGrp.getNumPass()) {
+				e.setBoardedPassengers(boardedPassengers + frontGrp.getNumPass());
+				floors[floor].removeFirstPassInQ(dir);
+				e.addPassengers(frontGrp);
+				logBoard(time, frontGrp.getNumPass(), frontGrp.getOnFloor(), frontGrp.getDirection(), frontGrp.getId());
 			} else {
 				callMgr.callerIsPolite(floor, dir); //sets skipped passengers to polite to avoid call dupes
-				Passengers p = floors[floor].peekFloorQueue(dir);
-				logSkip(time, p.getNumPass(), p.getOnFloor(), p.getDirection(), p.getId());
+				logSkip(time, frontGrp.getNumPass(), frontGrp.getOnFloor(), frontGrp.getDirection(), frontGrp.getId());
 				e.setCapacityFlag(true);
 				break;
 			}
@@ -374,31 +370,30 @@ public class Building {
 	 */
 	private int currStateMv1Flr(int time, Elevator elevator) {
 		elevator.incrementTicks();
+		int dir = elevator.getDirection();
+		int floor = elevator.getCurrFloor();
 		if (elevator.getTimeInState() % elevator.getTicksPerFloor() == 0) {
-			elevator.updateCurrFloor(elevator.getCurrFloor() + elevator.getDirection());
-			
+			elevator.updateCurrFloor(floor + dir);
+			floor += dir;			
 			ArrayList<Passengers> passengers = elevator.getAllPassengers();
 			for (Passengers p : passengers) {
-				if (p.getDestFloor() == elevator.getCurrFloor()) {
+				if (p.getDestFloor() == floor)
 					return Elevator.OPENDR;
-				}
 			}
-			if (callMgr.callOnFloor(elevator.getCurrFloor())) {
+			if (callMgr.callOnFloor(floor)) {
 				if (elevator.getPassengers() == 0) {
-					if ((elevator.getDirection() == UP && callMgr.getHighestDownCall() == elevator.getCurrFloor())
-							|| (elevator.getDirection() == DOWN && callMgr.getLowestUpCall() == elevator.getCurrFloor())) {
-						if (callMgr.changeDirection(elevator)) elevator.flipDirections();
+					if ((dir == UP && callMgr.getHighestDownCall() == floor) || (dir == DOWN && callMgr.getLowestUpCall() == floor)) {
+						if (callMgr.changeDirection(elevator)) 
+							elevator.flipDirections();
 						return Elevator.OPENDR;
 					}
 				}
-				if (callMgr.callOnFloor(elevator.getCurrFloor(), elevator.getDirection())) {
+				if (callMgr.callOnFloor(floor, dir)) 
 					return Elevator.OPENDR;
-				}
 			}
 		}
-		if (callMgr.changeDirection(elevator)) {
+		if (callMgr.changeDirection(elevator))
 			elevator.flipDirections();
-		}
 		return Elevator.MV1FLR;
 	}
 	

@@ -88,30 +88,17 @@ public class CallManager {
 		int numDownCalls = 0;
 		for (int i = 0; i < floors.length; i++)
 			if (downCalls[i]) numDownCalls++;
-		int highestDownCall = 0;
-		for (int i = floors.length - 1; i >= 0; i--) {
-			if (downCalls[i]) {
-				highestDownCall = i;
-				break;
-			}
-		}
-		int lowestUpCall = floors.length - 1;
-		for (int i = 0; i < floors.length; i++) {
-			if (upCalls[i]) {
-				lowestUpCall = i;
-				break;
-			}
-		}
+		int highestDownCall = getHighestDownCall();
+		int lowestUpCall = getLowestUpCall();
 		if (numUpCalls > numDownCalls) {
 			return floors[lowestUpCall].peekFloorQueue(UP);
 		} else if (numUpCalls < numDownCalls) {
 			return floors[highestDownCall].peekFloorQueue(DOWN);
 		} else {
-			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor)) {
+			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor))
 				return floors[lowestUpCall].peekFloorQueue(UP);
-			} else {
+			else
 				return floors[highestDownCall].peekFloorQueue(DOWN);
-			}
 		}
 	}
 	
@@ -160,15 +147,12 @@ public class CallManager {
 	boolean changeDirection(Elevator e) {
 		updateCallStatus();
 		int currFloor = e.getCurrFloor();
-		int currDir = e.getDirection();
-		if (currDir == UP) {
+		if (e.getDirection() == UP) {
 			if (currFloor == floors.length - 1) return true;
 			if (e.getPassengers() == 0) {
 				for (int i = currFloor + 1; i < floors.length; i++)
 					if (callOnFloor(i)) return false;
-				if (callOnFloor(currFloor))
-					if (upCalls[currFloor]) return false;
-				return true;
+				return !(callOnFloor(currFloor) && upCalls[currFloor]);
 			} else {
 				for (Passengers p : e.getAllPassengers())
 					if (p.getDestFloor() > currFloor) return false;
@@ -176,13 +160,9 @@ public class CallManager {
 		} else {
 			if (currFloor == 0) return true;
 			if (e.getPassengers() == 0) {
-				for (int i = 0; i < currFloor; i++) {
-					if (callOnFloor(i))
-						return false;
-				}
-				if (callOnFloor(currFloor))
-					if (downCalls[currFloor]) return false;
-				return true;
+				for (int i = 0; i < currFloor; i++)
+					if (callOnFloor(i)) return false;
+				return !(callOnFloor(currFloor) && downCalls[currFloor]);
 			} else {
 				for (Passengers p : e.getAllPassengers())
 					if (p.getDestFloor() < currFloor) return false;
@@ -202,17 +182,19 @@ public class CallManager {
 	 */
 	boolean changeDirectionAfterOffload(Elevator e) {
 		updateCallStatus();
+		int dir = e.getDirection();
+		int floor = e.getCurrFloor();
 		if (e.getPassengers() == 0) {
-			if (e.getDirection() == UP) {
-				for (int i = e.getCurrFloor() + 1; i < floors.length; i++)
+			if (dir == UP) {
+				for (int i = floor + 1; i < floors.length; i++)
 					if (callOnFloor(i)) return false;
-				if (callOnFloor(e.getCurrFloor(), UP)) return false;
+				if (callOnFloor(floor, UP)) return false;
 			} else {
-				for (int i = 0; i < e.getCurrFloor(); i++)
+				for (int i = 0; i < floor; i++)
 					if (callOnFloor(i)) return false;
-				if (callOnFloor(e.getCurrFloor(), DOWN)) return false;
+				if (callOnFloor(floor, DOWN)) return false;
 			}
-			if (callOnFloor(e.getCurrFloor(), e.getDirection() * -1)) return true;
+			if (callOnFloor(floor, dir * -1)) return true;
 		}
 		return false;
 	}
@@ -228,15 +210,12 @@ public class CallManager {
 	 */
 	boolean callInDirection(int direction, int currFloor) {
 		if (direction == UP) {
-			for (int i = currFloor + 1; i < floors.length; i++) {
+			for (int i = currFloor + 1; i < floors.length; i++)
 				if (callOnFloor(i, direction)) return true;
-			}
 		} else {
-			for (int i = 0; i < currFloor; i++) {
+			for (int i = 0; i < currFloor; i++)
 				if (callOnFloor(i, direction)) return true;
-			}
 		}
-		
 		return false;
 	}
 
@@ -279,7 +258,15 @@ public class CallManager {
 		return (elevatorDirection == UP)? upCalls[floor] : downCalls[floor];
 	}
 	
-	//TODO: might wanna move this into the building
+	/**
+	 * Whether or not a caller on a given floor is polite, will also set them to polite to avoid infinite loops
+	 * Author: RT
+	 * Reviewer: __
+	 * 
+	 * @param floor floor of call
+	 * @param elevatorDirection direction of call
+	 * @return whether or not the first caller in the queue is polite
+	 */
 	boolean callerIsPolite(int floor, int elevatorDirection) {
 		updateCallStatus();
 		if (floors[floor].peekFloorQueue(elevatorDirection).isPolite()) return true;

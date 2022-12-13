@@ -35,6 +35,10 @@ public class ElevatorSimulation extends Application {
 		return passengers;
 	}
 	
+	public void setPassengers(int passengers) {
+		this.passengers = passengers;
+	}
+	
 	private int time;
 
 	/** Local copies of the states for tracking purposes */
@@ -48,6 +52,8 @@ public class ElevatorSimulation extends Application {
 
 	/** Daniel's created variables */
 	private Timeline t;
+	private final int NORMAL_SPEED = 10;
+	private int stepSpeed = NORMAL_SPEED;
 	
 	private Pane pane;
 	private final int PANE_WIDTH = 700;
@@ -61,7 +67,7 @@ public class ElevatorSimulation extends Application {
 	private int ELEVATOR_X_POSITION;
 	private int ELEVATOR_Y_POSITION;
 	
-	private int[] floorPositions;
+	private int[] targetFloorPosition;
 	
 	private Rectangle elevatorOpenDoors;
 	
@@ -74,12 +80,12 @@ public class ElevatorSimulation extends Application {
 		NUM_ELEVATORS = controller.getNumElevators();
 		currFloor = controller.getCurrentFloor();
 		
+		targetFloorPosition = new int[NUM_FLOORS];
+		
 		ELEVATOR_WIDTH = (PANE_WIDTH / 10);
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
 		ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
-		ELEVATOR_Y_POSITION = PANE_HEIGHT - (PANE_HEIGHT / (NUM_FLOORS + 1)) - ELEVATOR_HEIGHT;
-		
-		floorPositions = new int[NUM_FLOORS];
+		ELEVATOR_Y_POSITION = (int)((-1 * (targetFloorPosition[0] + targetFloorPosition[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));
 	}
 	
 	
@@ -108,7 +114,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void mainSetup(Stage primaryStage) {
-		t = new Timeline(new KeyFrame(Duration.millis(500), ae -> controller.stepSim()));
+		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> controller.stepSim()));
 		
 		BorderPane borderPane = new BorderPane();
 		pane = new Pane();
@@ -152,7 +158,7 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 		
-		log.setOnAction(e -> elevatorMoveToFloor(5)); // TODO: DELETE
+		log.setOnAction(e -> elevatorMoveToFloor(2)); // TODO: DELETE
 		
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
@@ -172,8 +178,8 @@ public class ElevatorSimulation extends Application {
 			lineArr[i].setStartY(yLocation);
 			lineArr[i].setEndY(yLocation);
 			labelArr[i].setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
-			
-			floorPositions[i] = yLocation;
+			System.out.println(yLocation - ((PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) / 2 + " " + i);
+			targetFloorPosition[i] = yLocation - (((PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) / 2) + ELEVATOR_HEIGHT;
 			yLocation -= (PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS;
 			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
@@ -220,13 +226,14 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorMoveToFloor(int floor) {
-		if (ELEVATOR_Y_POSITION > floorPositions[floor - 1]) {
-			ELEVATOR_Y_POSITION--;
-		} else if (ELEVATOR_Y_POSITION < floorPositions[floor - 1]) {
+		System.out.println(ELEVATOR_Y_POSITION + ", " + floor);
+		if (ELEVATOR_Y_POSITION > targetFloorPosition[floor - 1]) {
 			ELEVATOR_Y_POSITION++;
+		} else if (ELEVATOR_Y_POSITION < targetFloorPosition[floor - 1]) {
+			ELEVATOR_Y_POSITION--;
 		} else {
 			currFloor = floor;
-			ELEVATOR_Y_POSITION = floorPositions[floor - 1];
+			ELEVATOR_Y_POSITION = targetFloorPosition[floor - 1];
 		}
 		
 		removeClosedElevator();

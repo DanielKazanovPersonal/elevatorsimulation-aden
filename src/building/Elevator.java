@@ -72,13 +72,14 @@ public class Elevator {
 		passByFloor = new ArrayList[numFloors];
 		
 		for (int i = 0; i < numFloors; i++) 
-			passByFloor[i] = new ArrayList<Passengers>(); 
-
-		//TODO: Finish this constructor, adding configuration initialiation and
-		//      initialization of any other private fields, etc.
+			passByFloor[i] = new ArrayList<Passengers>();
 		direction = 1; //up by default
 	}
 	
+	/**
+	 * Removes all passengers with a given destination floor
+	 * @param floor floor to be cleared
+	 */
 	public void clearPassengers(int floor) {
 		int passGettingOff = 0;
 		for (Passengers p : passByFloor[floor]) {
@@ -88,6 +89,11 @@ public class Elevator {
 		passengers -= passGettingOff;
 	}
 
+	/**
+	 * Returns a list of all of the passengers in the elevator
+	 * 
+	 * @return an arraylist of every passenger group in the elevator
+	 */
 	public ArrayList<Passengers> getAllPassengers() {
 		ArrayList<Passengers> allPass = new ArrayList<>();
 		for (int i = 0; i < passByFloor.length; i++) {
@@ -98,21 +104,22 @@ public class Elevator {
 		return allPass;
 	}
 
+	/**
+	 * Increase the time in state by 1
+	 */
 	public void incrementTicks() {
 		timeInState++;
 	}
 
+	/**
+	 * Adds a passenger group to the elevator
+	 * 
+	 * @param p passenger group
+	 */
 	public void addPassengers(Passengers p) {
 		passByFloor[p.getDestFloor()].add(p);
 		passengers += p.getNumPass();
-	}	
-
-	//TODO: Add Getter/Setters and any methods that you deem are required. Examples 
-	//      include:
-	//      1) moving the elevator
-	//      2) closing the doors
-	//      3) opening the doors
-	//      and so on...
+	}
 	
 	public int getPrevState() {
 		return this.prevState;
@@ -121,8 +128,7 @@ public class Elevator {
 	public int getCurrState() {
 		return this.currState;
 	}
-
-
+	
 	public int getPrevFloor() {
 		return this.prevFloor;
 	}
@@ -131,6 +137,10 @@ public class Elevator {
 		return this.currFloor;
 	}
 	
+	/**
+	 * Updates the current floor of the elevator
+	 * @param newFloor new floor of the elevator
+	 */
 	public void updateCurrFloor(int newFloor) {
 		prevFloor = currFloor;
 		currFloor = newFloor;
@@ -168,6 +178,10 @@ public class Elevator {
 		return this.passPerTick;
 	}
 
+	/**
+	 * Updates the current state of the elevator
+	 * @param newState new state of the elevator
+	 */
 	public void updateCurrState(int newState) {
 		prevState = currState;
 		currState = newState;
@@ -204,8 +218,6 @@ public class Elevator {
 	}
 
 	public void setDirection(int direction) {
-//		System.out.println("set direction to " + direction);
-//		if (direction == -1) {int x = 3/0;} //force a stacktrace dump for debug
 		this.direction = direction;
 	}
 
@@ -233,20 +245,9 @@ public class Elevator {
 		this.passengers = passengers;
 	}
 
+	//TODO: REMOVE
 	public ArrayList<Passengers>[] getPassByFloor() {
 		return this.passByFloor;
-	}
-
-	public void setPassByFloor(ArrayList<Passengers>[] passByFloor) {
-		this.passByFloor = passByFloor;
-	}
-
-	public int getMoveToFloor() {
-		return this.moveToFloor;
-	}
-
-	public void setMoveToFloor(int moveToFloor) {
-		this.moveToFloor = moveToFloor;
 	}
 
 	public int getPostMoveToFloorDir() {

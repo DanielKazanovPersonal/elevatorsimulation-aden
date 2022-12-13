@@ -81,13 +81,15 @@ public class Building {
 		}
 		callMgr = new CallManager(floors,NUM_FLOORS);
 		elevators = new Elevator[NUM_ELEVATORS];
-		//TODO: if you defined new fields, make sure to initialize them here
 
 	}
 
-	//returns the data of every passenger group in the floor queues in 4 array lists
+	/**
+	 * Called by the controller to retrieve data about passengers in the floor queues
+	 * 
+	 * @return an array of arraylists, where each arraylist is a list of a given passenger attribute
+	 */
 	public ArrayList<Integer>[] getFloorQueueData() {
-		//ppl in group, current, dest, polite (1 or 0)
 		ArrayList<Integer>[] data = new ArrayList[4];
 		for (int i = 0; i < 4; i++)
 			data[i] = new ArrayList<Integer>();
@@ -105,12 +107,26 @@ public class Building {
 		return data;
 	}
 
+	/**
+	 * Configures the elevators with the passed in parameters
+	 * 
+	 * @param numFloors the number of floors in the building
+	 * @param capacity the maximum number of passengers in an elevator
+	 * @param floorTicks the number of ticks to move between floors
+	 * @param doorTicks the number of ticks to open/close the door completely
+	 * @param passPerTick maximum number of passengers that can board/offload in a tick
+	 */
 	public void configElevators(int numFloors,int capacity, int floorTicks, int doorTicks, int passPerTick) {
 		for (int i = 0; i < elevators.length; i++) {
 			elevators[i] = new Elevator(numFloors, capacity, floorTicks, doorTicks, passPerTick);
 		}
 	}
 	
+	/**
+	 * Called before each update tick to move passengers from the main queue into the floor queues
+	 * 
+	 * @param timeSinceSimStart time since the start of the simulation
+	 */
 	public void updateFloorQueues(int timeSinceSimStart) {
 		if (!passQ.isEmpty()) {
 			while (!passQ.isEmpty() && passQ.peek().getTime() == timeSinceSimStart) {
@@ -119,18 +135,26 @@ public class Building {
 				floors[p.getOnFloor()].addPassenger(p, p.getDirection());
 			}
 		}
-		
-		Elevator e = elevators[0];
-		//to prevent duplicate messages
-		if (!elevatorStateChanged(e))
-			logElevatorStateChanged(timeSinceSimStart,  e.getPrevState(),  e.getCurrState(),  e.getPrevFloor(),  e.getCurrFloor());
 	}
-	
-	// TODO: Place all of your code HERE - state methods and helpers...
+
+
+	/**
+	 * Whether or not the elevator's state changed from the previous tick
+	 * 
+	 * @param e elevator to check
+	 * @return whether or not the state has changed
+	 */
 	private boolean elevatorStateChanged(Elevator e) {
 		return e.getCurrState() != e.getPrevState();
 	}
 	
+	/**
+	 * Calculates next state after stop state
+	 * 
+	 * @param time time since simulation started
+	 * @param elevator elevator to modify
+	 * @return the next state
+	 */
 	private int currStateStop(int time, Elevator elevator) {
 		if (!callMgr.callPending()) {
 			return Elevator.STOP;
@@ -149,6 +173,13 @@ public class Building {
 		}
 	}
 	
+	/**
+	 * Calculates next state after mvtoflr state
+	 * 
+	 * @param time time since simulation started
+	 * @param elevator elevator to modify
+	 * @return the next state
+	 */
 	private int currStateMvToFlr(int time, Elevator elevator) {
 		int startFloor = elevator.getStartFloor();
 		int endFloor = elevator.getTargetFloor();
@@ -168,6 +199,13 @@ public class Building {
 		}
 	}
 	
+	/**
+	 * Calculates next state after opendr state
+	 * 
+	 * @param time time since simulation started
+	 * @param elevator elevator to modify
+	 * @return the next state
+	 */
 	private int currStateOpenDr(int time, Elevator elevator) {
 		int doorState = elevator.getDoorState();
 		int maxDoorTicks = elevator.getTicksDoorOpenClose();
@@ -184,6 +222,13 @@ public class Building {
 		}
 	}
 	
+	/**
+	 * Calculates next state after offld state
+	 * 
+	 * @param time time since simulation started
+	 * @param elevator elevator to modify
+	 * @return the next state
+	 */
 	private int currStateOffLd(int time, Elevator elevator) {
 		elevator.incrementTicks();
 
@@ -201,22 +246,22 @@ public class Building {
 		}
 		
 		int offloaded = elevator.getOffloadedPassengers();
-		
-		//if done offloading
 		if (Math.ceil((double)offloaded / elevator.getPassPerTick()) <= elevator.getTimeInState()) {
-
 			if (callMgr.changeDirectionAfterOffload(elevator)) elevator.setDirection(elevator.getDirection() * -1);			
-			
 			return callMgr.callOnFloor(floor, elevator.getDirection())? Elevator.BOARD : Elevator.CLOSEDR;
 		} else {
 			return Elevator.OFFLD;
 		}
 	}
 	
+	/**
+	 * Calculates next state after board state
+	 * 
+	 * @param time time since simulation started
+	 * @param elevator elevator to modify
+	 * @return the next state
+	 */
 	private int currStateBoard(int time, Elevator elevator) {
-		int maxCap = elevator.getCapacity();
-		int passengersOnElevator = elevator.getPassengers();
-		int floor = elevator.getCurrFloor();
 		if (elevator.getTimeInState() == 0) {
 			elevator.setBoardedPassengers(0);
 			elevator.setCapacityFlag(false);
@@ -225,16 +270,8 @@ public class Building {
 		
 		elevator.incrementTicks();
 		int timeInState = elevator.getTimeInState();
-
-//		System.out.println(elevator.atCapacityLastTick());
-		
 		if (!elevator.atCapacityLastTick())
 			attemptPassengerBoard(elevator, time);
-		
-//		elevator.setCapacityFlag(false);
-		
-//		System.out.println(elevator.getPassengers());
-		
 		if (Math.ceil((double) elevator.getBoardedPassengers() / passengersPerTick) <= timeInState) {
 			return Elevator.CLOSEDR;
 		} else {
@@ -242,6 +279,12 @@ public class Building {
 		}
 	}
 	
+	/**
+	 * Attempt to board the next passenger on the floor
+	 * 
+	 * @param e elevator
+	 * @param time time since sim started
+	 */
 	private void attemptPassengerBoard(Elevator e, int time) {
 		int floor = e.getCurrFloor();
 		int dir = e.getDirection();
@@ -267,6 +310,13 @@ public class Building {
 		}
 	}
 	
+	/**
+	 * Calculates next state after closedr state
+	 * 
+	 * @param time time since simulation started
+	 * @param elevator elevator to modify
+	 * @return the next state
+	 */
 	private int currStateCloseDr(int time, Elevator elevator) {
 		int doorState = elevator.getDoorState();
 		int currFloor = elevator.getCurrFloor();
@@ -274,36 +324,33 @@ public class Building {
 
 		elevator.setDoorState(doorState - 1);
 
-		//if there is a call on the current floor in the current direction (caller isn't polite)
-		if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callerIsPolite(currFloor, dir)) {
+		if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callerIsPolite(currFloor, dir))
 			return Elevator.OPENDR;
-		}
-		
-		//if the elevator is empty and there is a call on the currentfloor
-		
-		
-		//if the doors are closing
 		if (doorState - 1 > 0) {
 			if (callMgr.changeDirection(elevator)) elevator.setDirection(dir * -1);
 			return Elevator.CLOSEDR;
-		//if the doors are fully closed and elevator is empty
 		} else if (elevator.getPassengers() == 0) {
-			if (!callMgr.callPending()) { //no calls
+			if (!callMgr.callPending()) {
 				return Elevator.STOP;
-			} else if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callInDirection(dir, currFloor)) { //call on current floor in current dir			
+			} else if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callInDirection(dir, currFloor)) {
 				return Elevator.OPENDR;
 			} else {
 				return Elevator.MV1FLR;
 			}
-		} else { //doors are fully closed but there are indeed calls on another floor
+		} else {
 			if (callMgr.changeDirection(elevator)) elevator.setDirection(elevator.getDirection() * -1);
 			return Elevator.MV1FLR;
 		}
 	}
 	
+	/**
+	 * Calculates next state after mv1flr state
+	 * 
+	 * @param time time since simulation started
+	 * @param elevator elevator to modify
+	 * @return the next state
+	 */
 	private int currStateMv1Flr(int time, Elevator elevator) {
-//		System.out.println(elevator.getDirection());
-//		System.out.println(elevator.getCurrFloor());
 		elevator.incrementTicks();
 		if (elevator.getTimeInState() % elevator.getTicksPerFloor() == 0) {
 			elevator.updateCurrFloor(elevator.getCurrFloor() + elevator.getDirection());
@@ -328,23 +375,26 @@ public class Building {
 			}
 		}
 		if (callMgr.changeDirection(elevator)) {
-//			System.out.println("cccccccc");
 			elevator.setDirection(elevator.getDirection() * -1);
 		}
 		return Elevator.MV1FLR;
 	}
 	
+	/**
+	 * Whether or not the simulation should end
+	 * 
+	 * @param time time since sim started
+	 * @return whether or not the simulation should end
+	 */
 	public boolean endSim(int time) {
 		for (Floor f : floors)
-			if (!f.isEmpty()) {
+			if (!f.isEmpty())
 				return false;
-			}
 		for (Elevator e : elevators)
-			if (e.getCurrState() != Elevator.STOP) {
+			if (e.getCurrState() != Elevator.STOP)
 				return false;
-			}
 		if (!passQ.isEmpty()) return false;
-		updateElevator(time); //to print the last log
+		updateElevator(time);
 		return true;
 	}
 	

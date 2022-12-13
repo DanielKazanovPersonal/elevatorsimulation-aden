@@ -79,21 +79,15 @@ public class CallManager {
 	 */
 	Passengers prioritizePassengerCalls(Elevator e) {
 		updateCallStatus();
-		
 		int floor = e.getCurrFloor();
-//		System.out.println(Arrays.toString(upCalls));
-//		System.out.println(Arrays.toString(downCalls));
-		
 		Passengers currFloorPass = checkCurrentFloor(e);
 		if (currFloorPass != null) return currFloorPass;
-		
 		int numUpCalls = 0;
 		for (int i = 0; i < floors.length; i++)
 			if (upCalls[i]) numUpCalls++;
 		int numDownCalls = 0;
 		for (int i = 0; i < floors.length; i++)
 			if (downCalls[i]) numDownCalls++;
-		
 		int highestDownCall = 0;
 		for (int i = floors.length - 1; i >= 0; i--) {
 			if (downCalls[i]) {
@@ -108,26 +102,25 @@ public class CallManager {
 				break;
 			}
 		}
-		
-//		System.out.println(numUpCalls + ", " + numDownCalls + ", " + lowestUpCall + ", " + highestDownCall + ", " + e.getCurrFloor());
-		
 		if (numUpCalls > numDownCalls) {
-//			System.out.println("1");
 			return floors[lowestUpCall].peekFloorQueue(UP);
 		} else if (numUpCalls < numDownCalls) {
-//			System.out.println("2");
 			return floors[highestDownCall].peekFloorQueue(DOWN);
 		} else {
 			if (Math.abs(lowestUpCall - floor) <= Math.abs(highestDownCall - floor)) {
-//				System.out.println("3");
 				return floors[lowestUpCall].peekFloorQueue(UP);
 			} else {
-//				System.out.println("4");
 				return floors[highestDownCall].peekFloorQueue(DOWN);
 			}
 		}
 	}
 	
+	/**
+	 * Call prioritization and direction switching if the call is on the current floor
+	 * 
+	 * @param e elevator
+	 * @return priority passenger group on this floor, or null if none
+	 */
 	Passengers checkCurrentFloor(Elevator e) {
 		int floor = e.getCurrFloor();
 		if (upCalls[floor] && !downCalls[floor]) {
@@ -154,15 +147,6 @@ public class CallManager {
 		return null;
 	}
 
-	//TODO: Write any additional methods here. Things that you might consider:
-	//      1. pending calls - are there any? only up? only down?
-	//      2. is there a call on the current floor in the current direction
-	//      3. How many up calls are pending? how many down calls are pending? 
-	//      4. How many calls are pending in the direction that the elevator is going
-	//      5. Should the elevator change direction?
-	//
-	//      These are an example - you may find you don't need some of these, or you may need more...
-	
 	/**
 	 * Decide whether or not to change directions based on calls and elevator destinations
 	 * 
@@ -173,95 +157,67 @@ public class CallManager {
 		updateCallStatus();
 		int currFloor = e.getCurrFloor();
 		int currDir = e.getDirection();
-//		System.out.println("initial dir " + currDir);
-		
 		if (currDir == UP) {
-//			System.out.print("going up, ");
 			if (currFloor == floors.length - 1) return true;
-
 			if (e.getPassengers() == 0) {
-				for (int i = currFloor + 1; i < floors.length; i++) {
-					if (callOnFloor(i)) {
-//						System.out.println("calls above");
-						return false;
-					}
-				}
-				
-				if (callOnFloor(currFloor)) {
+				for (int i = currFloor + 1; i < floors.length; i++)
+					if (callOnFloor(i)) return false;
+				if (callOnFloor(currFloor))
 					if (upCalls[currFloor]) return false;
-				}
-				
-//				System.out.println("no calls above");
-				
 				return true;
 			} else {
-//				System.out.println("have passengers, ");
-				for (Passengers p : e.getAllPassengers()) {
+				for (Passengers p : e.getAllPassengers())
 					if (p.getDestFloor() > currFloor) return false;
-				}
-//				return true;
 			}
 		} else {
-//			System.out.print("going down, ");
 			if (currFloor == 0) return true;
-
 			if (e.getPassengers() == 0) {
 				for (int i = 0; i < currFloor; i++) {
-					if (callOnFloor(i)) {
-//						System.out.println("call below");
+					if (callOnFloor(i))
 						return false;
-					}
 				}
-				
-				if (callOnFloor(currFloor)) {
+				if (callOnFloor(currFloor))
 					if (downCalls[currFloor]) return false;
-				}
-				
-//				System.out.println("no calls below");
 				return true;
 			} else {
-//				System.out.println("have passengers, ");
-				for (Passengers p : e.getAllPassengers()) {
+				for (Passengers p : e.getAllPassengers())
 					if (p.getDestFloor() < currFloor) return false;
-				}
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
+	/**
+	 * Determines whether or not to change the direction of the elevator after the offload case
+	 * 
+	 * @param e elevator
+	 * @return whether or not direction should change
+	 */
 	boolean changeDirectionAfterOffload(Elevator e) {
 		updateCallStatus();
-		//changing direction logic
-		//if elevator is empty
-		//	if no calls on this floor or floors in the direction of movement
-		//	and call on this floor in the opposite direction
-
 		if (e.getPassengers() == 0) {
 			if (e.getDirection() == UP) {
-				for (int i = e.getCurrFloor() + 1; i < floors.length; i++) {
+				for (int i = e.getCurrFloor() + 1; i < floors.length; i++)
 					if (callOnFloor(i)) return false;
-				}
-				//if call on current floor in the direction of movement
 				if (callOnFloor(e.getCurrFloor(), UP)) return false;
 			} else {
-				for (int i = 0; i < e.getCurrFloor(); i++) {
+				for (int i = 0; i < e.getCurrFloor(); i++)
 					if (callOnFloor(i)) return false;
-				}
-				//if call on current floor in the direction of movement
 				if (callOnFloor(e.getCurrFloor(), DOWN)) return false;
 			}
-			
-			//if you have reached here, then there are no calls in the current direction of the elevator
-			//if there is a call on the current floor in the opposite direction
 			if (callOnFloor(e.getCurrFloor(), e.getDirection() * -1)) return true;
 		}
-		
 		return false;
 	}
 	
-	//note -- excludes the current floor of the elevator
+	/**
+	 * Determines whether or not there is a call in a given direction from a certain floor
+	 * 
+	 * @param direction direction of call search
+	 * @param currFloor floor to start search from
+	 * @return whether or not there is a call in the direction of the elevator
+	 */
 	boolean callInDirection(int direction, int currFloor) {
 		if (direction == UP) {
 			for (int i = currFloor + 1; i < floors.length; i++) {
@@ -275,41 +231,52 @@ public class CallManager {
 		
 		return false;
 	}
-	
-	//might not need this tbh
-	boolean changeDirectionAfterCloseDoor(Elevator e) {
-		//if no passengers
-		
-		//if no calls in floors in the current direction
-		//and calls in floors in opposite direction
-		
-		return false;
-	}
-	
+
+	/**
+	 * Whether or not there is a call pending
+	 * 
+	 * @return if there is a call pending on some floor
+	 */
 	boolean callPending() {
 		updateCallStatus();
 		return upCallPending || downCallPending;
 	}
 	
+	/**
+	 * Whether or not there is a call on a floor
+	 * 
+	 * @param floor floor to scan
+	 * @return up or down call on given floor
+	 */
 	boolean callOnFloor(int floor) {
 		updateCallStatus();
 		return upCalls[floor] || downCalls[floor];
 	}
 	
+	/**
+	 * Whether or not there is a call in a certain direction on a floor
+	 * 
+	 * @param floor floor to scan
+	 * @param elevatorDirection direction to be checked
+	 * @return if there is a call on the given floor in the given direction
+	 */
 	boolean callOnFloor(int floor, int elevatorDirection) {
 		updateCallStatus();
-//		System.out.println(Arrays.toString(upCalls));
-//		System.out.println(Arrays.toString(downCalls));
 		return (elevatorDirection == UP)? upCalls[floor] : downCalls[floor];
 	}
 	
+	//TODO: might wanna move this into the building
 	boolean callerIsPolite(int floor, int elevatorDirection) {
 		updateCallStatus();
-		if (floors[floor].peekFloorQueue(elevatorDirection).getPolite()) return true;
+		if (floors[floor].peekFloorQueue(elevatorDirection).isPolite()) return true;
 		floors[floor].peekFloorQueue(elevatorDirection).setPolite(true);
 		return false;
 	}
 	
+	/**
+	 * Finds the lowest up call
+	 * @return the lowest up call
+	 */
 	int getLowestUpCall() {
 		for (int i = 0; i < floors.length; i++) {
 			if (upCalls[i]) return i;
@@ -317,6 +284,10 @@ public class CallManager {
 		return floors.length - 1;
 	}
 	
+	/**
+	 * Finds the highest down call
+	 * @return highest down call
+	 */
 	int getHighestDownCall() {
 		for (int i = floors.length - 1; i >= 0; i--) {
 			if (downCalls[i]) return i;

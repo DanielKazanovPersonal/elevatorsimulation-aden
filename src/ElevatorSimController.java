@@ -393,6 +393,8 @@ public class ElevatorSimController {
 				gui.elevatorCloseDoors();
 			} else if (building.getElevatorState() == 3) { // off load
 				gui.setPassengers(gui.getPassengers() - building.passGoingToFloorOnElevator());
+			} else if (building.getElevatorState() == 4) { // board state
+				gui.passengersGroupMove();
 			}
 		} else {
 			gui.passengersGroupSetup();

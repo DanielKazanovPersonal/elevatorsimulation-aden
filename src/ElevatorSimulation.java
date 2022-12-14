@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import building.Elevator;
 import javafx.animation.Animation;
@@ -67,6 +68,8 @@ public class ElevatorSimulation extends Application {
 	private int ELEVATOR_X_POSITION;
 	private int ELEVATOR_Y_POSITION;
 	
+	private final int PIXELS_BTWN_FLOORS;
+	
 	private int[] floorYPositions;
 	
 	private Rectangle elevatorOpenDoors;
@@ -85,7 +88,7 @@ public class ElevatorSimulation extends Application {
 		ELEVATOR_WIDTH = (PANE_WIDTH / 10);
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
 		ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
-		ELEVATOR_Y_POSITION = (int)((-1 * (floorYPositions[0] + floorYPositions[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));
+		PIXELS_BTWN_FLOORS = PANE_HEIGHT / (NUM_FLOORS + 1);
 	}
 	
 	
@@ -177,11 +180,12 @@ public class ElevatorSimulation extends Application {
 			labelArr[i].setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
 			floorYPositions[i] = yLocation;
 			System.out.println(floorYPositions[i] + " " + i);
-			yLocation -= PANE_HEIGHT / (NUM_FLOORS + 1);
+			yLocation -= PIXELS_BTWN_FLOORS;
 			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
-		yLocation -= PANE_HEIGHT / (NUM_FLOORS + 1);
 		floorYPositions[floorYPositions.length - 1] = yLocation;
+		ELEVATOR_Y_POSITION = (floorYPositions[0] + floorYPositions[1] - ELEVATOR_HEIGHT) / 2;
+		System.out.println(Arrays.toString(floorYPositions));
 	}
 	
 	public void elevatorClosedDoors() {
@@ -227,7 +231,12 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorMoveToFloor(int startFloor) {
-		ELEVATOR_Y_POSITION =  (int)(-1 * controller.getElevatorDirection() * ((controller.getTimeInState() / (double)(controller.getFloorTicks())) * PANE_HEIGHT / (NUM_FLOORS + 1)) + floorYPositions[startFloor + 1]);
+		ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() * (((controller.getTimeInState() + 1) / (double)(controller.getFloorTicks())) * PIXELS_BTWN_FLOORS) + (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
+		
+//		if (controller.getTimeInState() % 5 == 0)
+//			ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() * PIXELS_BTWN_FLOORS + (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
+		
+		System.out.println(ELEVATOR_Y_POSITION + ", " + startFloor + ", " + controller.getElevatorDirection());
 		elevatorClosedDoors();
 	}
 	

@@ -157,8 +157,6 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 		
-		log.setOnAction(e -> elevatorMoveToFloor(5)); // TODO: DELETE
-		
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
 	

@@ -360,6 +360,8 @@ public class ElevatorSimController {
 	 * must implement......
 	 */
 	public void stepSim() {
+		System.out.println("step sim working");
+		
  		// DO NOT MOVE THIS - YOU MUST INCREMENT TIME FIRST!
 		stepCnt++;
 		if (!building.endSim(stepCnt)) {

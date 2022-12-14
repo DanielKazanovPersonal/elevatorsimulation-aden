@@ -52,7 +52,7 @@ public class ElevatorSimulation extends Application {
 
 	/** Daniel's created variables */
 	private Timeline t;
-	private final int NORMAL_SPEED = 10;
+	private final int NORMAL_SPEED = 1000;
 	private int stepSpeed = NORMAL_SPEED;
 	
 	private Pane pane;
@@ -80,7 +80,7 @@ public class ElevatorSimulation extends Application {
 		NUM_ELEVATORS = controller.getNumElevators();
 		currFloor = controller.getCurrentFloor();
 		
-		floorYPositions = new int[NUM_FLOORS];
+		floorYPositions = new int[NUM_FLOORS + 1];
 		
 		ELEVATOR_WIDTH = (PANE_WIDTH / 10);
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
@@ -115,6 +115,7 @@ public class ElevatorSimulation extends Application {
 	
 	public void mainSetup(Stage primaryStage) {
 		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> controller.stepSim()));
+		t.setCycleCount(Animation.INDEFINITE);
 		
 		BorderPane borderPane = new BorderPane();
 		pane = new Pane();
@@ -124,8 +125,6 @@ public class ElevatorSimulation extends Application {
 	    borderPane.setCenter(pane);
 		borderPane.setBottom(hBox);
 		primaryStage.setScene(scene);
-		
-		currFloor = 1;
 		
 		buttonSetup(hBox);
 		floorSetup();
@@ -158,7 +157,7 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 		
-		log.setOnAction(e -> elevatorMoveToFloor(2)); // TODO: DELETE
+		log.setOnAction(e -> elevatorMoveToFloor(5)); // TODO: DELETE
 		
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
@@ -183,6 +182,8 @@ public class ElevatorSimulation extends Application {
 			yLocation -= PANE_HEIGHT / (NUM_FLOORS + 1);
 			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
+		yLocation -= PANE_HEIGHT / (NUM_FLOORS + 1);
+		floorYPositions[floorYPositions.length - 1] = yLocation;
 	}
 	
 	public void elevatorClosedDoors() {
@@ -226,11 +227,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorMoveToFloor(int startFloor) {
-		System.out.println("Elevator Y Position: " + ELEVATOR_Y_POSITION);
-		
-		//ELEVATOR_Y_POSITION = (controller.getElevatorDirection()) * (controller.getElevatorTimeInState() / controller.getFloorTicks()) * (PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) +(int)((-1 * (targetFloorPosition[0] + targetFloorPosition[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));  
-		
-		ELEVATOR_Y_POSITION =  -1 * controller.getElevatorDirection() * ((controller.getTimeInState() / controller.getFloorTicks()) * PANE_HEIGHT / (NUM_FLOORS + 1)) + floorYPositions[startFloor];
+		ELEVATOR_Y_POSITION =  -1 * controller.getElevatorDirection() * ((controller.getTimeInState() / controller.getFloorTicks()) * PANE_HEIGHT / (NUM_FLOORS + 1)) + floorYPositions[startFloor + 1];
 		
 		removeClosedElevator();
 		removeOpenElevator();

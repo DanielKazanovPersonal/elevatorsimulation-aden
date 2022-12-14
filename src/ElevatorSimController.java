@@ -365,7 +365,7 @@ public class ElevatorSimController {
  		// DO NOT MOVE THIS - YOU MUST INCREMENT TIME FIRST!
 		stepCnt++;
 		if (!building.endSim(stepCnt)) {
-			building.updateFloorQueues(stepCnt);
+//			building.updateFloorQueues(stepCnt);
 			building.updateElevator(stepCnt);
 		}
 
@@ -388,7 +388,7 @@ public class ElevatorSimController {
 			// check for arrival of new passengers
 			if (building.getElevatorState() == 1 || building.getElevatorState() == 6) { // 1 is movetofloor and 6 is move1floor
 				gui.elevatorMoveToFloor(elevatorStartFloor);
-				gui.passengersGroupSetup();
+//				gui.passengersGroupSetup();
 				return;
 			} else {
 				elevatorStartFloor = building.getElevatorCurrFloor();
@@ -397,14 +397,14 @@ public class ElevatorSimController {
 			if (building.getElevatorState() == 2) { // open door
 				gui.elevatorOpenDoors();
 			} else if (building.getElevatorState() == 5) { // close door
-				gui.elevatorClosedDoors();
-			} else if (building.getElevatorState() == 3) { // off load
-				gui.setPassengers(gui.getPassengers() - building.passGoingToFloorOnElevator());
-			} else if (building.getElevatorState() == 4) { // board state
-				gui.passengersGroupMove();
-			}
+				gui.elevatorClosedDoors();                 }
+//			} else if (building.getElevatorState() == 3) { // off load
+//				gui.setPassengers(gui.getPassengers() - building.passGoingToFloorOnElevator());
+//			} else if (building.getElevatorState() == 4) { // board state
+//				gui.passengersGroupMove();
+//			}
 		} else {
-			gui.passengersGroupSetup();
+//			gui.passengersGroupSetup();
 			building.closeLogs(stepCnt);
 			// process the passenger results
 			gui.endSimulation();

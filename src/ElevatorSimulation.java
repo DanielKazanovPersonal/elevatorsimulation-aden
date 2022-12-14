@@ -94,7 +94,7 @@ public class ElevatorSimulation extends Application {
 	
 	// TODO: Write this method
 	public void endSimulation() {
-		
+//		t.pause();
 	}
 
 	/**
@@ -132,34 +132,35 @@ public class ElevatorSimulation extends Application {
 		buttonSetup(hBox);
 		floorSetup();
 		elevatorClosedDoors();
-		passengersGroupSetup();
+//		passengersGroupSetup();
 	}
 	
 	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
-		
 		Button run = new Button("Run");
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
 		run.setPrefHeight(PANE_HEIGHT / 9);
 		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.play();}});
-		
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
 		stepButton.setPrefWidth(PANE_WIDTH / 3);
 		stepButton.setPrefHeight(PANE_HEIGHT / 9);
-		
-		TextField stepTextField = new TextField(time + "");
+		TextField stepTextField = new TextField();
 		stepTextField.setFont(font);
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
-		
+//		stepButton.setOnAction(e -> {		if (stepTextField.getText().matches("\\d+")) {
+//			controller.setStepCnt(Integer.parseInt(stepTextField.getText()));
+//		} else {
+//			stepTextField.setText("Enter Integer");
+//		}});
+
 		Button log = new Button("Log");
 		log.setFont(font);
 		log.setPrefWidth(PANE_WIDTH / 3);
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
-		
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
 	}
 	
@@ -261,9 +262,9 @@ public class ElevatorSimulation extends Application {
 			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
 			
 			pane.getChildren().addAll(circleArr[i], textArr[i]);
-			System.out.println("in loop");
+			System.out.println("Inside loop");
 		}
-		System.out.println("got here");
+		System.out.println("End of passengerGroupSetup()");
 	}
 	
 	// TODO: Write this method

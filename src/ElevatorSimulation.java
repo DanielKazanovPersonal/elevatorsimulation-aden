@@ -67,7 +67,7 @@ public class ElevatorSimulation extends Application {
 	private int ELEVATOR_X_POSITION;
 	private int ELEVATOR_Y_POSITION;
 	
-	private int[] targetFloorPosition;
+	private int[] floorYPositions;
 	
 	private Rectangle elevatorOpenDoors;
 	
@@ -80,12 +80,12 @@ public class ElevatorSimulation extends Application {
 		NUM_ELEVATORS = controller.getNumElevators();
 		currFloor = controller.getCurrentFloor();
 		
-		targetFloorPosition = new int[NUM_FLOORS];
+		floorYPositions = new int[NUM_FLOORS];
 		
 		ELEVATOR_WIDTH = (PANE_WIDTH / 10);
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
 		ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
-		ELEVATOR_Y_POSITION = (int)((-1 * (targetFloorPosition[0] + targetFloorPosition[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));
+		ELEVATOR_Y_POSITION = (int)((-1 * (floorYPositions[0] + floorYPositions[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));
 	}
 	
 	
@@ -166,7 +166,7 @@ public class ElevatorSimulation extends Application {
 	public void floorSetup() {
 		Line[] lineArr = new Line[NUM_FLOORS];
 		Text[] labelArr = new Text[NUM_FLOORS];
-		int yLocation = PANE_HEIGHT - (PANE_HEIGHT / (NUM_FLOORS + 1));
+		int yLocation = PANE_HEIGHT - (PANE_HEIGHT / (NUM_FLOORS));
 		
 		for (int i = 0; i < NUM_FLOORS; i++) {
 			lineArr[i] = new Line();
@@ -178,9 +178,9 @@ public class ElevatorSimulation extends Application {
 			lineArr[i].setStartY(yLocation);
 			lineArr[i].setEndY(yLocation);
 			labelArr[i].setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
-			targetFloorPosition[i] = yLocation - (((PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) / 2);
-			System.out.println(targetFloorPosition[i] + " " + i);
-			yLocation -= (PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS;
+			floorYPositions[i] = yLocation;
+			System.out.println(floorYPositions[i] + " " + i);
+			yLocation -= PANE_HEIGHT / (NUM_FLOORS + 1);
 			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
 	}
@@ -225,12 +225,12 @@ public class ElevatorSimulation extends Application {
 		elevatorClosedDoors();
 	}
 	
-	public void elevatorMoveToFloor(int floor) {
-		System.out.println(ELEVATOR_Y_POSITION + ", " + floor);
+	public void elevatorMoveToFloor(int startFloor) {
+		System.out.println("Elevator Y Position: " + ELEVATOR_Y_POSITION);
 		
-		ELEVATOR_Y_POSITION = (controller.getElevatorDirection()) * (controller.getElevatorTimeInState() / controller.getFloorTicks()) * (PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) +(int)((-1 * (targetFloorPosition[0] + targetFloorPosition[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));  
-		currFloor = floor;
-		ELEVATOR_Y_POSITION = targetFloorPosition[floor - 1];
+		//ELEVATOR_Y_POSITION = (controller.getElevatorDirection()) * (controller.getElevatorTimeInState() / controller.getFloorTicks()) * (PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) +(int)((-1 * (targetFloorPosition[0] + targetFloorPosition[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));  
+		
+		ELEVATOR_Y_POSITION =  -1 * controller.getElevatorDirection() * ((controller.getTimeInState() / controller.getFloorTicks()) * PANE_HEIGHT / (NUM_FLOORS + 1)) + floorYPositions[startFloor];
 		
 		removeClosedElevator();
 		removeOpenElevator();

@@ -188,7 +188,7 @@ public class ElevatorSimulation extends Application {
 	
 	public void elevatorClosedDoors() {
 		removeOpenElevator();
-		
+		removeClosedElevator();
 		
 		elevatorRectangle = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
 		elevatorLine = new Line();
@@ -217,6 +217,9 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorOpenDoors() {
+		removeClosedElevator();
+		removeOpenElevator();
+		
 		elevatorOpenDoors = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
 		elevatorOpenDoors.setStyle("-fx-fill: lightgray; -fx-stroke: black; -fx-stroke-width: 5;");
 		

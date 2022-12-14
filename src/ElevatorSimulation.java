@@ -222,12 +222,14 @@ public class ElevatorSimulation extends Application {
 		
 		elevatorOpenDoors = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
 		elevatorOpenDoors.setStyle("-fx-fill: lightgray; -fx-stroke: black; -fx-stroke-width: 5;");
+		elevatorText = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
+		elevatorText.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
 		
-		pane.getChildren().addAll(elevatorOpenDoors);
+		pane.getChildren().addAll(elevatorOpenDoors, elevatorText);
 	}
 	
 	public void elevatorMoveToFloor(int startFloor) {
-		ELEVATOR_Y_POSITION =  -1 * controller.getElevatorDirection() * ((controller.getTimeInState() / controller.getFloorTicks()) * PANE_HEIGHT / (NUM_FLOORS + 1)) + floorYPositions[startFloor + 1];
+		ELEVATOR_Y_POSITION =  (int)(-1 * controller.getElevatorDirection() * ((controller.getTimeInState() / (double)(controller.getFloorTicks())) * PANE_HEIGHT / (NUM_FLOORS + 1)) + floorYPositions[startFloor + 1]);
 		elevatorClosedDoors();
 	}
 	

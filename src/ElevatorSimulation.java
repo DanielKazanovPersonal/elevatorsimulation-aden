@@ -178,8 +178,8 @@ public class ElevatorSimulation extends Application {
 			lineArr[i].setStartY(yLocation);
 			lineArr[i].setEndY(yLocation);
 			labelArr[i].setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
-			System.out.println(yLocation - ((PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) / 2 + " " + i);
-			targetFloorPosition[i] = yLocation - (((PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) / 2) + ELEVATOR_HEIGHT;
+			targetFloorPosition[i] = yLocation - (((PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) / 2);
+			System.out.println(targetFloorPosition[i] + " " + i);
 			yLocation -= (PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS;
 			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
@@ -227,14 +227,10 @@ public class ElevatorSimulation extends Application {
 	
 	public void elevatorMoveToFloor(int floor) {
 		System.out.println(ELEVATOR_Y_POSITION + ", " + floor);
-		if (ELEVATOR_Y_POSITION > targetFloorPosition[floor - 1]) {
-			ELEVATOR_Y_POSITION++;
-		} else if (ELEVATOR_Y_POSITION < targetFloorPosition[floor - 1]) {
-			ELEVATOR_Y_POSITION--;
-		} else {
-			currFloor = floor;
-			ELEVATOR_Y_POSITION = targetFloorPosition[floor - 1];
-		}
+		
+		ELEVATOR_Y_POSITION = (controller.getElevatorDirection()) * (controller.getElevatorTimeInState() / controller.getFloorTicks()) * (PANE_HEIGHT - ELEVATOR_HEIGHT) / NUM_FLOORS) +(int)((-1 * (targetFloorPosition[0] + targetFloorPosition[1])) + (ELEVATOR_HEIGHT / 2) + (PANE_HEIGHT - (2.30 * ELEVATOR_HEIGHT)));  
+		currFloor = floor;
+		ELEVATOR_Y_POSITION = targetFloorPosition[floor - 1];
 		
 		removeClosedElevator();
 		removeOpenElevator();
@@ -271,7 +267,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	// TODO: Write this method
-	public void passengersGroupMove(Pane pane) {
+	public void passengersGroupMove() {
 		// take care of ticks
 	}
 	

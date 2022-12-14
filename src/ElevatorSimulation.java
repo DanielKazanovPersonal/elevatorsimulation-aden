@@ -228,9 +228,6 @@ public class ElevatorSimulation extends Application {
 	
 	public void elevatorMoveToFloor(int startFloor) {
 		ELEVATOR_Y_POSITION =  -1 * controller.getElevatorDirection() * ((controller.getTimeInState() / controller.getFloorTicks()) * PANE_HEIGHT / (NUM_FLOORS + 1)) + floorYPositions[startFloor + 1];
-		
-		removeClosedElevator();
-		removeOpenElevator();
 		elevatorClosedDoors();
 	}
 	

@@ -52,7 +52,7 @@ public class ElevatorSimulation extends Application {
 
 	/** Daniel's created variables */
 	private Timeline t;
-	private final int NORMAL_SPEED = 1000;
+	private final int NORMAL_SPEED = 100;
 	private int stepSpeed = NORMAL_SPEED;
 	
 	private Pane pane;

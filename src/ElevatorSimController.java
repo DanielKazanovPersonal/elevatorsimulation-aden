@@ -405,7 +405,7 @@ public class ElevatorSimController {
 	}
 	
 	public int getElevatorDirection() {
-		return building.getElevatorDirection()
+		return building.getElevatorDirection();
 	}
 
 	/**
@@ -415,6 +415,10 @@ public class ElevatorSimController {
 	 */
 	Building getBuilding() {
 		return building;
+	}
+	
+	int getTimeInState() {
+		return building.getElevatorTimeInState();
 	}
 
 

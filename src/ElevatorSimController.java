@@ -397,7 +397,7 @@ public class ElevatorSimController {
 			if (building.getElevatorState() == 2) { // open door
 				gui.elevatorOpenDoors();
 			} else if (building.getElevatorState() == 5) { // close door
-				gui.elevatorCloseDoors();
+				gui.elevatorClosedDoors();
 			} else if (building.getElevatorState() == 3) { // off load
 				gui.setPassengers(gui.getPassengers() - building.passGoingToFloorOnElevator());
 			} else if (building.getElevatorState() == 4) { // board state

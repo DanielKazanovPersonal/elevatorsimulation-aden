@@ -142,7 +142,7 @@ public class ElevatorSimulation extends Application {
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
 		run.setPrefHeight(PANE_HEIGHT / 9);
-		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.play();}}); // Change controller needs to handle
+		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.play();}});
 		
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
@@ -232,9 +232,6 @@ public class ElevatorSimulation extends Application {
 	
 	public void elevatorMoveToFloor(int startFloor) {
 		ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() * (((controller.getTimeInState() + 1) / (double)(controller.getFloorTicks())) * PIXELS_BTWN_FLOORS) + (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
-		
-//		if (controller.getTimeInState() % 5 == 0)
-//			ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() * PIXELS_BTWN_FLOORS + (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
 		
 		System.out.println(ELEVATOR_Y_POSITION + ", " + startFloor + ", " + controller.getElevatorDirection());
 		elevatorClosedDoors();

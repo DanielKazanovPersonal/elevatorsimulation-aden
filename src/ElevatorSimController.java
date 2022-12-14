@@ -64,6 +64,9 @@ public class ElevatorSimController {
 	
 	/** The end sim. */
 	private boolean endSim = false;
+	
+	/** For information persistance across tick updates */
+	private int elevatorStartFloor = 0;
 		
 	/**
 	 * Instantiates a new elevator sim controller. 
@@ -381,13 +384,15 @@ public class ElevatorSimController {
 		
 		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
 			// check for arrival of new passengers
-			if (building.getElevatorState() == 1) { // 1 is movetofloor and 6 is move1floor
-				gui.elevatorMoveToFloor(building.getElevatorTargetFloor()); // 	 BUILDING CLASS --> public void updateElevator(int time) {
+			if (building.getElevatorState() == 1 || building.getElevatorState() == 6) { // 1 is movetofloor and 6 is move1floor
+				gui.elevatorMoveToFloor(elevatorStartFloor);
 				gui.passengersGroupSetup();
-			} else if (building.getElevatorState() == 6) {
-				gui.elevatorMoveToFloor(building.getElevatorCurrFloor() + building.getElevatorDirection());
-				gui.passengersGroupSetup();
-			} else if (building.getElevatorState() == 2) { // open door
+				return;
+			} else {
+				elevatorStartFloor = building.getElevatorCurrFloor();
+			}
+			
+			if (building.getElevatorState() == 2) { // open door
 				gui.elevatorOpenDoors();
 			} else if (building.getElevatorState() == 5) { // close door
 				gui.elevatorCloseDoors();

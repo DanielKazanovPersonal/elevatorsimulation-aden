@@ -360,12 +360,10 @@ public class ElevatorSimController {
 	 * must implement......
 	 */
 	public void stepSim() {
-		System.out.println("step sim working");
-		
  		// DO NOT MOVE THIS - YOU MUST INCREMENT TIME FIRST!
 		stepCnt++;
 		if (!building.endSim(stepCnt)) {
-//			building.updateFloorQueues(stepCnt);
+			building.updateFloorQueues(stepCnt);
 			building.updateElevator(stepCnt);
 		}
 
@@ -384,7 +382,7 @@ public class ElevatorSimController {
 		if (gui == null) return;
 		
 		
-		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
+//		if (gui.getPassengers() != 0) { // || CODE_CODE_CODE
 			// check for arrival of new passengers
 			if (building.getElevatorState() == 1 || building.getElevatorState() == 6) { // 1 is movetofloor and 6 is move1floor
 				gui.elevatorMoveToFloor(elevatorStartFloor);
@@ -403,13 +401,13 @@ public class ElevatorSimController {
 //			} else if (building.getElevatorState() == 4) { // board state
 //				gui.passengersGroupMove();
 //			}
-		} else {
+//		} else {
 //			gui.passengersGroupSetup();
 			building.closeLogs(stepCnt);
 			// process the passenger results
 			gui.endSimulation();
 		}
-	}
+//	}
 	
 	public int getElevatorDirection() {
 		return building.getElevatorDirection();

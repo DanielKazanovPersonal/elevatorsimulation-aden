@@ -315,7 +315,7 @@ public class Building {
 		
 		int offloaded = elevator.getOffloadedPassengers();
 		if (Math.ceil((double)offloaded / elevator.getPassPerTick()) <= elevator.getTimeInState()) {
-			if (callMgr.changeDirectionAfterOffload(elevator)) elevator.flipDirections();			
+			if (callMgr.changeDirectionAfterOffload(elevator.getDirection(), floor, elevator.getPassengers())) elevator.flipDirections();			
 			return callMgr.callOnFloor(floor, elevator.getDirection())? Elevator.BOARD : Elevator.CLOSEDR;
 		} else {
 			return Elevator.OFFLD;
@@ -399,7 +399,7 @@ public class Building {
 		if (callMgr.callOnFloor(currFloor, dir) && !callMgr.callerIsPolite(currFloor, dir))
 			return Elevator.OPENDR;
 		if (doorState - 1 > 0) {
-			if (callMgr.changeDirection(elevator)) elevator.flipDirections();
+			if (callMgr.changeDirection(currFloor, dir, elevator.getAllPassengers())) elevator.flipDirections();
 			return Elevator.CLOSEDR;
 		} else if (elevator.getPassengers() == 0) {
 			if (!callMgr.callPending()) {
@@ -410,7 +410,7 @@ public class Building {
 				return Elevator.MV1FLR;
 			}
 		} else {
-			if (callMgr.changeDirection(elevator)) elevator.flipDirections();
+			if (callMgr.changeDirection(currFloor, dir, elevator.getAllPassengers())) elevator.flipDirections();
 			return Elevator.MV1FLR;
 		}
 	}
@@ -439,7 +439,7 @@ public class Building {
 			if (callMgr.callOnFloor(floor)) {
 				if (elevator.getPassengers() == 0) {
 					if ((dir == UP && callMgr.getHighestDownCall() == floor) || (dir == DOWN && callMgr.getLowestUpCall() == floor)) {
-						if (callMgr.changeDirection(elevator)) 
+						if (callMgr.changeDirection(floor, dir, passengers)) 
 							elevator.flipDirections();
 						return Elevator.OPENDR;
 					}
@@ -448,7 +448,7 @@ public class Building {
 					return Elevator.OPENDR;
 			}
 		}
-		if (callMgr.changeDirection(elevator))
+		if (callMgr.changeDirection(floor, dir, elevator.getAllPassengers()))
 			elevator.flipDirections();
 		return Elevator.MV1FLR;
 	}

@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -272,16 +273,14 @@ public class ElevatorSimulation extends Application {
 	
 	// TODO: Write this method
 	public void passengersGroupSetup() {
-		// in bulding call method called getAllPassengerData(); <-- array of arraylists (ints, 2D) Arraylist<int>[4] =
-		// for (i = controller.stepCnt; i < step)
-		// 	    controller.stepSim()
-		// doesn't have to be smooth, can just pop near the elevator once the tick updates
-		// draw all passengers
+		// remove all passengers before reprinting
 		
 		ArrayList<Integer>[] passengerData = controller.getAllPassengerData();
+		int[] numPassengersOnFloor = new int[NUM_FLOORS];
 		
 		Circle[] circleArr = new Circle[passengerData[0].size()];
 		Text[] textArr = new Text[passengerData[0].size()];
+		Polygon[] directionArr = new Polygon[passengerData[0].size()];
 		System.out.println(passengerData[0].size());
 		
 		for (int i = 0; i < passengerData[0].size(); i++) {
@@ -290,21 +289,21 @@ public class ElevatorSimulation extends Application {
 			int destFloor = passengerData[2].get(i); // Destination floor
 			int politeness = passengerData[3].get(i); // Politeness (0 is impolite, 1 is polite)
 			
-			circleArr[i] = new Circle(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, PIXELS_BTWN_FLOORS * 0.35);
-			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
+			circleArr[i] = new Circle((PANE_WIDTH / 3) + numPassengersOnFloor[currFloor], (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
+			numPassengersOnFloor[currFloor]++;
+//			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
 			textArr[i].setStyle("-fx-stroke: lightgray;");
 			
-			passengers += numPeople;
+//			if () {
+//				directionArr[i] = new Polygon();
+//			} else {
+//				directionArr[i] = new Polygon();
+//			}
 			
-			pane.getChildren().addAll(circleArr[i], textArr[i]);
-			System.out.println("Inside loop");
+			passengers += numPeople;
+			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);
 		}
 		System.out.println("End of passengerGroupSetup()");
-	}
-	
-	// TODO: Write this method
-	public void passengersGroupMove(int floor) {
-		// take care of ticks
 	}
 	
 	/**

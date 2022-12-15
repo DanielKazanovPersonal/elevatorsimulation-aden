@@ -386,7 +386,6 @@ public class ElevatorSimController {
 			if (building.getElevatorState() == 1 || building.getElevatorState() == 6) { // 1 is movetofloor and 6 is move1floor
 				gui.elevatorMoveToFloor(elevatorStartFloor);
 //				gui.passengersGroupSetup();
-				return;
 			} else {
 				elevatorStartFloor = building.getElevatorCurrFloor();
 			}
@@ -402,7 +401,6 @@ public class ElevatorSimController {
 //			}
 //		} else {
 			gui.passengersGroupSetup();
-			building.closeLogs(stepCnt);
 			// process the passenger results
 //			gui.endSimulation();
 		}

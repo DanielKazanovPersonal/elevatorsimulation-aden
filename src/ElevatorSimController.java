@@ -396,10 +396,11 @@ public class ElevatorSimController {
 //			}
 				gui.passengersGroupSetup();
 		} else {
+			if (gui == null) return;
 			gui.elevatorClosedDoors();
 			// process the passenger results
 			gui.endSimulation();
-			building.closeLogs(stepCnt);
+			building.closeLogs(++stepCnt);
 		}
 	}
 	

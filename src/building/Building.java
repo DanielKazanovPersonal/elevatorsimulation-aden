@@ -470,7 +470,6 @@ public class Building {
 				return false;
 		if (!passQ.isEmpty()) return false;
 		updateElevator(time);
-		logEndSimulation(time);
 		return true;
 	}
 	

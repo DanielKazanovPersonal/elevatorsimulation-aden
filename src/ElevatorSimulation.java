@@ -292,7 +292,7 @@ public class ElevatorSimulation extends Application {
 			circleArr[i] = new Circle((PANE_WIDTH / 3) + numPassengersOnFloor[currFloor], (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
 			numPassengersOnFloor[currFloor]++;
 //			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
-			textArr[i].setStyle("-fx-stroke: lightgray;");
+//			textArr[i].setStyle("-fx-stroke: lightgray;");
 			
 //			if () {
 //				directionArr[i] = new Polygon();
@@ -301,7 +301,9 @@ public class ElevatorSimulation extends Application {
 //			}
 			
 			passengers += numPeople;
-			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);
+//			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);
+			pane.getChildren().addAll(circleArr[i]);
+			
 		}
 		System.out.println("End of passengerGroupSetup()");
 	}

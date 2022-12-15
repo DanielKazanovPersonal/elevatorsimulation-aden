@@ -134,27 +134,26 @@ public class CallManager {
 	 * @param e the elevator object
 	 * @return whether or not to change directions
 	 */
-	boolean changeDirection(Elevator e) {
+	boolean changeDirection(int currFloor, int dir, ArrayList<Passengers> passengers) {
 		updateCallStatus();
-		int currFloor = e.getCurrFloor();
-		if (e.getDirection() == UP) {
+		if (dir == UP) {
 			if (currFloor == floors.length - 1) return true;
-			if (e.getPassengers() == 0) {
+			if (passengers.size() == 0) {
 				for (int i = currFloor + 1; i < floors.length; i++)
 					if (callOnFloor(i)) return false;
 				return !(callOnFloor(currFloor) && upCalls[currFloor]);
 			} else {
-				for (Passengers p : e.getAllPassengers())
+				for (Passengers p : passengers)
 					if (p.getDestFloor() > currFloor) return false;
 			}
 		} else {
 			if (currFloor == 0) return true;
-			if (e.getPassengers() == 0) {
+			if (passengers.size() == 0) {
 				for (int i = 0; i < currFloor; i++)
 					if (callOnFloor(i)) return false;
 				return !(callOnFloor(currFloor) && downCalls[currFloor]);
 			} else {
-				for (Passengers p : e.getAllPassengers())
+				for (Passengers p : passengers)
 					if (p.getDestFloor() < currFloor) return false;
 				return true;
 			}
@@ -170,11 +169,9 @@ public class CallManager {
 	 * @param e elevator
 	 * @return whether or not direction should change
 	 */
-	boolean changeDirectionAfterOffload(Elevator e) {
+	boolean changeDirectionAfterOffload(int dir, int floor, int numPassengers) {
 		updateCallStatus();
-		int dir = e.getDirection();
-		int floor = e.getCurrFloor();
-		if (e.getPassengers() == 0) {
+		if (numPassengers == 0) {
 			if (dir == UP) {
 				for (int i = floor + 1; i < floors.length; i++)
 					if (callOnFloor(i)) return false;

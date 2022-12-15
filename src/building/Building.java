@@ -291,7 +291,7 @@ public class Building {
 	/**
 	 * Calculates next state after offld state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -352,7 +352,7 @@ public class Building {
 	/**
 	 * Attempt to board the next passenger on the floor
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param e elevator
 	 * @param time time since sim started
@@ -477,7 +477,7 @@ public class Building {
 	/**
 	 * Adds a passenger to the building's queue.
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 *
 	 * @param time the time
 	 * @param numPass the num pass

@@ -49,6 +49,8 @@ public class ElevatorSimulation extends Application {
 	private final int BOARD = Elevator.BOARD;
 	private final int CLOSEDR = Elevator.CLOSEDR;
 	private final int MV1FLR = Elevator.MV1FLR;
+	private final int UP = 1;
+	private final int DOWN = -1;
 
 	/** Daniel's created variables */
 	private Timeline t;
@@ -140,9 +142,20 @@ public class ElevatorSimulation extends Application {
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
 		totalTicks = controller.getStepCnt();
-		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()) + " | Elevator direction: ");
+		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()) + " | Elevator direction: " + elevatorDirectionToString(controller.getElevatorDirection()));
 		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
 		pane.getChildren().add(clock);
+	}
+	
+	public String elevatorDirectionToString(int input) {
+		switch (input) {
+			case UP:
+				return "UP";
+			case DOWN:
+				return "DOWN";
+			default:
+				return "ERROR";
+		}
 	}
 	
 	public String elevatorStateToString(int input) {

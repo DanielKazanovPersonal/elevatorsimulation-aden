@@ -307,7 +307,7 @@ public class ElevatorSimulation extends Application {
 			
 			numPassengersOnFloor[currFloor]++;
 			
-			passengers = controller.getNumController();
+			passengers = controller.getNumPassengersInElevator();
 			
 //			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);
 			pane.getChildren().addAll(circleArr[i], textArr[i]);

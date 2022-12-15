@@ -149,6 +149,10 @@ public class Building {
 	public int getElevatorTimeInState() {
 		return elevators[0].getTimeInState();
 	}
+	
+	public int getPassengersInElevator() {
+		return elevators[0].getPassengers();
+	}
 
 	/**
 	 * Pass going to floor on elevator.

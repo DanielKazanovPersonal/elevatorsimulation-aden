@@ -165,13 +165,7 @@ public class ElevatorSimulation extends Application {
 		stepTextField.setFont(font);
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
-		stepButton.setOnAction(e -> {controller.setStepCnt(Integer.parseInt(stepTextField.getText())); t.play(); controller.stepSim(); updateTotalTicks(); t.pause();});
-		
-//		stepButton.setOnAction(e -> {		if (stepTextField.getText().matches("\\d+")) {
-//			controller.setStepCnt(Integer.parseInt(stepTextField.getText()));
-//		} else {
-//			stepTextField.setText("Enter Integer");
-//		}});
+		stepButton.setOnAction(e -> {t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText()));  updateTotalTicks(); t.play();});
 
 		Button log = new Button("Log");
 		log.setFont(font);

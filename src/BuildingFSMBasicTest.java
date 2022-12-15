@@ -16,7 +16,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -33,6 +32,7 @@ class BuildingFSMBasicTest {
 	private static boolean DEBUG = false;
 	private static String os = null;
 	private static String javaHome = null;
+	private ElevatorLogCompare cmpLog = new ElevatorLogCompare();
 
 	private void updateSimConfigCSV(String fname) {
 		File fh = fio.getFileHandle("ElevatorSimConfig.csv");
@@ -78,78 +78,78 @@ class BuildingFSMBasicTest {
 		ifh.delete();
 	}
 
-	private boolean processCmpElevatorOutput(Process proc, ArrayList<String> results) {
-		String line = "";
-		boolean pass = true;
-		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-		try {
-			while ((line = br.readLine())!=null) {
-				results.add(line);
-				System.out.println(line);
-				if (line.contains("FAILED")) pass = false;
-			}
-			br.close();		
-		} catch (IOException e) {
-			e.printStackTrace();			
-		}
-		return pass;
-	}
-	
-	private void printManualCmpElevatorInstructions(File fh) {
-		System.out.println("ERROR: cmpElevator failed to run - you will need to run manually.");
-		System.out.println("       1) cd to your project directory in the terminal.");
-		System.out.println("       2) java -jar cmpElevator.jar "+fh.getName().replaceAll(".cmp", ".log"));	
-	}
-	
-	private boolean processCmpElevatorError(Process proc, ArrayList<String> results, File fh) {
-		String line = "";
-		boolean pass = true;
-		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
-		try {
-			while ((line = br.readLine())!=null) {
-				results.add(line);
-				System.out.println(line);
-				pass = false;
-			}
-			br.close();		
-			printManualCmpElevatorInstructions(fh);
-		} catch (IOException e) {
-			e.printStackTrace();			
-		}
-		return pass;
-	}
-	
-	private boolean executeCmpElevator(File fh,String cmd) {
-		boolean pass = true;
-		ArrayList<String> cmpResults = new ArrayList<String>();
-		if (javaHome == null) {
-			printManualCmpElevatorInstructions(fh);
-			fail();
-		}
-		cmd = javaHome+"/"+cmd;
-		String[] execCmpElevator = cmd.split("\\s+");
-		try {
-			Process proc = new ProcessBuilder(execCmpElevator).start();
-			proc.waitFor();
-			pass = pass && processCmpElevatorOutput(proc,cmpResults);
-			if (cmpResults.isEmpty()) 
-				pass = pass && processCmpElevatorError(proc,cmpResults,fh);
-			
-			if (!cmpResults.isEmpty()) {
-				BufferedWriter bw = fio.openBufferedWriter(fh);
-				for (int i = 0; i < cmpResults.size() ; i++) {
-					bw.write(cmpResults.get(i)+"\n");
-				}
-				bw.close();
-				moveLogCmpFiles(fh.getName().replaceAll(".cmp", ""));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	    return(pass);	
-	}
+//	private boolean processCmpElevatorOutput(Process proc, ArrayList<String> results) {
+//		String line = "";
+//		boolean pass = true;
+//		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+//		try {
+//			while ((line = br.readLine())!=null) {
+//				results.add(line);
+//				System.out.println(line);
+//				if (line.contains("FAILED")) pass = false;
+//			}
+//			br.close();		
+//		} catch (IOException e) {
+//			e.printStackTrace();			
+//		}
+//		return pass;
+//	}
+//	
+//	private void printManualCmpElevatorInstructions(File fh) {
+//		System.out.println("ERROR: cmpElevator failed to run - you will need to run manually.");
+//		System.out.println("       1) cd to your project directory in the terminal.");
+//		System.out.println("       2) java -jar cmpElevator.jar "+fh.getName().replaceAll(".cmp", ".log"));	
+//	}
+//	
+//	private boolean processCmpElevatorError(Process proc, ArrayList<String> results, File fh) {
+//		String line = "";
+//		boolean pass = true;
+//		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+//		try {
+//			while ((line = br.readLine())!=null) {
+//				results.add(line);
+//				System.out.println(line);
+//				pass = false;
+//			}
+//			br.close();		
+//			printManualCmpElevatorInstructions(fh);
+//		} catch (IOException e) {
+//			e.printStackTrace();			
+//		}
+//		return pass;
+//	}
+//	
+//	private boolean executeCmpElevator(File fh,String cmd) {
+//		boolean pass = true;
+//		ArrayList<String> cmpResults = new ArrayList<String>();
+//		if (javaHome == null) {
+//			printManualCmpElevatorInstructions(fh);
+//			fail();
+//		}
+//		cmd = javaHome+"/"+cmd;
+//		String[] execCmpElevator = cmd.split("\\s+");
+//		try {
+//			Process proc = new ProcessBuilder(execCmpElevator).start();
+//			proc.waitFor();
+//			pass = pass && processCmpElevatorOutput(proc,cmpResults);
+//			if (cmpResults.isEmpty()) 
+//				pass = pass && processCmpElevatorError(proc,cmpResults,fh);
+//			
+//			if (!cmpResults.isEmpty()) {
+//				BufferedWriter bw = fio.openBufferedWriter(fh);
+//				for (int i = 0; i < cmpResults.size() ; i++) {
+//					bw.write(cmpResults.get(i)+"\n");
+//				}
+//				bw.close();
+//				moveLogCmpFiles(fh.getName().replaceAll(".cmp", ""));
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//	    return(pass);	
+//	}
 
 	
     private static String getOperatingSystem() {
@@ -223,9 +223,15 @@ class BuildingFSMBasicTest {
 	void tearDown() throws Exception {
 	}
 	
+	private void runFSMTest (String test,String cmd) {
+		deleteTestCSV(test+".csv");
+		assertTrue(cmpLog.executeCompare(cmd.split("\\s+")));
+		moveLogCmpFiles(test);
+	}
+	
 	@Test
 	@Order(1)
-//	@Disabled
+	//@Disabled
 	void testBasicCheckPassengers() {
 		String test = "basicCheckPassengers";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -236,15 +242,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 10;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(2)
-//	@Disabled
+	//@Disabled
 	void testCallOnFloorUp1() {
 		String test = "basicCallOnFloorUp1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -255,15 +259,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 26;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(3)
-//	@Disabled
+	//@Disabled
 	void testCallOnFloorUp1b() {
 		String test = "basicCallOnFloorUp1b";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -274,15 +276,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 31;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(4)
-//	@Disabled
+	//@Disabled
 	void testCallOnFloorUp1c() {
 		String test = "basicCallOnFloorUp1c";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -293,15 +293,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 46;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 	
 	@Test
 	@Order(5)
-//	@Disabled
+	//@Disabled
 	void testbasicBoardOffld1() {
 		String test = "basicBoardOffld1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -312,15 +310,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 34;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(6)
-//	@Disabled
+	//@Disabled
 	void testbasicBoardOffld2() {
 		String test = "basicBoardOffld2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -331,15 +327,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 34;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(7)
-//	@Disabled
+	//@Disabled
 	void testbasicBoardOffld3() {
 		String test = "basicBoardOffld3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -350,15 +344,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 63;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(8)
-//	@Disabled
+	//@Disabled
 	void testbasicBoardOffld4() {
 		String test = "basicBoardOffld4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -369,15 +361,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 59;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(9)
-//	@Disabled
+	//@Disabled
 	void testbasicMvToFChgDir1() {
 		String test = "basicMvToFChgDir1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -388,15 +378,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 57;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(10)
-//	@Disabled
+	//@Disabled
 	void testbasicMvToFChgDir2() {
 		String test = "basicMvToFChgDir2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -407,15 +395,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 97;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(11)
-//	@Disabled
+	//@Disabled
 	void testbasicMvToFChgDir3() {
 		String test = "basicMvToFChgDir3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -426,15 +412,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 47;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(12)
-//	@Disabled
+	//@Disabled
 	void testbasicMvToFChgDir4() {
 		String test = "basicMvToFChgDir4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -445,15 +429,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 87;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 	
 	@Test
 	@Order(13)
-//	@Disabled
+	//@Disabled
 	void testbasicMv1FChgDir1() {
 		String test = "basicMv1FChgDir1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -464,15 +446,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 66;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(14)
-//	@Disabled
+	//@Disabled
 	void testbasicMv1FChgDir2() {
 		String test = "basicMv1FChgDir2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -483,15 +463,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 111;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(15)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrChgDir1() {
 		String test = "basicClDrChgDir1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -502,15 +480,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 76;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(16)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrChgDir2() {
 		String test = "basicClDrChgDir2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -521,15 +497,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 106;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(17)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrChgDir3() {
 		String test = "basicClDrChgDir3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -540,15 +514,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 82;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(18)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrChgDir4() {
 		String test = "basicClDrChgDir4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -559,15 +531,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 127;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(19)
-//	@Disabled
+	//@Disabled
 	void testbasicOffldChgDir1() {
 		String test = "basicOffldChgDir1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -578,15 +548,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 76;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(20)
-//	@Disabled
+	//@Disabled
 	void testbasicOffldChgDir2() {
 		String test = "basicOffldChgDir2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -597,15 +565,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 62;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(21)
-//	@Disabled
+	//@Disabled
 	void testbasicOffldChgDir3() {
 		String test = "basicOffldChgDir3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -616,15 +582,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 111;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(22)
-//	@Disabled
+	//@Disabled
 	void testbasicOffldChgDir4() {
 		String test = "basicOffldChgDir4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -635,15 +599,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 97;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(23)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr1() {
 		String test = "basicClDrOpDr1";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -654,15 +616,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 52;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(24)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr2() {
 		String test = "basicClDrOpDr2";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -673,15 +633,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 82;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(25)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr3() {
 		String test = "basicClDrOpDr3";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -692,15 +650,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 82;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(26)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr4() {
 		String test = "basicClDrOpDr4";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -711,15 +667,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 78;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(27)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr5() {
 		String test = "basicClDrOpDr5";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -730,15 +684,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 92;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(28)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr6() {
 		String test = "basicClDrOpDr6";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -749,15 +701,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 132;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(29)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr7() {
 		String test = "basicClDrOpDr7";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -768,15 +718,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 132;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(30)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr8() {
 		String test = "basicClDrOpDr8";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -787,15 +735,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 127;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(31)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr9() {
 		String test = "basicClDrOpDr9";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -806,15 +752,13 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 137;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 	@Test
 	@Order(32)
-//	@Disabled
+	//@Disabled
 	void testbasicClDrOpDr10() {
 		String test = "basicClDrOpDr10";
 		System.out.println("\n\nExecuting Test: "+test+".csv");
@@ -825,10 +769,8 @@ class BuildingFSMBasicTest {
 	    int i;
 		for (i = 0; i < 87;i++) c.stepSim();
 		b.closeLogs(i);
-		deleteTestCSV(test+".csv");
-		File fh = fio.getFileHandle(test+".cmp");
 		String cmd = "java -jar ./cmpElevator.jar "+test+".log";
-		assertTrue(executeCmpElevator(fh,cmd));
+	    runFSMTest(test,cmd);
 	}
 
 

@@ -120,7 +120,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void mainSetup(Stage primaryStage) {
-		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks(); }));
+		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks();}));
 		t.setCycleCount(Animation.INDEFINITE);
 		
 		BorderPane borderPane = new BorderPane();
@@ -141,7 +141,7 @@ public class ElevatorSimulation extends Application {
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
 		totalTicks = controller.getStepCnt();
-		clock = new Label("Total ticks: " + totalTicks + " " + controller.getTimeInState());
+		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + controller.getTimeInState());
 		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
 		pane.getChildren().add(clock);
 	}
@@ -151,7 +151,7 @@ public class ElevatorSimulation extends Application {
 //		Label clock = new Label("Total ticks: " + totalTicks);
 //		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
 //		pane.getChildren().add(clock);
-		
+		updateTotalTicks();
 		Button run = new Button("Run");
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
@@ -161,10 +161,12 @@ public class ElevatorSimulation extends Application {
 		stepButton.setFont(font);
 		stepButton.setPrefWidth(PANE_WIDTH / 5);
 		stepButton.setPrefHeight(PANE_HEIGHT / 9);
-		TextField stepTextField = new TextField();
+		TextField stepTextField = new TextField("15");
 		stepTextField.setFont(font);
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
+		stepButton.setOnAction(e -> {controller.setStepCnt(Integer.parseInt(stepTextField.getText())); t.play(); controller.stepSim(); updateTotalTicks(); t.pause();});
+		
 //		stepButton.setOnAction(e -> {		if (stepTextField.getText().matches("\\d+")) {
 //			controller.setStepCnt(Integer.parseInt(stepTextField.getText()));
 //		} else {

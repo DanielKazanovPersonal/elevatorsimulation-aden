@@ -289,8 +289,8 @@ public class ElevatorSimulation extends Application {
 			int destFloor = passengerData[2].get(i); // Destination floor
 			int politeness = passengerData[3].get(i); // Politeness (0 is impolite, 1 is polite)
 			
-			circleArr[i] = new Circle((PANE_WIDTH / 2.5) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
-			textArr[i] = new Text((PANE_WIDTH / 2.5) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, numPeople + "");
+			circleArr[i] = new Circle((PANE_WIDTH / 2) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
+			textArr[i] = new Text((PANE_WIDTH / 2) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, numPeople + "");
 			textArr[i].setStyle("-fx-stroke: lightgray;");
 			
 			if (currFloor < destFloor) {

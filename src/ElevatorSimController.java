@@ -426,8 +426,8 @@ public class ElevatorSimController {
 	int getElevatorState() {
 		return building.getElevatorState();
 	}
-	
-	int getNumPassengersInElevator() {
+
+	public int getNumPassengersInElevator() {
 		return building.getPassengersInElevator();
 	}
 }

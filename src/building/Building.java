@@ -221,9 +221,11 @@ public class Building {
 		if (!callMgr.callPending()) {
 			return Elevator.STOP;
 		} else {
-			Passengers priorityGrp = callMgr.prioritizePassengerCalls(elevator);
-			if (priorityGrp.getOnFloor() == elevator.getCurrFloor())
+			Passengers priorityGrp = callMgr.prioritizePassengerCalls(elevator.getCurrFloor());
+			if (priorityGrp.getOnFloor() == elevator.getCurrFloor()) {
+				elevator.setDirection(priorityGrp.getDirection());
 				return Elevator.OPENDR;
+			}
 			elevator.setPostMoveToFloorDir(priorityGrp.getDestFloor() - priorityGrp.getOnFloor() > 0? UP : DOWN);
 			elevator.setStartFloor(elevator.getCurrFloor());
 			elevator.setTargetFloor(priorityGrp.getOnFloor());

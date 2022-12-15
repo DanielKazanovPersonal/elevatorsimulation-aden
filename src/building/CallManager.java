@@ -77,10 +77,9 @@ public class CallManager {
 	 * @param floor the floor the elevator is on
 	 * @return the passengers
 	 */
-	Passengers prioritizePassengerCalls(Elevator e) {
+	Passengers prioritizePassengerCalls(int floor) {
 		updateCallStatus();
-		int floor = e.getCurrFloor();
-		Passengers currFloorPass = checkCurrentFloor(e);
+		Passengers currFloorPass = checkCurrentFloor(floor);
 		if (currFloorPass != null) return currFloorPass;
 		int numUpCalls = 0;
 		for (int i = 0; i < floors.length; i++)
@@ -107,16 +106,13 @@ public class CallManager {
 	 * Author: RT
 	 * Reviewer: __
 	 * 
-	 * @param e elevator
+	 * @param floor current floor of the elevator
 	 * @return priority passenger group on this floor, or null if none
 	 */
-	Passengers checkCurrentFloor(Elevator e) {
-		int floor = e.getCurrFloor();
+	Passengers checkCurrentFloor(int floor) {
 		if (upCalls[floor] && !downCalls[floor]) {
-			e.setDirection(UP);
 			return floors[floor].peekFloorQueue(UP);
 		} else if (downCalls[floor] && !upCalls[floor]) {
-			e.setDirection(DOWN);
 			return floors[floor].peekFloorQueue(DOWN);
 		} else if (upCalls[floor] && downCalls[floor]){
 			int downCallsBelowElevator = 0;
@@ -125,13 +121,7 @@ public class CallManager {
 				if (downCalls[i]) downCallsBelowElevator++;
 			for (int i = floor + 1; i < floors.length; i++)
 				if (upCalls[i]) upCallsAboveElevator++;
-			if (upCallsAboveElevator >= downCallsBelowElevator) {
-				e.setDirection(UP);
-				return floors[floor].peekFloorQueue(UP);
-			} else {
-				e.setDirection(DOWN);
-				return floors[floor].peekFloorQueue(DOWN);
-			}
+			return floors[floor].peekFloorQueue((upCallsAboveElevator >= downCallsBelowElevator)? UP : DOWN);
 		}
 		return null;
 	}

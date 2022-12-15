@@ -1,7 +1,5 @@
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import building.Elevator;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -24,7 +22,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 
 public class ElevatorSimulation extends Application {
 	/** Instantiate the GUI fields */
@@ -99,8 +96,6 @@ public class ElevatorSimulation extends Application {
 		PIXELS_BTWN_FLOORS = PANE_HEIGHT / (NUM_FLOORS + 1);
 	}
 	
-	
-	// TODO: Write this method
 	public void endSimulation() {
 		t.stop();
 	}
@@ -140,7 +135,6 @@ public class ElevatorSimulation extends Application {
 		buttonSetup(hBox);
 		floorSetup();
 		elevatorClosedDoors();
-//		passengersGroupSetup();
 	}
 	
 	public void updateTotalTicks() {
@@ -174,9 +168,6 @@ public class ElevatorSimulation extends Application {
 	
 	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
-//		Label clock = new Label("Total ticks: " + totalTicks);
-//		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
-//		pane.getChildren().add(clock);
 		updateTotalTicks();
 		Button run = new Button("Run");
 		run.setFont(font);
@@ -192,7 +183,6 @@ public class ElevatorSimulation extends Application {
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
 		stepButton.setOnAction(e -> {t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText()));  updateTotalTicks(); t.play();});
-
 		Button log = new Button("Log");
 		log.setFont(font);
 		log.setPrefWidth(PANE_WIDTH / 3);

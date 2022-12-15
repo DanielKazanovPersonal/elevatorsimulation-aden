@@ -75,6 +75,9 @@ public class ElevatorSimulation extends Application {
 	
 	private int[] floorYPositions;
 	
+	private Circle[] circleArr = new Circle[0];
+	private Text[] textArr = new Text[0];
+	
 	private Rectangle elevatorOpenDoors;
 	
 	/**
@@ -274,12 +277,15 @@ public class ElevatorSimulation extends Application {
 	// TODO: Write this method
 	public void passengersGroupSetup() {
 		// remove all passengers before reprinting
+		for (int i = 0; i < circleArr.length; i++) {
+			pane.getChildren().removeAll(circleArr[i], textArr[i]);
+		}
 		
 		ArrayList<Integer>[] passengerData = controller.getAllPassengerData();
 		int[] numPassengersOnFloor = new int[NUM_FLOORS];
 		
-		Circle[] circleArr = new Circle[passengerData[0].size()];
-		Text[] textArr = new Text[passengerData[0].size()];
+		circleArr = new Circle[passengerData[0].size()];
+		textArr = new Text[passengerData[0].size()];
 		Polygon[] directionArr = new Polygon[passengerData[0].size()];
 		System.out.println(passengerData[0].size());
 		
@@ -289,10 +295,9 @@ public class ElevatorSimulation extends Application {
 			int destFloor = passengerData[2].get(i); // Destination floor
 			int politeness = passengerData[3].get(i); // Politeness (0 is impolite, 1 is polite)
 			
-			circleArr[i] = new Circle((PANE_WIDTH / 3) + numPassengersOnFloor[currFloor], (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
-			numPassengersOnFloor[currFloor]++;
-//			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
-//			textArr[i].setStyle("-fx-stroke: lightgray;");
+			circleArr[i] = new Circle((PANE_WIDTH / 2.5) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
+			textArr[i] = new Text((PANE_WIDTH / 2.5) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, numPeople + "");
+			textArr[i].setStyle("-fx-stroke: lightgray;");
 			
 //			if () {
 //				directionArr[i] = new Polygon();
@@ -300,9 +305,12 @@ public class ElevatorSimulation extends Application {
 //				directionArr[i] = new Polygon();
 //			}
 			
-			passengers += numPeople;
+			numPassengersOnFloor[currFloor]++;
+			
+			passengers = controller.getNumController();
+			
 //			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);
-			pane.getChildren().addAll(circleArr[i]);
+			pane.getChildren().addAll(circleArr[i], textArr[i]);
 			
 		}
 		System.out.println("End of passengerGroupSetup()");

@@ -97,7 +97,7 @@ public class ElevatorSimulation extends Application {
 	
 	// TODO: Write this method
 	public void endSimulation() {
-//		t.pause();
+		t.stop();
 	}
 
 	/**
@@ -141,9 +141,30 @@ public class ElevatorSimulation extends Application {
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
 		totalTicks = controller.getStepCnt();
-		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + controller.getElevatorState());
+		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()));
 		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
 		pane.getChildren().add(clock);
+	}
+	
+	public String elevatorStateToString(int input) {
+		switch (input) {
+			case STOP:
+				return "STOP";
+			case MVTOFLR:
+				return "MVTOFLR";
+			case OPENDR:
+				return "OPENDR";
+			case OFFLD:
+				return "OFFLD";
+			case BOARD:
+				return "BOARD";
+			case CLOSEDR:
+				return "CLOSEDR";
+			case MV1FLR:
+				return "MV1FLR";
+			default:
+				return "ERROR";
+		}
 	}
 	
 	public void buttonSetup(HBox hBox) {
@@ -272,6 +293,8 @@ public class ElevatorSimulation extends Application {
 			circleArr[i] = new Circle(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, PIXELS_BTWN_FLOORS * 0.35);
 			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
 			textArr[i].setStyle("-fx-stroke: lightgray;");
+			
+			passengers += numPeople;
 			
 			pane.getChildren().addAll(circleArr[i], textArr[i]);
 			System.out.println("Inside loop");

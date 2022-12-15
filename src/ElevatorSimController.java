@@ -404,7 +404,7 @@ public class ElevatorSimController {
 			gui.passengersGroupSetup();
 			building.closeLogs(stepCnt);
 			// process the passenger results
-			gui.endSimulation();
+//			gui.endSimulation();
 		}
 //	}
 	

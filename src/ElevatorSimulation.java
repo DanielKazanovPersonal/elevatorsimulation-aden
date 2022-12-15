@@ -295,8 +295,16 @@ public class ElevatorSimulation extends Application {
 			
 			if (currFloor < destFloor) {
 				directionArr[i] = new Polygon();
+				directionArr[i].getPoints().addAll(new Double[]{
+						(PANE_WIDTH / 3.0) + 25, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - 30,
+						(PANE_WIDTH / 3.0) + 50, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
 			} else {
 				directionArr[i] = new Polygon();
+				directionArr[i].getPoints().addAll(new Double[]{
+						(PANE_WIDTH / 3.0) + 25, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + 30,
+						(PANE_WIDTH / 3.0) + 50, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
 			}
 			numPassengersOnFloor[currFloor]++;
 			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);

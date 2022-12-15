@@ -141,7 +141,7 @@ public class ElevatorSimulation extends Application {
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
 		totalTicks = controller.getStepCnt();
-		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + controller.getTimeInState());
+		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + controller.getElevatorState());
 		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
 		pane.getChildren().add(clock);
 	}

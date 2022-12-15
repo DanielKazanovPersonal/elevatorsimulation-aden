@@ -257,7 +257,11 @@ public class Building {
 			return Elevator.OPENDR;
 		} else {
 			if (timeInState % ticksPerFloor == 0) {
-				elevator.updateCurrFloor(elevator.getCurrFloor() + elevator.getDirection());
+				int floor = elevator.getCurrFloor();
+				int dir = elevator.getDirection();
+				elevator.updateCurrFloor(floor + dir);
+				logElevatorStateChanged(time + 1, elevator.getPrevState(), elevator.getCurrState(), floor, floor + dir);
+
 			}
 			return Elevator.MVTOFLR;
 		}
@@ -448,7 +452,6 @@ public class Building {
 					return Elevator.OPENDR;
 			}
 			logElevatorStateChanged(time + 1, elevator.getPrevState(), elevator.getCurrState(), floor - dir, floor);
-
 		}
 		if (callMgr.changeDirection(floor, dir, elevator.getAllPassengers()))
 			elevator.flipDirections();

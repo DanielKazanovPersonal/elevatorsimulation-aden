@@ -296,14 +296,14 @@ public class ElevatorSimulation extends Application {
 			if (currFloor < destFloor) {
 				directionArr[i] = new Polygon();
 				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + 25, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - 30,
-						(PANE_WIDTH / 3.0) + 50, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
 						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
 			} else {
 				directionArr[i] = new Polygon();
 				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + 25, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + 30,
-						(PANE_WIDTH / 3.0) + 50, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + PIXELS_BTWN_FLOORS * 0.35,
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
 						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
 			}
 			numPassengersOnFloor[currFloor]++;

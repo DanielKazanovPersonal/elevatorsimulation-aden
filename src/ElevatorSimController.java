@@ -425,6 +425,7 @@ public class ElevatorSimController {
 		return building.getElevatorTimeInState();
 	}
 
-
-
+	int getElevatorState() {
+		return building.getElevatorState();
+	}
 }

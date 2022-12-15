@@ -447,6 +447,8 @@ public class Building {
 				if (callMgr.callOnFloor(floor, dir)) 
 					return Elevator.OPENDR;
 			}
+			logElevatorStateChanged(time + 1, elevator.getPrevState(), elevator.getCurrState(), floor - dir, floor);
+
 		}
 		if (callMgr.changeDirection(floor, dir, elevator.getAllPassengers()))
 			elevator.flipDirections();

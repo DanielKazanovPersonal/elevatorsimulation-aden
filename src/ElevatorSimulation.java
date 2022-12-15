@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -40,7 +41,7 @@ public class ElevatorSimulation extends Application {
 		this.passengers = passengers;
 	}
 	
-	private int time;
+	private int totalTicks;
 
 	/** Local copies of the states for tracking purposes */
 	private final int STOP = Elevator.STOP;
@@ -69,6 +70,7 @@ public class ElevatorSimulation extends Application {
 	private int ELEVATOR_Y_POSITION;
 	
 	private final int PIXELS_BTWN_FLOORS;
+	private Label clock;
 	
 	private int[] floorYPositions;
 	
@@ -88,6 +90,7 @@ public class ElevatorSimulation extends Application {
 		ELEVATOR_WIDTH = (PANE_WIDTH / 10);
 		ELEVATOR_HEIGHT = (PANE_HEIGHT / NUM_FLOORS);
 		ELEVATOR_X_POSITION = (PANE_WIDTH / 7);
+		
 		PIXELS_BTWN_FLOORS = PANE_HEIGHT / (NUM_FLOORS + 1);
 	}
 	
@@ -117,7 +120,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void mainSetup(Stage primaryStage) {
-		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> controller.stepSim()));
+		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks(); }));
 		t.setCycleCount(Animation.INDEFINITE);
 		
 		BorderPane borderPane = new BorderPane();
@@ -135,8 +138,20 @@ public class ElevatorSimulation extends Application {
 //		passengersGroupSetup();
 	}
 	
+	public void updateTotalTicks() {
+		pane.getChildren().remove(clock);
+		totalTicks = controller.getStepCnt();
+		clock = new Label("Total ticks: " + totalTicks);
+		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
+		pane.getChildren().add(clock);
+	}
+	
 	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
+//		Label clock = new Label("Total ticks: " + totalTicks);
+//		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
+//		pane.getChildren().add(clock);
+		
 		Button run = new Button("Run");
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
@@ -144,7 +159,7 @@ public class ElevatorSimulation extends Application {
 		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.play();}});
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
-		stepButton.setPrefWidth(PANE_WIDTH / 3);
+		stepButton.setPrefWidth(PANE_WIDTH / 5);
 		stepButton.setPrefHeight(PANE_HEIGHT / 9);
 		TextField stepTextField = new TextField();
 		stepTextField.setFont(font);
@@ -258,8 +273,9 @@ public class ElevatorSimulation extends Application {
 			int destFloor = passengerData[2].get(i); // Destination floor
 			int politeness = passengerData[3].get(i); // Politeness (0 is impolite, 1 is polite)
 			
-			circleArr[i] = new Circle(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, PANE_HEIGHT / NUM_FLOORS);
+			circleArr[i] = new Circle(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, PIXELS_BTWN_FLOORS * 0.35);
 			textArr[i] = new Text(PANE_WIDTH / 3 + (i * 10), PANE_HEIGHT / currFloor, numPeople + "");
+			textArr[i].setStyle("-fx-stroke: lightgray;");
 			
 			pane.getChildren().addAll(circleArr[i], textArr[i]);
 			System.out.println("Inside loop");
@@ -268,7 +284,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	// TODO: Write this method
-	public void passengersGroupMove() {
+	public void passengersGroupMove(int floor) {
 		// take care of ticks
 	}
 	

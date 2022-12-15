@@ -354,7 +354,6 @@ public class ElevatorSimController {
 		this.totalTicks = totalTicks;
 	}
 	
-	
  	/**
 	 * Step sim. See the comments below for the functionality you
 	 * must implement......
@@ -402,7 +401,7 @@ public class ElevatorSimController {
 //				gui.passengersGroupMove();
 //			}
 //		} else {
-//			gui.passengersGroupSetup();
+			gui.passengersGroupSetup();
 			building.closeLogs(stepCnt);
 			// process the passenger results
 			gui.endSimulation();

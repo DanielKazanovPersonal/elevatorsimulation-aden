@@ -291,7 +291,7 @@ public class Building {
 	/**
 	 * Calculates next state after offld state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -352,7 +352,7 @@ public class Building {
 	/**
 	 * Attempt to board the next passenger on the floor
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param e elevator
 	 * @param time time since sim started
@@ -447,6 +447,8 @@ public class Building {
 				if (callMgr.callOnFloor(floor, dir)) 
 					return Elevator.OPENDR;
 			}
+			logElevatorStateChanged(time + 1, elevator.getPrevState(), elevator.getCurrState(), floor - dir, floor);
+
 		}
 		if (callMgr.changeDirection(floor, dir, elevator.getAllPassengers()))
 			elevator.flipDirections();
@@ -470,14 +472,13 @@ public class Building {
 				return false;
 		if (!passQ.isEmpty()) return false;
 		updateElevator(time);
-		logEndSimulation(time);
 		return true;
 	}
 	
 	/**
 	 * Adds a passenger to the building's queue.
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 *
 	 * @param time the time
 	 * @param numPass the num pass

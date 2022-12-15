@@ -238,7 +238,7 @@ public class Building {
 	/**
 	 * Calculates next state after mvtoflr state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -325,7 +325,7 @@ public class Building {
 	/**
 	 * Calculates next state after board state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify

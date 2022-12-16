@@ -289,9 +289,9 @@ public class ElevatorSimulation extends Application {
 	public void passengersOffloadingAnimation() {
 		int currFloor = controller.getCurrFloor();
 		
-		if (controller.getElevatorState() != OFFLD && passengersOffloading != null) {
+		if (controller.getElevatorState() != OFFLD) {
 			System.out.println("elevator state not OFFLD");
-			pane.getChildren().remove(this.passengersOffloading);
+			pane.getChildren().remove(passengersOffloading);
 		}
 		
 		if (controller.getElevatorState() == OFFLD) {

@@ -110,8 +110,8 @@ public class ElevatorSimController {
 		return totalTicks;
 	}
 
-	public int getCurrentFloor() {
-		return 0; // HERE ------ IF WE DO ELEVATOR LIST IN BUILDING, THIS METHOD NEEDS TO TAKE IN WHICH ELEVATOR IS BEING USED
+	public int getCurrFloor() {
+		return building.getElevatorCurrFloor(); // HERE ------ IF WE DO ELEVATOR LIST IN BUILDING, THIS METHOD NEEDS TO TAKE IN WHICH ELEVATOR IS BEING USED
 	}
 
 	public String getTestName() {

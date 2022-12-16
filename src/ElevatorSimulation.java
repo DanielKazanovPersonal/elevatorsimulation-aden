@@ -49,6 +49,8 @@ public class ElevatorSimulation extends Application {
 	private final int BOARD = Elevator.BOARD;
 	private final int CLOSEDR = Elevator.CLOSEDR;
 	private final int MV1FLR = Elevator.MV1FLR;
+	private final int UP = 1;
+	private final int DOWN = -1;
 
 	/** Daniel's created variables */
 	private Timeline t;
@@ -75,6 +77,7 @@ public class ElevatorSimulation extends Application {
 	private Circle[] circleArr = new Circle[0];
 	private Text[] textArr = new Text[0];
 	private Polygon[] directionArr = new Polygon[0];
+	private Polygon passengersOffloading = new Polygon();
 	
 	private Rectangle elevatorOpenDoors;
 	
@@ -85,7 +88,7 @@ public class ElevatorSimulation extends Application {
 		controller = new ElevatorSimController(this);	
 		NUM_FLOORS = controller.getNumFloors();
 		NUM_ELEVATORS = controller.getNumElevators();
-		currFloor = controller.getCurrentFloor();
+		currFloor = controller.getCurrFloor();
 		
 		floorYPositions = new int[NUM_FLOORS + 1];
 		
@@ -120,7 +123,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void mainSetup(Stage primaryStage) {
-		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks();}));
+		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks(); passengersOffloadingAnimation();}));
 		t.setCycleCount(Animation.INDEFINITE);
 		
 		BorderPane borderPane = new BorderPane();
@@ -140,9 +143,20 @@ public class ElevatorSimulation extends Application {
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
 		totalTicks = controller.getStepCnt();
-		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()) + " | Elevator direction: ");
-		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
+		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()) + " | Elevator direction: " + elevatorDirectionToString(controller.getElevatorDirection()));
+		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
 		pane.getChildren().add(clock);
+	}
+	
+	public String elevatorDirectionToString(int input) {
+		switch (input) {
+			case UP:
+				return "UP";
+			case DOWN:
+				return "DOWN";
+			default:
+				return "ERROR";
+		}
 	}
 	
 	public String elevatorStateToString(int input) {
@@ -169,26 +183,39 @@ public class ElevatorSimulation extends Application {
 	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
 		updateTotalTicks();
+		
 		Button run = new Button("Run");
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
 		run.setPrefHeight(PANE_HEIGHT / 9);
-		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.play();}});
+		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause(); t.setCycleCount(Animation.INDEFINITE);} else {t.setCycleCount(Animation.INDEFINITE); t.play();}});
+		
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
 		stepButton.setPrefWidth(PANE_WIDTH / 5);
 		stepButton.setPrefHeight(PANE_HEIGHT / 9);
-		TextField stepTextField = new TextField("15");
+		
+		TextField stepTextField = new TextField("enter integer");
 		stepTextField.setFont(font);
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
-		stepButton.setOnAction(e -> {t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText()));  updateTotalTicks(); t.play();});
+		stepButton.setOnAction(e -> {if (!stepButtonInputCheck(stepTextField.getText())) {stepTextField.setText("enter integer");} else {
+			t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText())); updateTotalTicks(); t.play();
+		}});
+		
 		Button log = new Button("Log");
 		log.setFont(font);
 		log.setPrefWidth(PANE_WIDTH / 3);
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
+	}
+	
+	public boolean stepButtonInputCheck(String input) {
+		if (input.matches("\\d+")) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void floorSetup() {
@@ -217,6 +244,11 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorClosedDoors() {
+//		} else if (controller.getElevatorState() != OFFLD) {
+//			pane.getChildren().remove(passengersOffloading);
+//		}
+
+		
 		passengers = controller.getNumPassengersInElevator();
 		removeOpenElevator();
 		removeClosedElevator();
@@ -267,14 +299,33 @@ public class ElevatorSimulation extends Application {
 		elevatorClosedDoors();
 	}
 	
+	public void passengersOffloadingAnimation() {
+		int currFloor = controller.getCurrFloor();
+		
+		if (controller.getElevatorState() != OFFLD) {
+			System.out.println("elevator state not OFFLD");
+			pane.getChildren().remove(passengersOffloading);
+		}
+		
+		if (controller.getElevatorState() == OFFLD && !pane.getChildren().contains(passengersOffloading)) {
+			passengersOffloading = new Polygon();
+			System.out.println("curr flor " + controller.getCurrFloor());
+			passengersOffloading.getPoints().addAll(new Double[]{
+				    (PANE_WIDTH / 3.8) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+				    PANE_WIDTH / 3.8, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - PIXELS_BTWN_FLOORS * 0.15,
+				    PANE_WIDTH / 3.8, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + PIXELS_BTWN_FLOORS * 0.15 });
+			passengersOffloading.setStyle("-fx-fill: lightgray;");
+			pane.getChildren().add(passengersOffloading);
+		}
+	}
+	
 	/** 
 	 * 
 	 */
 	public void passengersGroupSetup() {
 		for (int i = 0; i < circleArr.length; i++) {
 			pane.getChildren().removeAll(circleArr[i], textArr[i], directionArr[i]);
-		}
-		
+		}		
 		ArrayList<Integer>[] passengerData = controller.getAllPassengerData();
 		int[] numPassengersOnFloor = new int[NUM_FLOORS];
 		
@@ -296,14 +347,14 @@ public class ElevatorSimulation extends Application {
 			if (currFloor < destFloor) {
 				directionArr[i] = new Polygon();
 				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + 25, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - 30,
-						(PANE_WIDTH / 3.0) + 50, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
 						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
 			} else {
 				directionArr[i] = new Polygon();
 				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + 25, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + 30,
-						(PANE_WIDTH / 3.0) + 50, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + PIXELS_BTWN_FLOORS * 0.35,
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
 						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
 			}
 			numPassengersOnFloor[currFloor]++;

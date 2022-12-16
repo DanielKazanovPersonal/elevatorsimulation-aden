@@ -79,6 +79,9 @@ public class Elevator {
 	/**
 	 * Removes all passengers with a given destination floor
 	 * @param floor floor to be cleared
+	 * Author: BX
+	 * Reviewer: __
+	 * 
 	 */
 	public void clearPassengers(int floor) {
 		int passGettingOff = 0;
@@ -91,6 +94,8 @@ public class Elevator {
 
 	/**
 	 * Returns a list of all of the passengers in the elevator
+	 * Author: BX
+	 * Reviewer: __
 	 * 
 	 * @return an arraylist of every passenger group in the elevator
 	 */
@@ -113,7 +118,8 @@ public class Elevator {
 
 	/**
 	 * Adds a passenger group to the elevator
-	 * 
+	 * Author: BX
+	 * Reviewer: __
 	 * @param p passenger group
 	 */
 	public void addPassengers(Passengers p) {
@@ -124,6 +130,8 @@ public class Elevator {
 	/**
 	 * Updates the current floor of the elevator
 	 * @param newFloor new floor of the elevator
+	 * Author: BX
+	 * Reviewer: __
 	 */
 	public void updateCurrFloor(int newFloor) {
 		prevFloor = currFloor;
@@ -132,6 +140,8 @@ public class Elevator {
 	/**
 	 * Updates the current state of the elevator
 	 * @param newState new state of the elevator
+	 * Author: BX
+	 * Reviewer: __
 	 */
 	public void updateCurrState(int newState) {
 		prevState = currState;

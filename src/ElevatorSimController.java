@@ -142,7 +142,8 @@ public class ElevatorSimController {
 	 * Parses the elevator simulation config file to configure the simulation:
 	 * number of floors and elevators, the actual test file to run, and the
 	 * elevator characteristics.
-	 *
+	 * Author: BX
+	 * Reviewer: __
 	 * @param line the line
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
@@ -169,6 +170,8 @@ public class ElevatorSimController {
 	 * Initialize passenger data. Reads the supplied filename,
 	 * and for each passenger group, identifies the pertinent information
 	 * and adds it to the passengers queue in Building...
+	 * Author: BX
+	 * Reviewer: __
 	 *
 	 * @param filename the filename
 	 */
@@ -196,6 +199,9 @@ public class ElevatorSimController {
 	 * Parses the line of passenger data into tokens, and 
 	 * passes those values to the building to be added to the
 	 * passenger queue
+	 * Author: BX
+	 * Reviewer: __
+	 *
 	 *
 	 * @param line the line of passenger input data
 	 */
@@ -357,6 +363,9 @@ public class ElevatorSimController {
  	/**
 	 * Step sim. See the comments below for the functionality you
 	 * must implement......
+	 * Author: BX
+	 * Reviewer: __
+	 * 
 	 */
 	public void stepSim() {
  		// DO NOT MOVE THIS - YOU MUST INCREMENT TIME FIRST!

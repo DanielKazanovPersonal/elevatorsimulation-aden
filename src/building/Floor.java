@@ -14,12 +14,21 @@ import genericqueue.GenericQueue;
 public class Floor {
 	/**  Constant for representing direction. */
 	private static final int UP = 1;
+	
+	/** The Constant DOWN. */
 	private static final int DOWN = -1;
 
-	/** The queues to represent Passengers going UP or DOWN */	
+	/**  The queues to represent Passengers going UP or DOWN. */	
 	private GenericQueue<Passengers> down;
+	
+	/** The up. */
 	private GenericQueue<Passengers> up;
 
+	/**
+	 * Instantiates a new floor.
+	 *
+	 * @param qSize the q size
+	 */
 	public Floor(int qSize) {
 		down = new GenericQueue<Passengers>(qSize);
 		up = new GenericQueue<Passengers>(qSize);
@@ -30,6 +39,13 @@ public class Floor {
 	// given time based upon direction - you could choose to 
 	// account for this in your methods.
 
+	/**
+	 * Pass going in dir.
+	 * Author: BX
+	 * Reviewer: __
+	 * @param dir the dir
+	 * @return true, if successful
+	 */
 	public boolean passGoingInDir(int dir) {
 		if (dir > 0) {
 			return !up.isEmpty();
@@ -38,6 +54,13 @@ public class Floor {
 		}
 	}
 
+	/**
+	 * Removes the first pass in Q.
+	 * Author: BX
+	 * Reviewer: __
+	 * @param direction the direction
+	 * @return the passengers
+	 */
 	// gets and removes first passenger in q
 	public Passengers removeFirstPassInQ(int direction) {
 
@@ -48,6 +71,13 @@ public class Floor {
 		}
 	}
 
+	/**
+	 * Adds the passenger to the direction queue.
+	 * Author: BX
+	 * Reviewer: __
+	 * @param p the p
+	 * @param direction the direction
+	 */
 	public void addPassenger(Passengers p, int direction) { // can always come back to change return value
 		if (direction == UP) {
 			up.add(p);
@@ -56,11 +86,24 @@ public class Floor {
 		}
 	}
 
+	/**
+	 * Checks if is empty.
+	 * Author: BX
+	 * Reviewer: __
+	 * @return true, if is empty
+	 */
 	public boolean isEmpty() {
 		if (down.isEmpty() && up.isEmpty()) return true;
 		return false;
 	}
 
+	/**
+	 * Peek floor queue.
+	 * Author: BX
+	 * Reviewer: __
+	 * @param dir the dir
+	 * @return the passengers
+	 */
 	// same as removeFirstPassInQ wo the removal
 	public Passengers peekFloorQueue(int dir) {
 		if (dir > 0) {
@@ -70,6 +113,12 @@ public class Floor {
 		}
 	}
 	
+	/**
+	 * Gets the all passengers.
+	 * Author: BX
+	 * Reviewer: __
+	 * @return the all passengers
+	 */
 	protected ArrayList<Passengers> getAllPassengers() {
 		ArrayList<Passengers> passengers = new ArrayList<Passengers>();
 		

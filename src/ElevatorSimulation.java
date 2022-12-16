@@ -77,7 +77,7 @@ public class ElevatorSimulation extends Application {
 	private Circle[] circleArr = new Circle[0];
 	private Text[] textArr = new Text[0];
 	private Polygon[] directionArr = new Polygon[0];
-	private Polygon passengersOffloading;
+	private Polygon passengersOffloading = new Polygon();
 	
 	private Rectangle elevatorOpenDoors;
 	
@@ -88,7 +88,7 @@ public class ElevatorSimulation extends Application {
 		controller = new ElevatorSimController(this);	
 		NUM_FLOORS = controller.getNumFloors();
 		NUM_ELEVATORS = controller.getNumElevators();
-		currFloor = controller.getCurrentFloor();
+		currFloor = controller.getCurrFloor();
 		
 		floorYPositions = new int[NUM_FLOORS + 1];
 		
@@ -123,7 +123,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void mainSetup(Stage primaryStage) {
-		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks();}));
+		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks(); passengersOffloadingAnimation();}));
 		t.setCycleCount(Animation.INDEFINITE);
 		
 		BorderPane borderPane = new BorderPane();
@@ -187,7 +187,7 @@ public class ElevatorSimulation extends Application {
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
 		run.setPrefHeight(PANE_HEIGHT / 9);
-		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.play();}});
+		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.setCycleCount(Animation.INDEFINITE); t.play();}});
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
 		stepButton.setPrefWidth(PANE_WIDTH / 5);
@@ -196,7 +196,7 @@ public class ElevatorSimulation extends Application {
 		stepTextField.setFont(font);
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
-		stepButton.setOnAction(e -> {t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText()));  updateTotalTicks(); t.play();});
+		stepButton.setOnAction(e -> {t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText())); updateTotalTicks(); t.play();});
 		Button log = new Button("Log");
 		log.setFont(font);
 		log.setPrefWidth(PANE_WIDTH / 3);
@@ -231,6 +231,11 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorClosedDoors() {
+//		} else if (controller.getElevatorState() != OFFLD) {
+//			pane.getChildren().remove(passengersOffloading);
+//		}
+
+		
 		passengers = controller.getNumPassengersInElevator();
 		removeOpenElevator();
 		removeClosedElevator();
@@ -262,15 +267,6 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorOpenDoors() {
-		if (controller.getElevatorState() == OFFLD) {
-			passengersOffloading = new Polygon();
-			passengersOffloading.getPoints().addAll(new Double[]{
-				    PANE_WIDTH / 3.5, ((floorYPositions[controller.getCurrentFloor() + 1] + floorYPositions[controller.getCurrentFloor()]) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
-				    PANE_WIDTH / 3.5, ((floorYPositions[controller.getCurrentFloor() + 1] + floorYPositions[controller.getCurrentFloor()]) / 2.0) - PIXELS_BTWN_FLOORS,
-				    (PANE_WIDTH / 3.5) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) });
-			pane.getChildren().add(passengersOffloading);
-		}
-		
 		passengers = controller.getNumPassengersInElevator();
 		removeClosedElevator();
 		removeOpenElevator();
@@ -290,14 +286,33 @@ public class ElevatorSimulation extends Application {
 		elevatorClosedDoors();
 	}
 	
+	public void passengersOffloadingAnimation() {
+		int currFloor = controller.getCurrFloor();
+		
+		if (controller.getElevatorState() != OFFLD && passengersOffloading != null) {
+			System.out.println("elevator state not OFFLD");
+			pane.getChildren().remove(this.passengersOffloading);
+		}
+		
+		if (controller.getElevatorState() == OFFLD) {
+			passengersOffloading = new Polygon();
+			System.out.println("curr flor " + controller.getCurrFloor());
+			passengersOffloading.getPoints().addAll(new Double[]{
+				    (PANE_WIDTH / 3.8) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
+				    PANE_WIDTH / 3.8, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - PIXELS_BTWN_FLOORS * 0.15,
+				    PANE_WIDTH / 3.8, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + PIXELS_BTWN_FLOORS * 0.15 });
+			passengersOffloading.setStyle("-fx-fill: lightgray;");
+			pane.getChildren().add(passengersOffloading);
+		}
+	}
+	
 	/** 
 	 * 
 	 */
 	public void passengersGroupSetup() {
 		for (int i = 0; i < circleArr.length; i++) {
-			pane.getChildren().removeAll(circleArr[i], textArr[i], directionArr[i]); // , passengersOffloading
-		}
-		
+			pane.getChildren().removeAll(circleArr[i], textArr[i], directionArr[i]);
+		}		
 		ArrayList<Integer>[] passengerData = controller.getAllPassengerData();
 		int[] numPassengersOnFloor = new int[NUM_FLOORS];
 		

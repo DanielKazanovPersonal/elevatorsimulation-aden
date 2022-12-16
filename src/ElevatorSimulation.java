@@ -77,6 +77,7 @@ public class ElevatorSimulation extends Application {
 	private Circle[] circleArr = new Circle[0];
 	private Text[] textArr = new Text[0];
 	private Polygon[] directionArr = new Polygon[0];
+	private Polygon passengersOffloading;
 	
 	private Rectangle elevatorOpenDoors;
 	
@@ -143,7 +144,7 @@ public class ElevatorSimulation extends Application {
 		pane.getChildren().remove(clock);
 		totalTicks = controller.getStepCnt();
 		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()) + " | Elevator direction: " + elevatorDirectionToString(controller.getElevatorDirection()));
-		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13)); // TODO: FIX with timeline implementation
+		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
 		pane.getChildren().add(clock);
 	}
 	
@@ -261,6 +262,15 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	public void elevatorOpenDoors() {
+		if (controller.getElevatorState() == OFFLD) {
+			passengersOffloading = new Polygon();
+			passengersOffloading.getPoints().addAll(new Double[]{
+				    PANE_WIDTH / 3.5, ((floorYPositions[controller.getCurrentFloor() + 1] + floorYPositions[controller.getCurrentFloor()]) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
+				    PANE_WIDTH / 3.5, ((floorYPositions[controller.getCurrentFloor() + 1] + floorYPositions[controller.getCurrentFloor()]) / 2.0) - PIXELS_BTWN_FLOORS,
+				    (PANE_WIDTH / 3.5) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) });
+			pane.getChildren().add(passengersOffloading);
+		}
+		
 		passengers = controller.getNumPassengersInElevator();
 		removeClosedElevator();
 		removeOpenElevator();
@@ -285,7 +295,7 @@ public class ElevatorSimulation extends Application {
 	 */
 	public void passengersGroupSetup() {
 		for (int i = 0; i < circleArr.length; i++) {
-			pane.getChildren().removeAll(circleArr[i], textArr[i], directionArr[i]);
+			pane.getChildren().removeAll(circleArr[i], textArr[i], directionArr[i]); // , passengersOffloading
 		}
 		
 		ArrayList<Integer>[] passengerData = controller.getAllPassengerData();

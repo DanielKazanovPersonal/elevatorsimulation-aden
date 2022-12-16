@@ -183,20 +183,24 @@ public class ElevatorSimulation extends Application {
 	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
 		updateTotalTicks();
+		
 		Button run = new Button("Run");
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
 		run.setPrefHeight(PANE_HEIGHT / 9);
-		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause();} else {t.setCycleCount(Animation.INDEFINITE); t.play();}});
+		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause(); t.setCycleCount(Animation.INDEFINITE);} else {t.setCycleCount(Animation.INDEFINITE); t.play();}});
+		
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
 		stepButton.setPrefWidth(PANE_WIDTH / 5);
 		stepButton.setPrefHeight(PANE_HEIGHT / 9);
-		TextField stepTextField = new TextField("15");
+		
+		TextField stepTextField = new TextField("enter integer");
 		stepTextField.setFont(font);
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
 		stepButton.setOnAction(e -> {t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText())); updateTotalTicks(); t.play();});
+		
 		Button log = new Button("Log");
 		log.setFont(font);
 		log.setPrefWidth(PANE_WIDTH / 3);

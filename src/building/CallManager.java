@@ -56,7 +56,7 @@ public class CallManager {
 	/**
 	 * Updates the call statuses based on the floor queues
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 */
 	void updateCallStatus() {
 		upCallPending = false;
@@ -72,7 +72,7 @@ public class CallManager {
 	/**
 	 * Prioritize passenger calls from STOP STATE
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 *
 	 * @param floor the floor the elevator is on
 	 * @return the passengers
@@ -104,7 +104,7 @@ public class CallManager {
 	/**
 	 * Call prioritization and direction switching if the call is on the current floor
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @param floor current floor of the elevator
 	 * @return priority passenger group on this floor, or null if none
@@ -129,7 +129,7 @@ public class CallManager {
 	/**
 	 * Decide whether or not to change directions based on calls and elevator destinations
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @param e the elevator object
 	 * @return whether or not to change directions
@@ -164,7 +164,7 @@ public class CallManager {
 	/**
 	 * Determines whether or not to change the direction of the elevator after the offload case
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @param e elevator
 	 * @return whether or not direction should change
@@ -189,7 +189,7 @@ public class CallManager {
 	/**
 	 * Determines whether or not there is a call in a given direction from a certain floor
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @param direction direction of call search
 	 * @param currFloor floor to start search from
@@ -209,7 +209,7 @@ public class CallManager {
 	/**
 	 * Whether or not there is a call pending
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @return if there is a call pending on some floor
 	 */
@@ -221,7 +221,7 @@ public class CallManager {
 	/**
 	 * Whether or not there is a call on a floor
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @param floor floor to scan
 	 * @return up or down call on given floor
@@ -234,7 +234,7 @@ public class CallManager {
 	/**
 	 * Whether or not there is a call in a certain direction on a floor
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @param floor floor to scan
 	 * @param elevatorDirection direction to be checked
@@ -248,7 +248,7 @@ public class CallManager {
 	/**
 	 * Whether or not a caller on a given floor is polite, will also set them to polite to avoid infinite loops
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @param floor floor of call
 	 * @param elevatorDirection direction of call
@@ -264,7 +264,7 @@ public class CallManager {
 	/**
 	 * Finds the lowest up call
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @return the lowest up call
 	 */
@@ -278,7 +278,7 @@ public class CallManager {
 	/**
 	 * Finds the highest down call
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 * @return highest down call
 	 */

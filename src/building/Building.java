@@ -87,7 +87,7 @@ public class Building {
 	/**
 	 * Called by the controller to retrieve data about passengers in the floor queues
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @return an array of arraylists, where each arraylist is a list of a given passenger attribute
 	 */
@@ -181,7 +181,7 @@ public class Building {
 	/**
 	 * Called before each update tick to move passengers from the main queue into the floor queues
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param timeSinceSimStart time since the start of the simulation
 	 */
@@ -199,7 +199,7 @@ public class Building {
 	/**
 	 * Whether or not the elevator's state changed from the previous tick
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param e elevator to check
 	 * @return whether or not the state has changed
@@ -211,7 +211,7 @@ public class Building {
 	/**
 	 * Calculates next state after stop state
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -238,7 +238,7 @@ public class Building {
 	/**
 	 * Calculates next state after mvtoflr state
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -270,7 +270,7 @@ public class Building {
 	/**
 	 * Calculates next state after opendr state
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -295,7 +295,7 @@ public class Building {
 	/**
 	 * Calculates next state after offld state
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -329,7 +329,7 @@ public class Building {
 	/**
 	 * Calculates next state after board state
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -356,7 +356,7 @@ public class Building {
 	/**
 	 * Attempt to board the next passenger on the floor
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param e elevator
 	 * @param time time since sim started
@@ -387,7 +387,7 @@ public class Building {
 	/**
 	 * Calculates next state after closedr state
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -422,7 +422,7 @@ public class Building {
 	/**
 	 * Calculates next state after mv1flr state
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -461,7 +461,7 @@ public class Building {
 	/**
 	 * Whether or not the simulation should end
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 * 
 	 * @param time time since sim started
 	 * @return whether or not the simulation should end
@@ -481,7 +481,7 @@ public class Building {
 	/**
 	 * Adds a passenger to the building's queue.
 	 * Author: RT
-	 * Reviewer: BX
+	 * Reviewer: BX, DK
 	 *
 	 * @param time the time
 	 * @param numPass the num pass

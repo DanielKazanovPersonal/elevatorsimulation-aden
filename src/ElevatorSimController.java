@@ -143,7 +143,7 @@ public class ElevatorSimController {
 	 * number of floors and elevators, the actual test file to run, and the
 	 * elevator characteristics.
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * @param line the line
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
@@ -171,7 +171,7 @@ public class ElevatorSimController {
 	 * and for each passenger group, identifies the pertinent information
 	 * and adds it to the passengers queue in Building...
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 *
 	 * @param filename the filename
 	 */
@@ -200,7 +200,7 @@ public class ElevatorSimController {
 	 * passes those values to the building to be added to the
 	 * passenger queue
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 *
 	 *
 	 * @param line the line of passenger input data
@@ -364,7 +364,7 @@ public class ElevatorSimController {
 	 * Step sim. See the comments below for the functionality you
 	 * must implement......
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * 
 	 */
 	public void stepSim() {
@@ -403,7 +403,7 @@ public class ElevatorSimController {
 //			} else if (building.getElevatorState() == 4) { // board state
 //				gui.passengersGroupMove();
 //			}
-				gui.passengersGroupSetup();
+				gui.passengerGroupSetup();
 		} else {
 			if (gui == null) return;
 			gui.elevatorClosedDoors();

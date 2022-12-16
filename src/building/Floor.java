@@ -42,7 +42,7 @@ public class Floor {
 	/**
 	 * Pass going in dir.
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * @param dir the dir
 	 * @return true, if successful
 	 */
@@ -57,7 +57,7 @@ public class Floor {
 	/**
 	 * Removes the first pass in Q.
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * @param direction the direction
 	 * @return the passengers
 	 */
@@ -74,7 +74,7 @@ public class Floor {
 	/**
 	 * Adds the passenger to the direction queue.
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * @param p the p
 	 * @param direction the direction
 	 */
@@ -89,7 +89,7 @@ public class Floor {
 	/**
 	 * Checks if is empty.
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * @return true, if is empty
 	 */
 	public boolean isEmpty() {
@@ -100,7 +100,7 @@ public class Floor {
 	/**
 	 * Peek floor queue.
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * @param dir the dir
 	 * @return the passengers
 	 */
@@ -116,7 +116,7 @@ public class Floor {
 	/**
 	 * Gets the all passengers.
 	 * Author: BX
-	 * Reviewer: __
+	 * Reviewer: DK
 	 * @return the all passengers
 	 */
 	protected ArrayList<Passengers> getAllPassengers() {

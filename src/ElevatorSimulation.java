@@ -254,13 +254,11 @@ public class ElevatorSimulation extends Application {
 			lineArr[i].setEndY(yLocation);
 			labelArr[i].setFont(Font.font("Tahoma", FontWeight.BOLD, 25));
 			floorYPositions[i] = yLocation;
-			System.out.println(floorYPositions[i] + " " + i);
 			yLocation -= PIXELS_BTWN_FLOORS;
 			pane.getChildren().addAll(lineArr[i], labelArr[i]);
 		}
 		floorYPositions[floorYPositions.length - 1] = yLocation;
 		ELEVATOR_Y_POSITION = (floorYPositions[0] + floorYPositions[1] - ELEVATOR_HEIGHT) / 2;
-		System.out.println(Arrays.toString(floorYPositions));
 	}
 	
 	/** 
@@ -314,7 +312,6 @@ public class ElevatorSimulation extends Application {
 	public void elevatorMoveToFloor(int startFloor) {
 		ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() * (((controller.getTimeInState() + 1) / (double)(controller.getFloorTicks())) * PIXELS_BTWN_FLOORS) + (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
 		
-		System.out.println(ELEVATOR_Y_POSITION + ", " + startFloor + ", " + controller.getElevatorDirection());
 		elevatorClosedDoors();
 	}
 	
@@ -348,7 +345,6 @@ public class ElevatorSimulation extends Application {
 		circleArr = new Circle[passengerData[0].size()];
 		textArr = new Text[passengerData[0].size()];
 		directionArr = new Polygon[passengerData[0].size()];
-		System.out.println(passengerData[0].size());
 		
 		for (int i = 0; i < passengerData[0].size(); i++) {
 			int numPeople = passengerData[0].get(i); // Number of people in group
@@ -386,13 +382,11 @@ public class ElevatorSimulation extends Application {
 		int currFloor = controller.getCurrFloor();
 		
 		if (controller.getElevatorState() != OFFLD) {
-			System.out.println("elevator state not OFFLD");
 			pane.getChildren().remove(passengersOffloading);
 		}
 		
 		if (controller.getElevatorState() == OFFLD && !pane.getChildren().contains(passengersOffloading)) {
 			passengersOffloading = new Polygon();
-			System.out.println("curr flor " + controller.getCurrFloor());
 			passengersOffloading.getPoints().addAll(new Double[]{
 				    (PANE_WIDTH / 3.8) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
 				    PANE_WIDTH / 3.8, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - PIXELS_BTWN_FLOORS * 0.15,

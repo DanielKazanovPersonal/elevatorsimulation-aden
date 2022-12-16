@@ -383,7 +383,7 @@ public class Building {
 	/**
 	 * Calculates next state after closedr state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -418,7 +418,7 @@ public class Building {
 	/**
 	 * Calculates next state after mv1flr state
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since simulation started
 	 * @param elevator elevator to modify
@@ -456,7 +456,7 @@ public class Building {
 	/**
 	 * Whether or not the simulation should end
 	 * Author: RT
-	 * Reviewer: __
+	 * Reviewer: BX
 	 * 
 	 * @param time time since sim started
 	 * @return whether or not the simulation should end

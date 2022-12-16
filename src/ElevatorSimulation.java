@@ -116,7 +116,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void mainSetup(Stage primaryStage) {
 		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks(); passengersOffloadingAnimation();}));
@@ -138,7 +138,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
@@ -150,7 +150,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public String elevatorStateToString(int input) {
 		switch (input) {
@@ -175,7 +175,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public String elevatorDirectionToString(int input) {
 		switch (input) {
@@ -190,7 +190,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
@@ -225,7 +225,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public boolean stepButtonInputCheck(String input) {
 		if (input.matches("\\d+")) {
@@ -236,7 +236,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void floorSetup() {
 		Line[] lineArr = new Line[NUM_FLOORS];
@@ -263,7 +263,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void elevatorClosedDoors() {
 		passengers = controller.getNumPassengersInElevator();
@@ -290,7 +290,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void elevatorOpenDoors() {
 		passengers = controller.getNumPassengersInElevator();
@@ -307,7 +307,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void elevatorMoveToFloor(int startFloor) {
 		ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() * (((controller.getTimeInState() + 1) / (double)(controller.getFloorTicks())) * PIXELS_BTWN_FLOORS) + (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
@@ -317,7 +317,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void removeClosedElevator() {
 		pane.getChildren().removeAll(elevatorRectangle, elevatorLine, elevatorText);
@@ -325,7 +325,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void removeOpenElevator() {
 		pane.getChildren().removeAll(elevatorOpenDoors);
@@ -333,7 +333,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void passengerGroupSetup() {
 		for (int i = 0; i < circleArr.length; i++) {
@@ -376,7 +376,7 @@ public class ElevatorSimulation extends Application {
 	
 	/** 
 	 * Author: DK
-	 * Reviewer: _
+	 * Reviewer: RT
 	 */
 	public void passengersOffloadingAnimation() {
 		int currFloor = controller.getCurrFloor();

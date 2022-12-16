@@ -200,7 +200,7 @@ public class ElevatorSimulation extends Application {
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
 		stepButton.setOnAction(e -> {if (!stepButtonInputCheck(stepTextField.getText())) {stepTextField.setText("enter integer");} else {
-			t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText())); updateTotalTicks(); t.play();
+			t.pause(); t.stop(); t.setCycleCount(Integer.parseInt(stepTextField.getText())); updateTotalTicks(); t.play();
 		}});
 		
 		Button log = new Button("Log");

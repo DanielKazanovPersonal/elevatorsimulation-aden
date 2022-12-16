@@ -199,7 +199,9 @@ public class ElevatorSimulation extends Application {
 		stepTextField.setFont(font);
 		stepTextField.setPrefWidth(PANE_WIDTH / 5);
 		stepTextField.setPrefHeight(PANE_HEIGHT / 9);
-		stepButton.setOnAction(e -> {t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText())); updateTotalTicks(); t.play();});
+		stepButton.setOnAction(e -> {if (!stepButtonInputCheck(stepTextField.getText())) {stepTextField.setText("enter integer");} else {
+			t.pause(); t.setCycleCount(Integer.parseInt(stepTextField.getText())); updateTotalTicks(); t.play();
+		}});
 		
 		Button log = new Button("Log");
 		log.setFont(font);
@@ -207,6 +209,13 @@ public class ElevatorSimulation extends Application {
 		log.setPrefHeight(PANE_HEIGHT / 9);
 		log.setOnAction(e -> controller.enableLogging());
 	    hBox.getChildren().addAll(run, stepButton, stepTextField, log);
+	}
+	
+	public boolean stepButtonInputCheck(String input) {
+		if (input.matches("\\d+")) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void floorSetup() {

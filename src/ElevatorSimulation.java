@@ -294,7 +294,7 @@ public class ElevatorSimulation extends Application {
 			pane.getChildren().remove(passengersOffloading);
 		}
 		
-		if (controller.getElevatorState() == OFFLD) {
+		if (controller.getElevatorState() == OFFLD && !pane.getChildren().contains(passengersOffloading)) {
 			passengersOffloading = new Polygon();
 			System.out.println("curr flor " + controller.getCurrFloor());
 			passengersOffloading.getPoints().addAll(new Double[]{

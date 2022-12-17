@@ -151,7 +151,8 @@ public class ElevatorSimulation extends Application {
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
 		totalTicks = controller.getStepCnt();
-		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()) + " | Elevator direction: " + elevatorDirectionToString(controller.getElevatorDirection()));
+		clock = new Label("Total ticks: " + totalTicks + " | Elevator state: " + elevatorStateToString(controller.getElevatorState()) + 
+				" | Elevator direction: " + elevatorDirectionToString(controller.getElevatorDirection()));
 		clock.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
 		pane.getChildren().add(clock);
 	}
@@ -228,7 +229,8 @@ public class ElevatorSimulation extends Application {
 		run.setFont(font);
 		run.setPrefWidth(PANE_WIDTH / 3);
 		run.setPrefHeight(PANE_HEIGHT / 9);
-		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause(); t.setCycleCount(Animation.INDEFINITE);} else {t.setCycleCount(Animation.INDEFINITE); t.play();}});
+		run.setOnAction(e -> {if (t.getStatus() == Animation.Status.RUNNING) {t.pause(); t.setCycleCount(Animation.INDEFINITE);} else {
+			t.setCycleCount(Animation.INDEFINITE); t.play();}});
 		
 		Button stepButton = new Button("Step: ");
 		stepButton.setFont(font);
@@ -355,7 +357,9 @@ public class ElevatorSimulation extends Application {
 	 * Reviewer: RT
 	 */
 	public void elevatorMoveToFloor(int startFloor) {
-		ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() * (((controller.getTimeInState() + 1) / (double)(controller.getFloorTicks())) * PIXELS_BTWN_FLOORS) + (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
+		ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() 
+				* (((controller.getTimeInState() + 1) / (double)(controller.getFloorTicks())) * PIXELS_BTWN_FLOORS)
+				+ (floorYPositions[startFloor] + floorYPositions[startFloor + 1] - ELEVATOR_HEIGHT) / 2f);
 		
 		elevatorClosedDoors();
 	}
@@ -405,22 +409,27 @@ public class ElevatorSimulation extends Application {
 			int destFloor = passengerData[2].get(i); // Destination floor
 			int politeness = passengerData[3].get(i); // Politeness (0 is impolite, 1 is polite)
 			
-			circleArr[i] = new Circle((PANE_WIDTH / 2) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
-			textArr[i] = new Text((PANE_WIDTH / 2) + numPassengersOnFloor[currFloor] * 100, (floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, numPeople + "");
+			circleArr[i] = new Circle((PANE_WIDTH / 2) + numPassengersOnFloor[currFloor] * 100, 
+					(floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, PIXELS_BTWN_FLOORS * 0.35);
+			textArr[i] = new Text((PANE_WIDTH / 2) + numPassengersOnFloor[currFloor] * 100, 
+					(floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, numPeople + "");
 			textArr[i].setStyle("-fx-stroke: lightgray;");
+			
+			int floorYPositonsOneHigher = floorYPositions[currFloor + 1];
+			int currentFloorYPosition = floorYPositions[currFloor];
 			
 			if (currFloor < destFloor) {
 				directionArr[i] = new Polygon();
 				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
-						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0),
+						(PANE_WIDTH / 3.0), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0)});
 			} else {
 				directionArr[i] = new Polygon();
 				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + PIXELS_BTWN_FLOORS * 0.35,
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
-						(PANE_WIDTH / 3.0), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0)});
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) + PIXELS_BTWN_FLOORS * 0.35,
+						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0),
+						(PANE_WIDTH / 3.0), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0)});
 			}
 			numPassengersOnFloor[currFloor]++;
 			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);
@@ -436,6 +445,8 @@ public class ElevatorSimulation extends Application {
 	 */
 	public void passengersOffloadingAnimation() {
 		int currFloor = controller.getCurrFloor();
+		int floorYPositonsOneHigher = floorYPositions[currFloor + 1];
+		int currentFloorYPosition = floorYPositions[currFloor]; 
 		
 		if (controller.getElevatorState() != OFFLD) {
 			pane.getChildren().remove(passengersOffloading);
@@ -444,9 +455,9 @@ public class ElevatorSimulation extends Application {
 		if (controller.getElevatorState() == OFFLD && !pane.getChildren().contains(passengersOffloading)) {
 			passengersOffloading = new Polygon();
 			passengersOffloading.getPoints().addAll(new Double[]{
-				    (PANE_WIDTH / 3.8) + (PANE_WIDTH * 0.04), ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0),
-				    PANE_WIDTH / 3.8, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) - PIXELS_BTWN_FLOORS * 0.15,
-				    PANE_WIDTH / 3.8, ((floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2.0) + PIXELS_BTWN_FLOORS * 0.15 });
+				    (PANE_WIDTH / 3.8) + (PANE_WIDTH * 0.04), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0),
+				    PANE_WIDTH / 3.8, ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) - PIXELS_BTWN_FLOORS * 0.15,
+				    PANE_WIDTH / 3.8, ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) + PIXELS_BTWN_FLOORS * 0.15 });
 			passengersOffloading.setStyle("-fx-fill: lightgray;");
 			pane.getChildren().add(passengersOffloading);
 		}

@@ -373,23 +373,10 @@ public class ElevatorSimController {
 		if (!building.endSim(stepCnt)) {
 			building.updateFloorQueues(stepCnt);
 			building.updateElevator(stepCnt);
-			// TODO: Write the rest of this method
-			// If simulation is not completed (not all passengers have been processed
-			// or elevator(s) are not all in STOP state), then
-			// 		1) check for arrival of any new passengers
-			// 		2) update the elevator
-			// 		3) update the GUI
-			//  else 
-			//    	1) update the GUI
-			//		2) close the logs
-			//		3) process the passenger results
-			//		4) send endSimulation to the GUI to stop ticks.
-			
 			if (gui == null) return;
 
 			if (building.getElevatorState() == 1 || building.getElevatorState() == 6) { // 1 is movetofloor and 6 is move1floor
 				gui.elevatorMoveToFloor(elevatorStartFloor);
-//				gui.passengersGroupSetup();
 			} else {
 				elevatorStartFloor = building.getElevatorCurrFloor();
 			}
@@ -397,13 +384,9 @@ public class ElevatorSimController {
 			if (building.getElevatorState() == 2) { // open door
 				gui.elevatorOpenDoors();
 			} else if (building.getElevatorState() == 5) { // close door
-				gui.elevatorClosedDoors();                 }
-//			} else if (building.getElevatorState() == 3) { // off load
-//				gui.setPassengers(gui.getPassengers() - building.passGoingToFloorOnElevator());
-//			} else if (building.getElevatorState() == 4) { // board state
-//				gui.passengersGroupMove();
-//			}
-				gui.passengerGroupSetup();
+				gui.elevatorClosedDoors();
+			}
+			gui.passengerGroupSetup();
 		} else {
 			if (gui == null) return;
 			gui.elevatorClosedDoors();

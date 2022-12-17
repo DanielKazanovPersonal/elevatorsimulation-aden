@@ -121,7 +121,7 @@ public class ElevatorSimulation extends Application {
 	 * @param primaryStage the primary stage
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void mainSetup(Stage primaryStage) {
 		t = new Timeline(new KeyFrame(Duration.millis(stepSpeed), ae -> {controller.stepSim(); updateTotalTicks(); passengersOffloadingAnimation();}));
@@ -146,7 +146,7 @@ public class ElevatorSimulation extends Application {
 	 * every tick.
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void updateTotalTicks() {
 		pane.getChildren().remove(clock);
@@ -165,7 +165,7 @@ public class ElevatorSimulation extends Application {
 	 * @return string value of input
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public String elevatorStateToString(int input) {
 		switch (input) {
@@ -196,7 +196,7 @@ public class ElevatorSimulation extends Application {
 	 * @return string value of input
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public String elevatorDirectionToString(int input) {
 		switch (input) {
@@ -219,7 +219,7 @@ public class ElevatorSimulation extends Application {
 	 * @param hBox the HBox
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void buttonSetup(HBox hBox) {
 		Font font = new Font(25);
@@ -260,7 +260,7 @@ public class ElevatorSimulation extends Application {
 	 * @return true for integer input, false for non-integer input
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public boolean stepButtonInputCheck(String input) {
 		if (input.matches("\\d+")) {
@@ -274,7 +274,7 @@ public class ElevatorSimulation extends Application {
 	 * by mainSetup().
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void floorSetup() {
 		Line[] lineArr = new Line[NUM_FLOORS];
@@ -304,7 +304,7 @@ public class ElevatorSimulation extends Application {
 	 * elevator state changes (STOP, MVTOFLR, CLOSEDR, MV1FLR).
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void elevatorClosedDoors() {
 		passengers = controller.getNumPassengersInElevator();
@@ -333,7 +333,7 @@ public class ElevatorSimulation extends Application {
 	 * elevator state changes (OPENDR, OFFLD, BOARD).
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void elevatorOpenDoors() {
 		passengers = controller.getNumPassengersInElevator();
@@ -354,7 +354,7 @@ public class ElevatorSimulation extends Application {
 	 * @param startFloor the starting floor
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void elevatorMoveToFloor(int startFloor) {
 		ELEVATOR_Y_POSITION = (int)(-1 * controller.getElevatorDirection() 
@@ -368,7 +368,7 @@ public class ElevatorSimulation extends Application {
 	 * Removes closed elevator objects from the GUI for repositioning purposes.
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void removeClosedElevator() {
 		pane.getChildren().removeAll(elevatorRectangle, elevatorLine, elevatorText);
@@ -378,7 +378,7 @@ public class ElevatorSimulation extends Application {
 	 * Removes open elevator objects from the GUI for repositioning purposes.
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void removeOpenElevator() {
 		pane.getChildren().removeAll(elevatorOpenDoors);
@@ -390,7 +390,7 @@ public class ElevatorSimulation extends Application {
 	 * the building.
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void passengerGroupSetup() {
 		for (int i = 0; i < circleArr.length; i++) {
@@ -441,7 +441,7 @@ public class ElevatorSimulation extends Application {
 	 * the time line.
 	 * 
 	 * Author: DK
-	 * Reviewer: RT
+	 * Reviewer: RT, BX
 	 */
 	public void passengersOffloadingAnimation() {
 		int currFloor = controller.getCurrFloor();

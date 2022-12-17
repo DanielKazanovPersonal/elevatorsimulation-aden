@@ -115,6 +115,11 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Calls all setup methods that initiate GUI graphical components (buttons, floors, elevator). 
+	 * Called once at the start of the GUI creation.
+	 * 
+	 * @param primaryStage the primary stage
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -137,6 +142,9 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Updates elevator state information and total ticks. Gets called by the time line
+	 * every tick.
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -149,6 +157,12 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Converts elevator state from integer to string. Gets called by the updateTotalTicks
+	 * method.
+	 * 
+	 * @param input the input
+	 * @return string value of input
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -174,6 +188,12 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Converts elevator direction from integer to string. Gets called by the updateTotalTicks
+	 * method.
+	 * 
+	 * @param input the input
+	 * @return string value of input
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -189,6 +209,14 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Sets up the buttons at the bottom of the GUI visually and implements setOnAction
+	 * to process presses. Button run starts the elevator simulation by pausing or playing
+	 * the time line. Button stepButton plays through the elevator simulation for a certain
+	 * amount of integer ticks entered by the user through TextField stepTextField. Button log
+	 * actuates print statements in the console which present data on the simulation.
+	 * 
+	 * @param hBox the HBox
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -224,6 +252,11 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Checks stepTextField input only allow integer input values.
+	 * 
+	 * @param input the input
+	 * @return true for integer input, false for non-integer input
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -235,6 +268,9 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Sets up the floors for the building, dependent on NUM_FLOORS local variable. Gets called
+	 * by mainSetup().
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -262,6 +298,9 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Draws elevator with closed doors animation. Gets called by stepSim() in controller every time 
+	 * elevator state changes (STOP, MVTOFLR, CLOSEDR, MV1FLR).
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -272,8 +311,8 @@ public class ElevatorSimulation extends Application {
 		
 		elevatorRectangle = new Rectangle(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION, ELEVATOR_WIDTH, ELEVATOR_HEIGHT);
 		elevatorLine = new Line();
-		
 		elevatorRectangle.setStyle("-fx-fill: black; -fx-stroke: black; -fx-stroke-width: 5;");
+		
 		elevatorLine.setStrokeWidth(3);
 		elevatorLine.setStroke(Color.LIGHTGRAY);
 		elevatorLine.setStartX(ELEVATOR_X_POSITION + (ELEVATOR_WIDTH / 2));
@@ -284,11 +323,13 @@ public class ElevatorSimulation extends Application {
 		elevatorText = new Text(ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION - 10, "Passengers: " + this.passengers);
 		elevatorText.setFont(Font.font("Tahoma", FontWeight.BOLD, 13));
 		
-		
 		pane.getChildren().addAll(elevatorRectangle, elevatorLine, elevatorText);
 	}
 	
 	/** 
+	 * Draws elevator with open doors animation. Gets called by stepSim() in controller every time
+	 * elevator state changes (OPENDR, OFFLD, BOARD).
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -306,6 +347,10 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Updates ELEVATOR_Y_POSITION dependent on destined floor y position.
+	 * 
+	 * @param startFloor the starting floor
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -316,6 +361,8 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Removes closed elevator objects from the GUI for repositioning purposes.
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -324,6 +371,8 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Removes open elevator objects from the GUI for repositioning purposes.
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -332,6 +381,10 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Sets up the passenger groups by getting passenger data from the controller.
+	 * Gets called by stepSim() in controller every time new passenger groups enter 
+	 * the building.
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */
@@ -375,6 +428,9 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
+	 * Graphical component of passengers off-loading from the elevator. Gets called by
+	 * the time line.
+	 * 
 	 * Author: DK
 	 * Reviewer: RT
 	 */

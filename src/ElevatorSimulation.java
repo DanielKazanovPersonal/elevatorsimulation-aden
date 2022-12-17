@@ -415,24 +415,40 @@ public class ElevatorSimulation extends Application {
 					(floorYPositions[currFloor + 1] + floorYPositions[currFloor]) / 2, numPeople + "");
 			textArr[i].setStyle("-fx-stroke: lightgray;");
 			
-			int floorYPositonsOneHigher = floorYPositions[currFloor + 1];
-			int currentFloorYPosition = floorYPositions[currFloor];
-			
-			if (currFloor < destFloor) {
-				directionArr[i] = new Polygon();
-				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0),
-						(PANE_WIDTH / 3.0), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0)});
-			} else {
-				directionArr[i] = new Polygon();
-				directionArr[i].getPoints().addAll(new Double[]{
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) + PIXELS_BTWN_FLOORS * 0.35,
-						(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0),
-						(PANE_WIDTH / 3.0), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0)});
-			}
+			passengerDirectionAnimation(currFloor, destFloor, i);
+
 			numPassengersOnFloor[currFloor]++;
 			pane.getChildren().addAll(circleArr[i], textArr[i], directionArr[i]);
+		}
+	}
+	
+	/** 
+	 * Graphical component of direction of passenger groups on specific floors. Gets 
+	 * called by the passengerGroupSetup method.
+	 * 
+	 * @param currFloor the current floor of the passenger group
+	 * @param destFloor the destination floor of the passenger group
+	 * @param i the index of the passenger group in the queue
+	 * 
+	 * Author: DK
+	 * Reviewer: RT, BX
+	 */
+	public void passengerDirectionAnimation(int currFloor, int destFloor, int i) {
+		int floorYPositonsOneHigher = floorYPositions[currFloor + 1];
+		int currentFloorYPosition = floorYPositions[currFloor];
+		
+		if (currFloor < destFloor) {
+			directionArr[i] = new Polygon();
+			directionArr[i].getPoints().addAll(new Double[]{
+					(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) - PIXELS_BTWN_FLOORS * 0.35,
+					(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0),
+					(PANE_WIDTH / 3.0), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0)});
+		} else {
+			directionArr[i] = new Polygon();
+			directionArr[i].getPoints().addAll(new Double[]{
+					(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.04), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0) + PIXELS_BTWN_FLOORS * 0.35,
+					(PANE_WIDTH / 3.0) + (PANE_WIDTH * 0.08), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0),
+					(PANE_WIDTH / 3.0), ((floorYPositonsOneHigher + currentFloorYPosition) / 2.0)});
 		}
 	}
 	

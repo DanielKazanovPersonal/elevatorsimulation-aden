@@ -59,6 +59,19 @@ class ExecFullElevatorTests {
 		}
 		ifh.delete();
 	}
+
+	private void renamePassDataFile(String fname) {
+		File ofh = new File(fname);
+		File ifh = new File("FullElevatorTestPassData.csv");
+		Path src = Paths.get(ifh.getPath());
+		Path dest = Paths.get(ofh.getPath());
+		try {
+			Files.copy(src, dest,StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ifh.delete();
+	}
 	
 //	private boolean processCmpElevatorOutput(Process proc, ArrayList<String> results) {
 //		String line = "";
@@ -191,6 +204,7 @@ class ExecFullElevatorTests {
 		for (i = 0; i < 13397;i++) c.stepSim();
 		b.closeLogs(i);
 		renameLogFile(test+"Cfg1.log");
+		renamePassDataFile(test+"Cfg1PassData.csv");
 		assertTrue(true);		
 	}
 
@@ -209,6 +223,7 @@ class ExecFullElevatorTests {
 		for (i = 0; i < 13429;i++) c.stepSim();
 		b.closeLogs(i);
 		renameLogFile(test+"Cfg2.log");
+		renamePassDataFile(test+"Cfg2PassData.csv");
 		assertTrue(true);
 	}
 
@@ -227,6 +242,7 @@ class ExecFullElevatorTests {
 		for (i = 0; i < 13371;i++) c.stepSim();
 		b.closeLogs(i);
 		renameLogFile(test+"Cfg3.log");
+		renamePassDataFile(test+"Cfg3PassData.csv");
 		assertTrue(true);
 	}
 

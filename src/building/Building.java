@@ -527,7 +527,6 @@ public class Building {
 		for (Elevator lift: elevators) {
 			if (elevatorStateChanged(lift))
 				logElevatorStateChanged(time,lift.getPrevState(),lift.getCurrState(),lift.getPrevFloor(),lift.getCurrFloor());
-//			System.out.println(lift.getDirection());
 			switch (lift.getCurrState()) {
 				case Elevator.STOP: lift.updateCurrState(currStateStop(time,lift)); break;
 				case Elevator.MVTOFLR: lift.updateCurrState(currStateMvToFlr(time,lift)); break;

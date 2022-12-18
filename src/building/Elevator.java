@@ -74,6 +74,11 @@ public class Elevator {
 		for (int i = 0; i < numFloors; i++) 
 			passByFloor[i] = new ArrayList<Passengers>();
 		direction = 1; //up by default
+		
+		this.capacity = capacity;
+		this.ticksPerFloor = floorTicks;
+		this.ticksDoorOpenClose = doorTicks;
+		this.passPerTick = passPerTick;
 	}
 	
 	/**

@@ -70,10 +70,6 @@ public class Passengers {
 		return this.id;
 	}
 
-	void setId(int id) {
-		this.id = id;
-	}
-
 	int getTime() {
 		return this.time;
 	}
@@ -104,10 +100,6 @@ public class Passengers {
 
 	int getDirection() {
 		return this.direction;
-	}
-
-	int getTimeWillGiveUp() {
-		return this.timeWillGiveUp;
 	}
 
 	int getBoardTime() {

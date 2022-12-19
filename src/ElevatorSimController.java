@@ -106,10 +106,6 @@ public class ElevatorSimController {
 
 	private int totalTicks = 0;
 
-	public int getTotalTicks() {
-		return totalTicks;
-	}
-
 	public int getCurrFloor() {
 		return building.getElevatorCurrFloor(); // HERE ------ IF WE DO ELEVATOR LIST IN BUILDING, THIS METHOD NEEDS TO TAKE IN WHICH ELEVATOR IS BEING USED
 	}
@@ -232,134 +228,23 @@ public class ElevatorSimController {
 	
 	// TODO: Write any other helper methods that you may need to access data from the building...
 
-	public boolean isPASSQ_DEBUG() {
-		return this.PASSQ_DEBUG;
-	}
-
-	public boolean getPASSQ_DEBUG() {
-		return this.PASSQ_DEBUG;
-	}
-
-	public void setPASSQ_DEBUG(boolean PASSQ_DEBUG) {
-		this.PASSQ_DEBUG = PASSQ_DEBUG;
-	}
-
-	public ElevatorSimulation getGui() {
-		return this.gui;
-	}
-
-	public void setGui(ElevatorSimulation gui) {
-		this.gui = gui;
-	}
-	public void setBuilding(Building building) {
-		this.building = building;
-	}
-
-	public MyFileIO getFio() {
-		return this.fio;
-	}
-
-	public void setFio(MyFileIO fio) {
-		this.fio = fio;
-	}
-
-	public int getNUM_FLOORS() {
-		return this.NUM_FLOORS;
-	}
-
-
-	public int getNUM_ELEVATORS() {
-		return this.NUM_ELEVATORS;
-	}
-
 
 	public int getNumFloors() {
 		return this.numFloors;
-	}
-
-	public void setNumFloors(int numFloors) {
-		this.numFloors = numFloors;
 	}
 
 	public int getNumElevators() {
 		return this.numElevators;
 	}
 
-	public void setNumElevators(int numElevators) {
-		this.numElevators = numElevators;
-	}
-
-	public int getCapacity() {
-		return this.capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-
 	public int getFloorTicks() {
 		return this.floorTicks;
-	}
-
-	public void setFloorTicks(int floorTicks) {
-		this.floorTicks = floorTicks;
-	}
-
-	public int getDoorTicks() {
-		return this.doorTicks;
-	}
-
-	public void setDoorTicks(int doorTicks) {
-		this.doorTicks = doorTicks;
-	}
-
-	public int getPassPerTick() {
-		return this.passPerTick;
-	}
-
-	public void setPassPerTick(int passPerTick) {
-		this.passPerTick = passPerTick;
-	}
-
-	public String getTestfile() {
-		return this.testfile;
-	}
-
-	public void setTestfile(String testfile) {
-		this.testfile = testfile;
-	}
-
-	public String getLogfile() {
-		return this.logfile;
-	}
-
-	public void setLogfile(String logfile) {
-		this.logfile = logfile;
 	}
 
 	public int getStepCnt() {
 		return this.stepCnt;
 	}
 
-	public void setStepCnt(int stepCnt) {
-		this.stepCnt = stepCnt;
-	}
-
-	public boolean isEndSim() {
-		return this.endSim;
-	}
-
-	public boolean getEndSim() {
-		return this.endSim;
-	}
-
-	public void setEndSim(boolean endSim) {
-		this.endSim = endSim;
-	}
-	public void setTotalTicks(int totalTicks) {
-		this.totalTicks = totalTicks;
-	}
-	
  	/**
 	 * Step sim. See the comments below for the functionality you
 	 * must implement......

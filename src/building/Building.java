@@ -120,15 +120,6 @@ public class Building {
 	}
 
 	/**
-	 * Gets the elevator target floor.
-	 *
-	 * @return the elevator target floor
-	 */
-	public int getElevatorTargetFloor() {
-		return(elevators[0].getTargetFloor());
-	}
-
-	/**
 	 * Gets the elevator curr floor.
 	 *
 	 * @return the elevator curr floor
@@ -152,15 +143,6 @@ public class Building {
 	
 	public int getPassengersInElevator() {
 		return elevators[0].getPassengers();
-	}
-
-	/**
-	 * Pass going to floor on elevator.
-	 *
-	 * @return the int
-	 */
-	public int passGoingToFloorOnElevator() {
-		return(elevators[0].getPassWithDestFloor(getElevatorCurrFloor()).size());
 	}
 
 	/**

@@ -245,7 +245,7 @@ class BuildingFSMPolTest {
 		b.closeLogs(i);
 		deleteTestCSV(test+".csv");
 		File fh = fio.getFileHandle(test+".cmp");
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -264,7 +264,7 @@ class BuildingFSMPolTest {
 		b.closeLogs(i);
 		deleteTestCSV(test+".csv");
 		File fh = fio.getFileHandle(test+".cmp");
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -283,7 +283,7 @@ class BuildingFSMPolTest {
 		b.closeLogs(i);
 		deleteTestCSV(test+".csv");
 		File fh = fio.getFileHandle(test+".cmp");
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -302,7 +302,7 @@ class BuildingFSMPolTest {
 		b.closeLogs(i);
 		deleteTestCSV(test+".csv");
 		File fh = fio.getFileHandle(test+".cmp");
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -321,7 +321,7 @@ class BuildingFSMPolTest {
 		b.closeLogs(i);
 		deleteTestCSV(test+".csv");
 		File fh = fio.getFileHandle(test+".cmp");
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 

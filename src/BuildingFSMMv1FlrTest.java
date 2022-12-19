@@ -243,7 +243,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 96;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -260,7 +260,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 87;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -277,7 +277,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 102;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -294,7 +294,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 102;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -311,7 +311,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 102;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -328,7 +328,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 132;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -345,7 +345,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 139;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -362,7 +362,7 @@ class BuildingFSMMv1FlrTest {
 	    int i;
 		for (i = 0; i < 157;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 }

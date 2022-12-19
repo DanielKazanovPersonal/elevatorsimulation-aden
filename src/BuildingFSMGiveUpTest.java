@@ -244,7 +244,7 @@ class BuildingFSMGiveUpTest {
 	    int i;
 		for (i = 0; i < 41;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -261,7 +261,7 @@ class BuildingFSMGiveUpTest {
 	    int i;
 		for (i = 0; i < 107;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -278,7 +278,7 @@ class BuildingFSMGiveUpTest {
 	    int i;
 		for (i = 0; i < 109;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 
@@ -295,7 +295,7 @@ class BuildingFSMGiveUpTest {
 	    int i;
 		for (i = 0; i < 129;i++) c.stepSim();
 		b.closeLogs(i);
-		String cmd = "java -jar cmpElevator.jar --ckCalls "+test+".log";
+		String cmd = "java -jar cmpElevator.jar "+test+".log";
 	    runFSMTest(test,cmd);
 	}
 

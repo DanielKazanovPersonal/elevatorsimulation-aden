@@ -254,7 +254,7 @@ public class ElevatorSimulation extends Application {
 	}
 	
 	/** 
-	 * Checks stepTextField input only allow integer input values.
+	 * Checks stepTextField input to only allow integer input values.
 	 * 
 	 * @param input the input
 	 * @return true for integer input, false for non-integer input
